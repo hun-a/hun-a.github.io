@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>javascript game 2 (1) | Dev Huna</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="javascript,game,html5" />
+    
+    <meta name="description" content="잡담앞에 포스트에서 만들었던 공 튀기기를 베껴서 갤러그를 만들어 봤다. 갤러그 보다는 갤러가가 맞다고 한다…?! 아직 손 볼 부분은 많은데 그래도 일단 포스팅을 하고 보자. 데모         Gamedev Canvas Workshop         * { padding: 0; marg">
+<meta name="keywords" content="javascript,game,html5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript game 2 (1)">
+<meta property="og:url" content="https://seunghun-kim.github.io/2017/04/19/js-game2-01/index.html">
+<meta property="og:site_name" content="Dev Huna">
+<meta property="og:description" content="잡담앞에 포스트에서 만들었던 공 튀기기를 베껴서 갤러그를 만들어 봤다. 갤러그 보다는 갤러가가 맞다고 한다…?! 아직 손 볼 부분은 많은데 그래도 일단 포스팅을 하고 보자. 데모         Gamedev Canvas Workshop         * { padding: 0; margin: 0; }     canvas { background: #eee;">
+<meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2017-11-15T14:45:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript game 2 (1)">
+<meta name="twitter:description" content="잡담앞에 포스트에서 만들었던 공 튀기기를 베껴서 갤러그를 만들어 봤다. 갤러그 보다는 갤러가가 맞다고 한다…?! 아직 손 볼 부분은 많은데 그래도 일단 포스팅을 하고 보자. 데모         Gamedev Canvas Workshop         * { padding: 0; margin: 0; }     canvas { background: #eee;">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+					<h1>
+						<a href="/" style="font-size:90px;color:#fff; text-decoration: none;">Dev Huna</a>
+					</h1>
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">홈</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/">Code</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/CleanCode/">CleanCode</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JDBC/">JDBC</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Game/">Game</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Node-js/">Node.js</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/">Tips</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/jekyll/">jekyll</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://about.me/huna">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="검색" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '포스트',
+            PAGES: 'Pages',
+            CATEGORIES: '카테고리',
+            TAGS: '태그',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/JavaScript/Game/">Game</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-js-game2-01" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        javascript game 2 (1)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/04/19/js-game2-01/" class="article-date">
+            <time datetime="2017-04-18T15:00:00.000Z" itemprop="datePublished">2017-04-19</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/game/">game</a>, <a class="tag-link" href="/tags/html5/">html5</a>, <a class="tag-link" href="/tags/javascript/">javascript</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="잡담"><a href="#잡담" class="headerlink" title="잡담"></a>잡담</h2><p>앞에 포스트에서 만들었던 공 튀기기를 베껴서 <a href="https://namu.wiki/w/%EA%B0%A4%EB%9F%AC%EA%B0%80" target="_blank" rel="noopener">갤러그</a>를 만들어 봤다. <del>갤러그 보다는 갤러가가 맞다고 한다…?!</del></p>
+<p>아직 손 볼 부분은 많은데 그래도 일단 포스팅을 하고 보자.</p>
+<p>데모</p>
+<p><head><br>    <meta charset="utf-8"><br>    <title>Gamedev Canvas Workshop</title><br>    <style></p>
+<pre><code>    * { padding: 0; margin: 0; }
+    canvas { background: #eee; display: block; margin: 0 auto; }
+&lt;/style&gt;
+</code></pre><p></head></p>
+<body><br><br><canvas id="myCanvas" width="480" height="320"></canvas><br><br><script><br>    var canvas = document.getElementById(‘myCanvas’);<br>  var ctx = canvas.getContext(‘2d’);<br><br>  var theEnd = false;<br>  var retry = true;<br>  var score = 0;<br>  var lives = 3;<br>  var level = 1;<br><br>  var shipColor = ‘cyan’;<br>  var shipWidth = 30;<br>  var shipHeight = 10;<br>  var shipX = (canvas.width - shipWidth) / 2<br>  var shipY = canvas.height - shipHeight;<br><br>  var gunWidth = 6;<br>  var gunHeight = 5;<br>  var leftGunX = shipX;<br>  var rightGunX = shipX + shipWidth - gunWidth;<br>  var gunsY = shipY - gunHeight;<br><br>  var bulletColor = ‘red’;<br>  var bulletWidth = 3;<br>  var bulletHeight = 5;<br>  var bulletY = gunsY - bulletHeight;<br>  var bulletCount = 10;<br>  var firstFire = true;<br>  var bulletStatus = 1;<br>  var leftBulletX = leftGunX + ((gunWidth - bulletWidth) / 2);<br>  var rightBulletX = rightGunX + ((gunWidth - bulletWidth) / 2);<br><br>  var enemiesColor = ‘red’;<br>  var enemiesColumnCount = 7;<br>  var enemiesRowCount = 2;<br>  var enemyWidth = 30;<br>  var enemyHeight = 10;<br>  var enemyPadding = 36;<br>  var enemyOffsetTop = 30;<br>  var enemyOffsetLeft = 30;<br>  var enemiesMoving = 0;<br>  var enemiesMovingLimit = 15;<br>  var enemiesAttackWidth = 5;<br>  var enemiesAttackHeight = 10;<br>  var enemiesAttackX = -1;<br>  var enemiesAttackY = -1;<br>  var ed = 0.3;<br>  var eaSpeed = 9;<br>  var enemies = [];<br><br>  function initEnemies() {<br>    for (c = 0; c &lt; enemiesColumnCount; c++) {<br>      enemies[c] = [];<br>      for (r = 0; r &lt; enemiesRowCount; r++) {<br>        enemies[c][r] = { x: 0, y: 0, status: 1 };<br>      }<br>    }<br>  }<br><br>  initEnemies();<br><br>  var rightPressed = false;<br>  var leftPressed = false;<br><br>  document.addEventListener(‘keydown’, function(e) {<br>    if (e.keyCode === 39) {<br>      rightPressed = true;<br>    } else if (e.keyCode === 37) {<br>      leftPressed = true;<br>    }<br>  }, false);<br><br>  document.addEventListener(‘keyup’, function(e) {<br>    if (e.keyCode === 39) {<br>      rightPressed = false;<br>    } else if (e.keyCode === 37) {<br>      leftPressed = false;<br>    }<br>  }, false);<br><br>  document.addEventListener(‘mousemove’, function(e) {<br>    var relativeX = e.clientX - canvas.offsetLeft;<br>    if (relativeX &gt; 0 &amp;&amp; relativeX &lt; canvas.width) {<br>      shipX = relativeX - shipWidth / 2;<br>      leftGunX = shipX;<br>      rightGunX = shipX + shipWidth - gunWidth;<br>    }<br>  }, false);<br><br>  function drawScore() {<br>    ctx.font = ‘16px arial’;<br>    ctx.fillStyle = ‘#0095DD’;<br>    ctx.fillText(‘Score: ‘ + score, 8, 20);<br>  }<br><br>  function drawLives() {<br>    ctx.font = ‘16px arial’;<br>    ctx.fillStyle = ‘#0095DD’;<br>    ctx.fillText(‘Lives: ‘ + lives, canvas.width / 2 - 30, 20); // fillText(text, x, y);<br>  }<br><br>  function drawLevel() {<br>    ctx.font = ‘16px arial’;<br>    ctx.fillStyle = ‘#0095DD’;<br>    ctx.fillText(‘Level: ‘ + level, canvas.width - 65, 20); // fillText(text, x, y);<br>  }<br><br>  function drawEnemies() {<br>    for (c = 0; c &lt; enemiesColumnCount; c++) {<br>      for (r = 0; r &lt; enemiesRowCount; r++) {<br>        if (enemies[c][r].status === 1) {<br>          var enemyX = (c <em> (enemyWidth + enemyPadding)) + enemyOffsetLeft + enemiesMoving;<br>          var enemyY = (r </em> (enemyHeight + enemyPadding)) + enemyOffsetTop;<br>          enemies[c][r].x = enemyX;<br>          enemies[c][r].y = enemyY;<br>          var attack = (Math.random() <em> 30) &lt; 1;<br>          if (attack &amp;&amp; enemiesAttackY === -1) {<br>            enemiesAttackX = enemyX;<br>            enemiesAttackY = enemyY;<br>          }<br><br>          ctx.beginPath();<br>          ctx.rect(enemyX, enemyY, enemyWidth, enemyHeight);<br>          ctx.fillStyle = enemiesColor;<br>          ctx.fill();<br>          ctx.closePath();<br>        }<br>      }<br>    }<br>    if (enemiesMoving &gt; enemiesMovingLimit) {<br>      ed = -ed;<br>    } else if (enemiesMoving &lt; enemiesMovingLimit </em> (-1)) {<br>      ed = -ed;<br>    }<br>    enemiesMoving += ed;<br><br>    return enemiesAttackX;<br>  }<br><br>  function collisionDetection(blx, brx) {<br>    for (c = 0; c &lt; enemiesColumnCount; c++) {<br>      for (r = 0; r &lt; enemiesRowCount; r++) {<br>        var e = enemies[c][r];<br>        if (e.status === 1) {<br>          if ((blx &gt; e.x &amp;&amp; blx &lt; e.x + enemyWidth &amp;&amp; bulletY &gt; e.y &amp;&amp; bulletY &lt; e.y + enemyHeight)<br>           || (brx &gt; e.x &amp;&amp; brx &lt; e.x + enemyWidth &amp;&amp; bulletY &gt; e.y &amp;&amp; bulletY &lt; e.y + enemyHeight)) {<br>            score++;<br>            initBullet();<br>            e.status = 0;<br>            if (score === enemiesColumnCount <em> enemiesRowCount </em> level) {<br>              alert(‘Level UP!!’);<br>              // level up<br>              level += 1;<br>              enemyWidth -= 2;<br>              shipWidth += 5;<br>              shipHeight += 2;<br>              eaSpeed += 0.5;<br><br>              initEnemies();<br><br>              if (!retry &amp;&amp; enemyWidth &lt;= 0) {<br>                alert(‘Congraturation!\n You Finished All stages!’);<br>                theEnd = true;<br>              } else {<br>                draw();<br>              }<br>            }<br>          }<br>        }<br>      }<br>    }<br>  }<br><br>  function attackedDetection(attackX) {<br>    if (enemiesAttackY &gt; canvas.height) {<br>      enemiesAttackX = -1;<br>      enemiesAttackY = -1;<br>    }<br><br>    if (attackX &gt; shipX &amp;&amp; attackX &lt; shipX + shipWidth &amp;&amp; enemiesAttackY &gt; shipY &amp;&amp; enemiesAttackY &lt; shipY + shipHeight) {<br>      lives–;<br>    }<br>  }<br><br>  function drawBullet(leftX, rightX) {<br>    ctx.beginPath();<br>    ctx.rect(leftX, bulletY, bulletWidth, bulletHeight);<br>    ctx.rect(rightX, bulletY, bulletWidth, bulletHeight);<br>    ctx.fillStyle = bulletColor;<br>    ctx.fill();<br>    ctx.closePath();<br>  }<br><br>  function initBullet() {<br>    bulletY = gunsY - bulletHeight;<br>    leftBulletX = leftGunX + ((gunWidth - bulletWidth) / 2);<br>    rightBulletX = rightGunX + ((gunWidth - bulletWidth) / 2);<br>  }<br><br>  function drawShip() {<br>    ctx.beginPath();<br>    // body of ship<br>    ctx.rect(shipX, shipY, shipWidth, shipHeight);<br>    // left gun of ship<br>    ctx.rect(leftGunX, gunsY, gunWidth, gunHeight);<br>    // right gun of ship<br>    ctx.rect(rightGunX, gunsY, gunWidth, gunHeight);<br>    ctx.fillStyle = shipColor;<br>    ctx.fill();<br>    ctx.closePath();<br>  }<br><br>  function drawAttack(attackX) {<br>    ctx.beginPath();<br>    ctx.rect(attackX, enemiesAttackY, enemiesAttackWidth, enemiesAttackHeight);<br>    ctx.fillStyle = enemiesColor;<br>    ctx.fill();<br>    ctx.closePath();<br>  }<br><br>  function draw() {<br>    if (theEnd) {<br>      return;<br>    }<br>    ctx.clearRect(0, 0, canvas.width, canvas.height);<br>    drawShip();<br>    drawBullet(leftBulletX, rightBulletX);<br>    var enemiesAttackX = drawEnemies();<br>    if (enemiesAttackX !== -1 &amp;&amp; enemiesAttackY !== -1) {<br>      drawAttack(enemiesAttackX);<br>      enemiesAttackY += eaSpeed;<br>    }<br>    attackedDetection(enemiesAttackX);<br>    collisionDetection(leftBulletX, rightBulletX);<br>    drawScore();<br>    drawLives();<br>    drawLevel();<br>    bulletY -= 2;<br><br>    if (lives === 0) {<br>      retry = confirm(‘Game Over!\nDo you want to retry?’);<br>      if (retry) {<br>        document.location.reload();<br>      } else {<br>        return;<br>      }<br>    }<br><br>    if (rightPressed &amp;&amp; shipX + shipWidth &lt; canvas.width) {<br>      shipX = leftGunX += 7;<br>      rightGunX += 7;<br>    } else if (leftPressed &amp;&amp; shipX &gt; 0) {<br>      shipX = leftGunX -= 7;<br>      rightGunX -= 7;<br>    }<br><br>    if (bulletY &lt; 0) {<br>      initBullet();<br>    }<br><br>    requestAnimationFrame(draw);<br>  }<br><br>  draw();<br></script><br><br></body>
+
+
+<p>비행기의 총알이 레벨이 올라갈수록 빨라지는데… 의도된건 아니다. ㅋㅋㅋ</p>
+<p><del>누가 네모만 있다고 뭐라 했는데 절대 귀찮아서 그런건 아니다. 개취이다.</del></p>
+<p>아무튼…</p>
+</style></head></p>
+        </div>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>팔로우:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/SeunghunandChan" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/seunghun.kim.96" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/seunghun-kim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/04/20/js-game-04/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">새로운</strong>
+        <p class="article-nav-title">
+        
+            javascript game (4)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/04/19/js-game-03/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">오래된</strong>
+        <p class="article-nav-title">javascript game (3)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">최근 글</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/11/15/Euclidean_algorithm/" class="title">Euclidean_algorithm</a></p>
+                            <p class="item-date"><time datetime="2017-11-15T03:20:56.000Z" itemprop="datePublished">2017-11-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_02/" class="title">print_star (2)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_01/" class="title">print_star (1)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Node-js/">Node.js</a></p>
+                            <p class="item-title"><a href="/2017/04/25/node-events-01/" class="title">Node.js events (1)</a></p>
+                            <p class="item-date"><time datetime="2017-04-24T15:00:00.000Z" itemprop="datePublished">2017-04-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Game/">Game</a></p>
+                            <p class="item-title"><a href="/2017/04/24/js-game-06/" class="title">javascript game (6)</a></p>
+                            <p class="item-date"><time datetime="2017-04-23T15:00:00.000Z" itemprop="datePublished">2017-04-24</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">카테고리</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Code/">Code</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Code/CleanCode/">CleanCode</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JDBC/">JDBC</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Game/">Game</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Node-js/">Node.js</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/jekyll/">jekyll</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">아카이브</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">11월 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">10월 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">4월 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">10월 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">3월 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">태그</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Brute-force/">Brute_force</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Euclidean/">Euclidean</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Star/">Star</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cleancode/">cleancode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/events/">events</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdbc/">jdbc</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wording/">wording</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">태그 클라우드</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Algorithms/" style="font-size: 15px;">Algorithms</a> <a href="/tags/Brute-force/" style="font-size: 10px;">Brute_force</a> <a href="/tags/Euclidean/" style="font-size: 10px;">Euclidean</a> <a href="/tags/Star/" style="font-size: 12.5px;">Star</a> <a href="/tags/cleancode/" style="font-size: 12.5px;">cleancode</a> <a href="/tags/code/" style="font-size: 12.5px;">code</a> <a href="/tags/events/" style="font-size: 10px;">events</a> <a href="/tags/game/" style="font-size: 17.5px;">game</a> <a href="/tags/html5/" style="font-size: 17.5px;">html5</a> <a href="/tags/java/" style="font-size: 12.5px;">java</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jdbc/" style="font-size: 12.5px;">jdbc</a> <a href="/tags/jekyll/" style="font-size: 10px;">jekyll</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/wording/" style="font-size: 10px;">wording</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">링크</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io/ko/">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" style="font-size:40px;color:#fff; text-decoration: none;">Dev Huna</a>
+                </h1>
+                <p>&copy; 2017 Huna</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'huna';
+    
+    
+    var disqus_url = 'https://seunghun-kim.github.io/2017/04/19/js-game2-01/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

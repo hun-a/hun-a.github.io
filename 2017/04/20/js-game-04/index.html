@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>javascript game (4) | Dev Huna</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="javascript,game,html5" />
+    
+    <meta name="description" content="잡담오늘은 공을 튕길 수 있는 판때기를 만드는 방법과 키보드를 통해 그 판때기를 이동하도록 구현을 해볼 것이다. 이제 좀 게임같이 보일 것이다. 지난 포스팅이 궁금하면 다음 아래 링크를 참고하기 바란다.  캔버스 생성과 그리기 공 움직이기 벽에 공 튀기기  판때기 구현과 키보드 컨트롤그">
+<meta name="keywords" content="javascript,game,html5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript game (4)">
+<meta property="og:url" content="https://seunghun-kim.github.io/2017/04/20/js-game-04/index.html">
+<meta property="og:site_name" content="Dev Huna">
+<meta property="og:description" content="잡담오늘은 공을 튕길 수 있는 판때기를 만드는 방법과 키보드를 통해 그 판때기를 이동하도록 구현을 해볼 것이다. 이제 좀 게임같이 보일 것이다. 지난 포스팅이 궁금하면 다음 아래 링크를 참고하기 바란다.  캔버스 생성과 그리기 공 움직이기 벽에 공 튀기기  판때기 구현과 키보드 컨트롤그럼 시작 해 볼까? 판때기 구현판때기 구현을 위해 몇 가지 변수를 선언해">
+<meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2017-11-15T14:45:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript game (4)">
+<meta name="twitter:description" content="잡담오늘은 공을 튕길 수 있는 판때기를 만드는 방법과 키보드를 통해 그 판때기를 이동하도록 구현을 해볼 것이다. 이제 좀 게임같이 보일 것이다. 지난 포스팅이 궁금하면 다음 아래 링크를 참고하기 바란다.  캔버스 생성과 그리기 공 움직이기 벽에 공 튀기기  판때기 구현과 키보드 컨트롤그럼 시작 해 볼까? 판때기 구현판때기 구현을 위해 몇 가지 변수를 선언해">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+					<h1>
+						<a href="/" style="font-size:90px;color:#fff; text-decoration: none;">Dev Huna</a>
+					</h1>
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">홈</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/">Code</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/CleanCode/">CleanCode</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JDBC/">JDBC</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Game/">Game</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Node-js/">Node.js</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/">Tips</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/jekyll/">jekyll</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://about.me/huna">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="검색" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '포스트',
+            PAGES: 'Pages',
+            CATEGORIES: '카테고리',
+            TAGS: '태그',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/JavaScript/Game/">Game</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-js-game-04" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        javascript game (4)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/04/20/js-game-04/" class="article-date">
+            <time datetime="2017-04-19T15:00:00.000Z" itemprop="datePublished">2017-04-20</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/game/">game</a>, <a class="tag-link" href="/tags/html5/">html5</a>, <a class="tag-link" href="/tags/javascript/">javascript</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="잡담"><a href="#잡담" class="headerlink" title="잡담"></a>잡담</h2><p>오늘은 공을 튕길 수 있는 판때기를 만드는 방법과 키보드를 통해 그 판때기를 이동하도록 구현을 해볼 것이다. 이제 좀 게임같이 보일 것이다.</p>
+<p>지난 포스팅이 궁금하면 다음 아래 링크를 참고하기 바란다.</p>
+<ol>
+<li><a href="/2017/04/17/js-game-01/">캔버스 생성과 그리기</a></li>
+<li><a href="/2017/04/18/js-game-02/">공 움직이기</a></li>
+<li><a href="/2017/04/19/js-game-03/">벽에 공 튀기기</a></li>
+</ol>
+<h2 id="판때기-구현과-키보드-컨트롤"><a href="#판때기-구현과-키보드-컨트롤" class="headerlink" title="판때기 구현과 키보드 컨트롤"></a>판때기 구현과 키보드 컨트롤</h2><p>그럼 시작 해 볼까?</p>
+<h3 id="판때기-구현"><a href="#판때기-구현" class="headerlink" title="판때기 구현"></a>판때기 구현</h3><p>판때기 구현을 위해 몇 가지 변수를 선언해보자. 필요한 변수는 판때기 높이와 너비, 그리고 판때기의 X 좌표를 저장할 변수이다. 바로 이렇게!</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> paddleHeight = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">var</span> paddleWidth = <span class="number">75</span>;</span><br><span class="line"><span class="keyword">var</span> paddleX = (canvas.width - paddleWidth) / <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<p>판때기 높이는 <code>10px</code>, 너비는 <code>75px</code>, X 좌표는 <code>canvas</code>의 너비를 기준으로 판때기 만큼 뺀 다음 2로 나눠서 중앙에 위치하도록 설정했다. 왜 <code>canvas.width / 2</code> 로 안하고 <code>(canvas.width - paddleWidth) / 2</code> 로 하냐고? 전자는 판때기가 중앙에 위치하지 않는다. 못믿겠으면 아래 판때기 그리는 함수를 구현한 후 실행해보면 된다.</p>
+<p>판때기 그리는 함수를 만들어 보자.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">drawPaddle</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  ctx.beginPath();</span><br><span class="line">  ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);</span><br><span class="line">  ctx.fillStyle = <span class="string">'#0095DD'</span>;</span><br><span class="line">  ctx.fill();</span><br><span class="line">  ctx.closePath();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>위에 선언했던 변수들을 바탕으로 직각사각형 하나를 그렸다. Y축의 시작 좌표가 왜 <code>canvas.height - paddleHeight</code> 인지 궁금한 사람이 있을 것이다. <code>canvas.height</code>는 웹에 표시되는 <code>canvas</code>의 가장 아래 좌표를 가리킨다. 우리는 <code>canvas</code>를 선언할 때 다음과 같이 했었다. <del>기억 안나지?</del></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"myCanvas"</span> <span class="attr">width</span>=<span class="string">"480"</span> <span class="attr">height</span>=<span class="string">"320"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>즉, <code>320px</code>로 지정했으니 <code>canvas.height</code>의 값은 320이 나올 것이다. 그런데! 만약 우리가 판때기의 위치 중 Y좌표를 <code>canvas.height</code> 만 했다면? 판때기가 <code>canvas</code> 아래로 벗어나서 보이지 않을 것이다. 따라서 Y축 위치를 위로 <code>10px</code>만큼 옮겨주기 위해 <code>canvas.height - paddleHeight</code> 가 된 것이다.</p>
+<p>그리고 나서 <code>drawPaddle()</code> 함수를 <code>draw()</code>에 넣어주자. 그럼 화면에 판때기 하나가 그려졌을 것이다. 하지만 움직이지 않는다…</p>
+<h3 id="사용자가-키보드를-사용해서-판때기를-움직이게-하기"><a href="#사용자가-키보드를-사용해서-판때기를-움직이게-하기" class="headerlink" title="사용자가 키보드를 사용해서 판때기를 움직이게 하기"></a>사용자가 키보드를 사용해서 판때기를 움직이게 하기</h3><p>쉽다. 이벤트를 구현해주면 된다. <del>이벤트는 뭔가요?</del></p>
+<p>먼저 우리는 오른쪽, 왼쪽에 대한 값을 저장할 변수가 필요하다. 선언하자.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rightPressed = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">var</span> leftPressed = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+<p>두 변수의 초기값이 <code>false</code>인 이유는 처음에는 당연히 키보드가 안눌려 있기 때문이다. <del>내가 먼저 누를꺼니깐</del></p>
+<p>그럼 저 변수를 어떻게 사용할 것인가? 바로 순수 자바스크립트를 이용해서 왼쪽 방향키와 오른쪽 방향키에 대해 이벤트를 등록해서 사용할 것이다. 바로 이렇게!</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'keydown'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (e.keyCode === <span class="number">39</span>) &#123;</span><br><span class="line">    rightPressed = <span class="literal">true</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.keyCode === <span class="number">37</span>) &#123;</span><br><span class="line">    leftPressed = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'keyup'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (e.keyCode === <span class="number">39</span>) &#123;</span><br><span class="line">    rightPressed = <span class="literal">false</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.keyCode === <span class="number">37</span>) &#123;</span><br><span class="line">    leftPressed = <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+<p><a href="https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Paddle_and_keyboard_controls" target="_blank" rel="noopener">MDN</a>의 예제에는 콜백 함수가 따로 선언되어 있지만 나는 귀찮아서 익명 함수로 생성해서 사용했다. 그리고 파라미터로 넘어간 <code>e</code>는 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank" rel="noopener">이벤트 객체</a>이다.</p>
+<p><code>addEventListener()</code>는 <a href="https://developer.mozilla.org/ko/docs/Web/API/EventTarget/addEventListener" target="_blank" rel="noopener">여기</a> 에서 참고해서 보면 된다. <del>절대 귀찮아서 그런거 아니다</del></p>
+<p>자, 이제 실행해 보자. 잘 움직이는가? <del>ㅋㅋㅋㅋ</del></p>
+<p>움직이지 않을 것이다. 왜? 이벤트만 추가했지 실질적으로 판때기를 움직이는 로직은 아직 구현하지 않았기 때문이다.</p>
+<p>마지막으로 아래 코드를 <code>draw()</code> 함수에 끝부분에 적어준다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(rightPressed &amp;&amp; paddleX &lt; canvas.width-paddleWidth) &#123;</span><br><span class="line">    paddleX += <span class="number">7</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(leftPressed &amp;&amp; paddleX &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    paddleX -= <span class="number">7</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>간단하다. 오른쪽 방향키가 눌리면 <code>rightPressed</code>가 <code>true</code>가 될 꺼고, 판때기 X 좌표가 <code>canvas.width - paddleWidth</code> 보다 작다면 <code>paddleX</code> 에 <code>7px</code> 만큼 더해줘서 오른쪽으로 움직이는 효과를 주었다. 그럼 왼쪽은 반대로 생각하면 되겠지?</p>
+<p>자, 이제 코드를 실행해보자. 이번엔 잘 움직일 것이다. 바로 이렇게</p>
+<body><br><style><br>  <em> {padding: 0; margin: 0; }<br>  canvas {background: #eee; display: block; margin: 0 auto;}<br></style><br>  <canvas id="myCanvas" width="480" height="320"></canvas><br><br><script><br>var canvas = document.getElementById(“myCanvas”);<br>var ctx = canvas.getContext(“2d”);<br>var ballRadius = 10;<br>var x = canvas.width/2;<br>var y = canvas.height-30;<br>var dx = 2;<br>var dy = -2;<br>var paddleHeight = 10;<br>var paddleWidth = 75;<br>var paddleX = (canvas.width-paddleWidth)/2;<br>var rightPressed = false;<br>var leftPressed = false;<br><br>document.addEventListener(“keydown”, keyDownHandler, false);<br>document.addEventListener(“keyup”, keyUpHandler, false);<br><br>function keyDownHandler(e) {<br>    if(e.keyCode == 39) {<br>        rightPressed = true;<br>    }<br>    else if(e.keyCode == 37) {<br>        leftPressed = true;<br>    }<br>}<br>function keyUpHandler(e) {<br>    if(e.keyCode == 39) {<br>        rightPressed = false;<br>    }<br>    else if(e.keyCode == 37) {<br>        leftPressed = false;<br>    }<br>}<br><br>function drawBall() {<br>    ctx.beginPath();<br>    ctx.arc(x, y, ballRadius, 0, Math.PI</em>2);<br>    ctx.fillStyle = “#0095DD”;<br>    ctx.fill();<br>    ctx.closePath();<br>}<br>function drawPaddle() {<br>    ctx.beginPath();<br>    ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);<br>    ctx.fillStyle = “#0095DD”;<br>    ctx.fill();<br>    ctx.closePath();<br>}<br><br>function draw() {<br>    ctx.clearRect(0, 0, canvas.width, canvas.height);<br>    drawBall();<br>    drawPaddle();<br><br>    if(x + dx &gt; canvas.width-ballRadius || x + dx &lt; ballRadius) {<br>        dx = -dx;<br>    }<br>    if(y + dy &gt; canvas.height-ballRadius || y + dy &lt; ballRadius) {<br>        dy = -dy;<br>    }<br><br>    if(rightPressed &amp;&amp; paddleX &lt; canvas.width-paddleWidth) {<br>        paddleX += 7;<br>    }<br>    else if(leftPressed &amp;&amp; paddleX &gt; 0) {<br>        paddleX -= 7;<br>    }<br><br>    x += dx;<br>    y += dy;<br>}<br><br>setInterval(draw, 10);<br></script><br></body>
+
+<p>그런데 판때기가 공을 튕기지 않는 기분이다… 나머지는 다음 시간에!</p>
+<p><br><br><br><br>_이 포스트는 <a href="https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Paddle_and_keyboard_controls" target="_blank" rel="noopener">MDN 2D Breakout game</a> 의 튜토리얼을 참고한 내용 입니다._</p>
+
+        </div>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>팔로우:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/SeunghunandChan" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/seunghun.kim.96" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/seunghun-kim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/04/21/js-game-05/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">새로운</strong>
+        <p class="article-nav-title">
+        
+            javascript game (5)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/04/19/js-game2-01/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">오래된</strong>
+        <p class="article-nav-title">javascript game 2 (1)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">최근 글</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/11/15/Euclidean_algorithm/" class="title">Euclidean_algorithm</a></p>
+                            <p class="item-date"><time datetime="2017-11-15T03:20:56.000Z" itemprop="datePublished">2017-11-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_02/" class="title">print_star (2)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_01/" class="title">print_star (1)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Node-js/">Node.js</a></p>
+                            <p class="item-title"><a href="/2017/04/25/node-events-01/" class="title">Node.js events (1)</a></p>
+                            <p class="item-date"><time datetime="2017-04-24T15:00:00.000Z" itemprop="datePublished">2017-04-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Game/">Game</a></p>
+                            <p class="item-title"><a href="/2017/04/24/js-game-06/" class="title">javascript game (6)</a></p>
+                            <p class="item-date"><time datetime="2017-04-23T15:00:00.000Z" itemprop="datePublished">2017-04-24</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">카테고리</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Code/">Code</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Code/CleanCode/">CleanCode</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JDBC/">JDBC</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Game/">Game</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Node-js/">Node.js</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/jekyll/">jekyll</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">아카이브</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">11월 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">10월 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">4월 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">10월 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">3월 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">태그</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Brute-force/">Brute_force</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Euclidean/">Euclidean</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Star/">Star</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cleancode/">cleancode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/events/">events</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdbc/">jdbc</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wording/">wording</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">태그 클라우드</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Algorithms/" style="font-size: 15px;">Algorithms</a> <a href="/tags/Brute-force/" style="font-size: 10px;">Brute_force</a> <a href="/tags/Euclidean/" style="font-size: 10px;">Euclidean</a> <a href="/tags/Star/" style="font-size: 12.5px;">Star</a> <a href="/tags/cleancode/" style="font-size: 12.5px;">cleancode</a> <a href="/tags/code/" style="font-size: 12.5px;">code</a> <a href="/tags/events/" style="font-size: 10px;">events</a> <a href="/tags/game/" style="font-size: 17.5px;">game</a> <a href="/tags/html5/" style="font-size: 17.5px;">html5</a> <a href="/tags/java/" style="font-size: 12.5px;">java</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jdbc/" style="font-size: 12.5px;">jdbc</a> <a href="/tags/jekyll/" style="font-size: 10px;">jekyll</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/wording/" style="font-size: 10px;">wording</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">링크</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io/ko/">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" style="font-size:40px;color:#fff; text-decoration: none;">Dev Huna</a>
+                </h1>
+                <p>&copy; 2017 Huna</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'huna';
+    
+    
+    var disqus_url = 'https://seunghun-kim.github.io/2017/04/20/js-game-04/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

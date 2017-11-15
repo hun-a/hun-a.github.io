@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>javascript game (6) | Dev Huna</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="javascript,game,html5" />
+    
+    <meta name="description" content="잡담어느덧 절반 이상 만들었다. 오늘 포스팅까지 구현하면 이제 그럴듯한 게임이 만들어 질 것이다. 그러니 나머지 부분도 잘 따라오기 바란다. 지난 포스팅이 궁금하면 다음 아래 링크를 참고하기 바란다.  캔버스 생성과 그리기 공 움직이기 벽에 공 튀기기 판때기 구현과 키보드 컨트롤 Gam">
+<meta name="keywords" content="javascript,game,html5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript game (6)">
+<meta property="og:url" content="https://seunghun-kim.github.io/2017/04/24/js-game-06/index.html">
+<meta property="og:site_name" content="Dev Huna">
+<meta property="og:description" content="잡담어느덧 절반 이상 만들었다. 오늘 포스팅까지 구현하면 이제 그럴듯한 게임이 만들어 질 것이다. 그러니 나머지 부분도 잘 따라오기 바란다. 지난 포스팅이 궁금하면 다음 아래 링크를 참고하기 바란다.  캔버스 생성과 그리기 공 움직이기 벽에 공 튀기기 판때기 구현과 키보드 컨트롤 Game Over  벽돌 만들기벽돌 변수 세팅우선 벽돌을 구현하기 위해 무엇을">
+<meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2017-11-15T14:45:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript game (6)">
+<meta name="twitter:description" content="잡담어느덧 절반 이상 만들었다. 오늘 포스팅까지 구현하면 이제 그럴듯한 게임이 만들어 질 것이다. 그러니 나머지 부분도 잘 따라오기 바란다. 지난 포스팅이 궁금하면 다음 아래 링크를 참고하기 바란다.  캔버스 생성과 그리기 공 움직이기 벽에 공 튀기기 판때기 구현과 키보드 컨트롤 Game Over  벽돌 만들기벽돌 변수 세팅우선 벽돌을 구현하기 위해 무엇을">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+					<h1>
+						<a href="/" style="font-size:90px;color:#fff; text-decoration: none;">Dev Huna</a>
+					</h1>
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">홈</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/">Code</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/CleanCode/">CleanCode</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JDBC/">JDBC</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Game/">Game</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Node-js/">Node.js</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/">Tips</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/jekyll/">jekyll</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://about.me/huna">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="검색" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '포스트',
+            PAGES: 'Pages',
+            CATEGORIES: '카테고리',
+            TAGS: '태그',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/JavaScript/Game/">Game</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-js-game-06" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        javascript game (6)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/04/24/js-game-06/" class="article-date">
+            <time datetime="2017-04-23T15:00:00.000Z" itemprop="datePublished">2017-04-24</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/game/">game</a>, <a class="tag-link" href="/tags/html5/">html5</a>, <a class="tag-link" href="/tags/javascript/">javascript</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="잡담"><a href="#잡담" class="headerlink" title="잡담"></a>잡담</h2><p>어느덧 절반 이상 만들었다. 오늘 포스팅까지 구현하면 이제 그럴듯한 게임이 만들어 질 것이다. 그러니 나머지 부분도 잘 따라오기 바란다.</p>
+<p>지난 포스팅이 궁금하면 다음 아래 링크를 참고하기 바란다.</p>
+<ol>
+<li><a href="/2017/04/17/js-game-01/">캔버스 생성과 그리기</a></li>
+<li><a href="/2017/04/18/js-game-02/">공 움직이기</a></li>
+<li><a href="/2017/04/19/js-game-03/">벽에 공 튀기기</a></li>
+<li><a href="/2017/04/20/js-game-04/">판때기 구현과 키보드 컨트롤</a></li>
+<li><a href="/2017/04/21/js-game-05/">Game Over</a></li>
+</ol>
+<h2 id="벽돌-만들기"><a href="#벽돌-만들기" class="headerlink" title="벽돌 만들기"></a>벽돌 만들기</h2><h3 id="벽돌-변수-세팅"><a href="#벽돌-변수-세팅" class="headerlink" title="벽돌 변수 세팅"></a>벽돌 변수 세팅</h3><p>우선 벽돌을 구현하기 위해 무엇을 먼저 해야 할까? 바로 벽돌 정보들을 저장할 변수를 선언해야 한다. 벽돌 너비라던가 높이라던가 몇 개를 몇 줄로 만들건지 라던가… 일단 아래를 봐보자.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> brickRowCount = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">var</span> brickColumnCount = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">var</span> brickWidth = <span class="number">75</span>;</span><br><span class="line"><span class="keyword">var</span> brickHeight = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">var</span> brickPadding = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">var</span> brickOffsetTop = <span class="number">30</span>;</span><br><span class="line"><span class="keyword">var</span> brickOffsetLeft = <span class="number">30</span>;</span><br></pre></td></tr></table></figure>
+<p>먼저 벽돌을 5 * 3 개수로 만들 것이다. 너비는 <code>75px</code>, 높이는 <code>20px</code>, padding은 <code>10px</code>, 위쪽 offset은 <code>30px</code>, 왼쪽 offset은 <code>30px</code>로 선언했다.</p>
+<p>offset 값이 왜 필요할까? 이게 없으면 벽돌을 만들어서 출력하면 위쪽과 왼쪽에 딱 붙어서 벽돌 모습이 보기 흉할 것이다. 그래서 보기 좋~게 offset 만큼 거리를 떨어뜨려 화면에 그릴 것이기 때문에 offset을 주는 것이다.</p>
+<p>자, 이제 <code>for-loop</code>를 이용해서 벽돌을 5 * 3 개수만큼 만들어 보자. 방법은 아래와 같다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> bricks = [];</span><br><span class="line"><span class="keyword">for</span> (c = <span class="number">0</span>; c &lt; brickColumnCount; c++) &#123;</span><br><span class="line">  bricks[c] = [];</span><br><span class="line">  <span class="keyword">for</span> (r = <span class="number">0</span>; r &lt; brickRowCount; r++) &#123;</span><br><span class="line">    bricks[c][r] = &#123; <span class="attr">x</span>:<span class="number">0</span>, <span class="attr">y</span>:<span class="number">0</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>위와 같이 벽돌을 저장할 2 <em> 2 배열을 선언 후 초기화 해준다.  그럼 총 5 </em> 3 만큼의 요소를 가진 배열이 만들어 질 것이다. 그런데 배열의 값이 <code>{ x:0, y:0 }</code> 이라는 객체를 저장하고 있다. 이건 뭘까? 뒤에 나오겠지만 벽돌과 공이 충돌할 경우 감지할 수 있는 로직이 필요한데, 역시나 좌표를 이용해서 처리 할 것이다. 그럴려면 해당 벽돌의 X, Y 좌푤가 필요하지 않겠나? 바로 그거다.</p>
+<h3 id="벽돌-그리기"><a href="#벽돌-그리기" class="headerlink" title="벽돌 그리기"></a>벽돌 그리기</h3><p>자, 이제 벽돌을 만들 준비가 다 됬다. 그럼 이제 실제로 벽돌을 화면에 그려보도록 하자. 바로 아래와 같이 <code>drawBricks()</code> 함수를 선언하자!</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">drawBricks</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(c=<span class="number">0</span>; c&lt;brickColumnCount; c++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(r=<span class="number">0</span>; r&lt;brickRowCount; r++) &#123;</span><br><span class="line">            <span class="keyword">var</span> brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;</span><br><span class="line">            <span class="keyword">var</span> brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;</span><br><span class="line">            bricks[c][r].x = brickX;</span><br><span class="line">            bricks[c][r].y = brickY;</span><br><span class="line">            ctx.beginPath();</span><br><span class="line">            ctx.rect(brickX, brickY, brickWidth, brickHeight);</span><br><span class="line">            ctx.fillStyle = <span class="string">"#0095DD"</span>;</span><br><span class="line">            ctx.fill();</span><br><span class="line">            ctx.closePath();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>또 loop가 두 번 돈다. 여기서 두 번째 <code>for-loop</code>를 보면, <code>brickX</code>, <code>brickY</code> 변수가 새로 선언되고, <code>bricks[c][r]</code> 에 X, Y 좌표 값으로 할당되고 있다. 이 부분이 위에서 언급한 공과의 충돌을 처리하기 위한 벽돌의 위치 정보를 저장하는 부분이다.</p>
+<p><code>brickX</code>는 <code>brickWidth + brickPadding</code>에 컬럼의 갯수인 <code>c</code> 만큼 곱한 뒤 <code>brickOffsetLeft</code>를 통해 왼쪽에서 <code>30px</code>만큼 띄워서 화면에 그린다. <code>brickY</code>도 동일한 로직으로 위쪽과 offset 만큼 떨어뜨려 그리게 된다.</p>
+<h3 id="진짜로-벽돌-그리기"><a href="#진짜로-벽돌-그리기" class="headerlink" title="진짜로 벽돌 그리기"></a>진짜로 벽돌 그리기</h3><p>이제, <code>draw()</code> 함수 안에서 <code>drawBricks()</code> 함수를 호출하여 벽돌을 그려보자. 그럼 아래의 데모처럼 작동할 것이다.</p>
+<body><br><style><br>  <em> {padding: 0; margin: 0; }<br>  canvas {background: #eee; display: block; margin: 0 auto;}<br></style><br>  <canvas id="myCanvas" width="480" height="320"></canvas><br><br><script><br>var canvas = document.getElementById(“myCanvas”);<br>var ctx = canvas.getContext(“2d”);<br>var ballRadius = 10;<br>var x = canvas.width/2;<br>var y = canvas.height-30;<br>var dx = 2;<br>var dy = -2;<br>var paddleHeight = 10;<br>var paddleWidth = 75;<br>var paddleX = (canvas.width-paddleWidth)/2;<br>var rightPressed = false;<br>var leftPressed = false;<br><br>var brickRowCount = 3;<br>var brickColumnCount = 5;<br>var brickWidth = 75;<br>var brickHeight = 20;<br>var brickPadding = 10;<br>var brickOffsetTop = 30;<br>var brickOffsetLeft = 30;<br>var bricks = [];<br>for (c = 0; c &lt; brickColumnCount; c++) {<br>  bricks[c] = [];<br>  for (r = 0; r &lt; brickRowCount; r++) {<br>    bricks[c][r] = { x:0, y:0 };<br>  }<br>}<br><br>document.addEventListener(“keydown”, keyDownHandler, false);<br>document.addEventListener(“keyup”, keyUpHandler, false);<br><br>function keyDownHandler(e) {<br>    if(e.keyCode == 39) {<br>        rightPressed = true;<br>    }<br>    else if(e.keyCode == 37) {<br>        leftPressed = true;<br>    }<br>}<br>function keyUpHandler(e) {<br>    if(e.keyCode == 39) {<br>        rightPressed = false;<br>    }<br>    else if(e.keyCode == 37) {<br>        leftPressed = false;<br>    }<br>}<br><br>function drawBricks() {<br>    for(c=0; c&lt;brickColumnCount; c++) {<br>        for(r=0; r&lt;brickRowCount; r++) {<br>            var brickX = (c</em>(brickWidth+brickPadding))+brickOffsetLeft;<br>            var brickY = (r<em>(brickHeight+brickPadding))+brickOffsetTop;<br>            bricks[c][r].x = brickX;<br>            bricks[c][r].y = brickY;<br>            ctx.beginPath();<br>            ctx.rect(brickX, brickY, brickWidth, brickHeight);<br>            ctx.fillStyle = “#0095DD”;<br>            ctx.fill();<br>            ctx.closePath();<br>        }<br>    }<br>}<br><br>function drawBall() {<br>    ctx.beginPath();<br>    ctx.arc(x, y, ballRadius, 0, Math.PI</em>2);<br>    ctx.fillStyle = “#0095DD”;<br>    ctx.fill();<br>    ctx.closePath();<br>}<br>function drawPaddle() {<br>    ctx.beginPath();<br>    ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);<br>    ctx.fillStyle = “#0095DD”;<br>    ctx.fill();<br>    ctx.closePath();<br>}<br><br>function draw() {<br>    ctx.clearRect(0, 0, canvas.width, canvas.height);<br>    drawBricks();<br>    drawBall();<br>    drawPaddle();<br><br>    if(x + dx &gt; canvas.width-ballRadius || x + dx &lt; ballRadius) {<br>        dx = -dx;<br>    }<br>    if(y + dy &lt; ballRadius) {<br>        dy = -dy;<br>    }<br>    else if(y + dy &gt; canvas.height-ballRadius) {<br>        if(x &gt; paddleX &amp;&amp; x &lt; paddleX + paddleWidth) {<br>            dy = -dy;<br>        }<br>        else {<br>            <!-- alert("GAME OVER"); --><br>            <!-- document.location.reload(); --><br>            return;<br>        }<br>    }<br><br>    if(rightPressed &amp;&amp; paddleX &lt; canvas.width-paddleWidth) {<br>        paddleX += 7;<br>    }<br>    else if(leftPressed &amp;&amp; paddleX &gt; 0) {<br>        paddleX -= 7;<br>    }<br><br>    x += dx;<br>    y += dy;<br>}<br>setInterval(draw, 10);<br></script><br></body>
+
+<p>엇 그런데 공이 벽돌을 그냥 통과한다… 그럼 나머지는 다음 시간에…</p>
+<p><br><br><br><br>_이 포스트는 <a href="https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Build_the_brick_field" target="_blank" rel="noopener">MDN 2D Breakout game</a> 의 튜토리얼을 참고한 내용 입니다._</p>
+
+        </div>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>팔로우:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/SeunghunandChan" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/seunghun.kim.96" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/seunghun-kim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/04/25/node-events-01/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">새로운</strong>
+        <p class="article-nav-title">
+        
+            Node.js events (1)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/04/21/js-game-05/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">오래된</strong>
+        <p class="article-nav-title">javascript game (5)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">최근 글</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/11/15/Euclidean_algorithm/" class="title">Euclidean_algorithm</a></p>
+                            <p class="item-date"><time datetime="2017-11-15T03:20:56.000Z" itemprop="datePublished">2017-11-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_02/" class="title">print_star (2)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_01/" class="title">print_star (1)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Node-js/">Node.js</a></p>
+                            <p class="item-title"><a href="/2017/04/25/node-events-01/" class="title">Node.js events (1)</a></p>
+                            <p class="item-date"><time datetime="2017-04-24T15:00:00.000Z" itemprop="datePublished">2017-04-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Game/">Game</a></p>
+                            <p class="item-title"><a href="/2017/04/24/js-game-06/" class="title">javascript game (6)</a></p>
+                            <p class="item-date"><time datetime="2017-04-23T15:00:00.000Z" itemprop="datePublished">2017-04-24</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">카테고리</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Code/">Code</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Code/CleanCode/">CleanCode</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JDBC/">JDBC</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Game/">Game</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Node-js/">Node.js</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/jekyll/">jekyll</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">아카이브</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">11월 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">10월 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">4월 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">10월 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">3월 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">태그</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Brute-force/">Brute_force</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Euclidean/">Euclidean</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Star/">Star</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cleancode/">cleancode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/events/">events</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdbc/">jdbc</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wording/">wording</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">태그 클라우드</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Algorithms/" style="font-size: 15px;">Algorithms</a> <a href="/tags/Brute-force/" style="font-size: 10px;">Brute_force</a> <a href="/tags/Euclidean/" style="font-size: 10px;">Euclidean</a> <a href="/tags/Star/" style="font-size: 12.5px;">Star</a> <a href="/tags/cleancode/" style="font-size: 12.5px;">cleancode</a> <a href="/tags/code/" style="font-size: 12.5px;">code</a> <a href="/tags/events/" style="font-size: 10px;">events</a> <a href="/tags/game/" style="font-size: 17.5px;">game</a> <a href="/tags/html5/" style="font-size: 17.5px;">html5</a> <a href="/tags/java/" style="font-size: 12.5px;">java</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jdbc/" style="font-size: 12.5px;">jdbc</a> <a href="/tags/jekyll/" style="font-size: 10px;">jekyll</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/wording/" style="font-size: 10px;">wording</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">링크</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io/ko/">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" style="font-size:40px;color:#fff; text-decoration: none;">Dev Huna</a>
+                </h1>
+                <p>&copy; 2017 Huna</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'huna';
+    
+    
+    var disqus_url = 'https://seunghun-kim.github.io/2017/04/24/js-game-06/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>JDBC (2) - getConnection() | Dev Huna</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="java,jdbc" />
+    
+    <meta name="description" content="잡담처음 무언가를 배울때 ‘왜?’ 라는 궁금증이 중요하다. 이러한 궁금함이 없이 학습을 하다 보면 누군가로부터, 아니면 책으로부터 주는 지식을 아무 생각 없이 그대로 받아들이게 된다. 이게 나쁘지만은 않지만 ‘왜?’ 라는 생각을 시작함으로써 더 깊고 더 넓은 지식을 향해 나아갈 수 있다">
+<meta name="keywords" content="java,jdbc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDBC (2) - getConnection()">
+<meta property="og:url" content="https://seunghun-kim.github.io/2016/10/12/jdbc-02/index.html">
+<meta property="og:site_name" content="Dev Huna">
+<meta property="og:description" content="잡담처음 무언가를 배울때 ‘왜?’ 라는 궁금증이 중요하다. 이러한 궁금함이 없이 학습을 하다 보면 누군가로부터, 아니면 책으로부터 주는 지식을 아무 생각 없이 그대로 받아들이게 된다. 이게 나쁘지만은 않지만 ‘왜?’ 라는 생각을 시작함으로써 더 깊고 더 넓은 지식을 향해 나아갈 수 있다고 본다. Intro지난번 포스팅에서는 Class.forName(java">
+<meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2017-11-15T14:45:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JDBC (2) - getConnection()">
+<meta name="twitter:description" content="잡담처음 무언가를 배울때 ‘왜?’ 라는 궁금증이 중요하다. 이러한 궁금함이 없이 학습을 하다 보면 누군가로부터, 아니면 책으로부터 주는 지식을 아무 생각 없이 그대로 받아들이게 된다. 이게 나쁘지만은 않지만 ‘왜?’ 라는 생각을 시작함으로써 더 깊고 더 넓은 지식을 향해 나아갈 수 있다고 본다. Intro지난번 포스팅에서는 Class.forName(java">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+					<h1>
+						<a href="/" style="font-size:90px;color:#fff; text-decoration: none;">Dev Huna</a>
+					</h1>
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">홈</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/">Code</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/CleanCode/">CleanCode</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JDBC/">JDBC</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Game/">Game</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Node-js/">Node.js</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/">Tips</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/jekyll/">jekyll</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://about.me/huna">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="검색" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '포스트',
+            PAGES: 'Pages',
+            CATEGORIES: '카테고리',
+            TAGS: '태그',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Java/">Java</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Java/JDBC/">JDBC</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-jdbc-02" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        JDBC (2) - getConnection()
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2016/10/12/jdbc-02/" class="article-date">
+            <time datetime="2016-10-11T15:00:00.000Z" itemprop="datePublished">2016-10-12</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/jdbc/">jdbc</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="잡담"><a href="#잡담" class="headerlink" title="잡담"></a>잡담</h2><p>처음 무언가를 배울때 ‘왜?’ 라는 궁금증이 중요하다. 이러한 궁금함이 없이 학습을 하다 보면 누군가로부터, 아니면 책으로부터 주는 지식을 아무 생각 없이 그대로 받아들이게 된다.</p>
+<p>이게 나쁘지만은 않지만 ‘왜?’ 라는 생각을 시작함으로써 더 깊고 더 넓은 지식을 향해 나아갈 수 있다고 본다.</p>
+<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p><a href="https://haddm.github.io/2016/10/07/class_for_name/" target="_blank" rel="noopener">지난번 포스팅</a>에서는 <code>Class.forName(java.lang.String)</code> 을 이용하여 JDBC Driver가 어떻게 동적으로 로딩 되는지 알아봤다. 자세한 사항은 지난 포스팅을 참고하면 된다.</p>
+<p>이번에는 동적으로 로딩된 클래스를 어떻게 오브젝트화하여 사용하는지에 대해 알아보려고 한다.</p>
+<p>사실 나도 잘 모른다. 지금부터 같이 알아보자.</p>
+<p><em>(해당 포스팅에 사용되는 DB는 <a href="http://www.cubrid.com/zbxe/home" target="_blank" rel="noopener">CUBRID</a>이며, 국산 오픈소스 DB이다. 필요하면 맘껏 갖다 쓰시기 바란다.)</em></p>
+<h3 id="java-sql-Connection"><a href="#java-sql-Connection" class="headerlink" title="java.sql.Connection"></a>java.sql.Connection</h3><p>요 인터페이스는 JDBC Driver의 connection을 생성할 때 사용하는 인터페이스다. 낯이 많이 익을 것이다. </p>
+<p>왜 인터페이스일까? 클래스면 바로 new Connection 해서 오브젝트 생성하면 될텐데! 라고 궁금해 하는 사람들이 있을텐데 <em>(내가 옛날에 그랬지 ㅎ)</em></p>
+<p>그건 <a href="https://en.wikipedia.org/wiki/Object-oriented_programming#Polymorphism" target="_blank" rel="noopener">다형성</a>을 통해 클래스간 관심사를 분리해서 결합력을 낮추기 위해서 정도라고 생각하면 되겠다.</p>
+<p>인터페이스는 여기까지 하고,</p>
+<p>이놈은 인터페이스라 <code>new</code> 키워드를 이용해서 오브젝트를 생성하지 못한다. 그래서 우리는 java.sql.DriverManager 클래스를 이용해서 오브젝트를 생성한다.</p>
+<h3 id="java-sql-DriverManager"><a href="#java-sql-DriverManager" class="headerlink" title="java.sql.DriverManager"></a>java.sql.DriverManager</h3><p><a href="https://docs.oracle.com/javase/8/docs/api/java/sql/DriverManager.html" target="_blank" rel="noopener">java api (8 기준)</a>을 보면 getConnection 메소드는 총 3개가 존재한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(String url)</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(String url, Properties info)</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(String url, String user, String password)</span></span></span><br></pre></td></tr></table></figure>
+<p>위 3개 메소드는 public으로 내부에 노출되어 있다. 그럼 내부적으로 사용되는 무언가가 있을 것 같은 기분이 드는데?</p>
+<p>소스… 소스를 까보자…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(String url)</span></span></span><br><span class="line"><span class="function">	<span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line"></span><br><span class="line">	java.util.Properties info = <span class="keyword">new</span> java.util.Properties();</span><br><span class="line">	<span class="keyword">return</span> (getConnection(url, info, Reflection.getCallerClass()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>이건 인자가 하나뿐이고 내부에서 <code>getConnection(url, info, Reflection.getCallerClass())</code> 를 호출한다.</p>
+<p>다른거!</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(String url,</span></span></span><br><span class="line"><span class="function"><span class="params">    java.util.Properties info)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (getConnection(url, info, Reflection.getCallerClass()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>인자 갯수만 늘어났지 동일한 행동을 한다. 또 다른거!</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(String url,</span></span></span><br><span class="line"><span class="function"><span class="params">    String user, String password)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    java.util.Properties info = <span class="keyword">new</span> java.util.Properties();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (user != <span class="keyword">null</span>) &#123;</span><br><span class="line">        info.put(<span class="string">"user"</span>, user);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (password != <span class="keyword">null</span>) &#123;</span><br><span class="line">        info.put(<span class="string">"password"</span>, password);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (getConnection(url, info, Reflection.getCallerClass()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>문자열 인자를 이용해서 Properties info를 만들고 동일한 행동을 한다.</p>
+<p>그럼 우리가 궁금한 놈은 <code>getConnection(url, info, Reflection.getCallerClass())</code> 이거다!</p>
+<p>소스… 소스를 보자!</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    String url, java.util.Properties info, Class&lt;?&gt; caller)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">     <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * When callerCl is null, we should check the application's</span></span><br><span class="line"><span class="comment">     * (which is invoking this class indirectly)</span></span><br><span class="line"><span class="comment">     * classloader, so that the JDBC driver class outside rt.jar</span></span><br><span class="line"><span class="comment">     * can be loaded from here.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    ClassLoader callerCL = caller != <span class="keyword">null</span> ? caller.getClassLoader() : <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">synchronized</span>(DriverManager.class) &#123;</span><br><span class="line">        <span class="comment">// synchronize loading of the correct classloader.</span></span><br><span class="line">        <span class="keyword">if</span> (callerCL == <span class="keyword">null</span>) &#123;</span><br><span class="line">            callerCL = Thread.currentThread().getContextClassLoader();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(url == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> SQLException(<span class="string">"The url cannot be null"</span>, <span class="string">"08001"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    println(<span class="string">"DriverManager.getConnection(\""</span> + url + <span class="string">"\")"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Walk through the loaded registeredDrivers attempting to make a connection.</span></span><br><span class="line">    <span class="comment">// Remember the first exception that gets raised so we can reraise it.</span></span><br><span class="line">    SQLException reason = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(DriverInfo aDriver : registeredDrivers) &#123;</span><br><span class="line">        <span class="comment">// If the caller does not have permission to load the driver then</span></span><br><span class="line">        <span class="comment">// skip it.</span></span><br><span class="line">        <span class="keyword">if</span>(isDriverAllowed(aDriver.driver, callerCL)) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                println(<span class="string">"    trying "</span> + aDriver.driver.getClass().getName());</span><br><span class="line">                Connection con = aDriver.driver.connect(url, info);</span><br><span class="line">                <span class="keyword">if</span> (con != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// Success!</span></span><br><span class="line">                    println(<span class="string">"getConnection returning "</span> + aDriver.driver.getClass().getName());</span><br><span class="line">                    <span class="keyword">return</span> (con);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException ex) &#123;</span><br><span class="line">                <span class="keyword">if</span> (reason == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    reason = ex;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            println(<span class="string">"    skipping: "</span> + aDriver.getClass().getName());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// if we got here nobody could connect.</span></span><br><span class="line">    <span class="keyword">if</span> (reason != <span class="keyword">null</span>)    &#123;</span><br><span class="line">        println(<span class="string">"getConnection failed: "</span> + reason);</span><br><span class="line">        <span class="keyword">throw</span> reason;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    println(<span class="string">"getConnection: no suitable driver found for "</span>+ url);</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> SQLException(<span class="string">"No suitable driver found for "</span>+ url, <span class="string">"08001"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>전 포스트에서 본 것 같은 느낌은 기분탓이다. 메소드가 생각보다 기니깐 잘라서 한번 보자.</p>
+<p>먼저 맨 윗부분</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    String url, java.util.Properties info, Class&lt;?&gt; caller)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">     <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * When callerCl is null, we should check the application's</span></span><br><span class="line"><span class="comment">     * (which is invoking this class indirectly)</span></span><br><span class="line"><span class="comment">     * classloader, so that the JDBC driver class outside rt.jar</span></span><br><span class="line"><span class="comment">     * can be loaded from here.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    ClassLoader callerCL = caller != <span class="keyword">null</span> ? caller.getClassLoader() : <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">synchronized</span>(DriverManager.class) &#123;</span><br><span class="line">        <span class="comment">// synchronize loading of the correct classloader.</span></span><br><span class="line">        <span class="keyword">if</span> (callerCL == <span class="keyword">null</span>) &#123;</span><br><span class="line">            callerCL = Thread.currentThread().getContextClassLoader();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>여기에서 <code>ClassLoader callerCL = caller != null ? caller.getClassLoader() : null;</code> 이부분은 JDBC 4.0 스펙을 위해 추가된 소스코드이다. 실제로 JDK 7 소스코드에서는 해당 부분이 없다.</p>
+<p>아래 내용은 JDBC 4.0 스펙에서 발췌한 글이다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">■ Automatic loading of java.sql.Driver</span><br><span class="line">DriverManager.getConnection has been modified to utilize the Java SE Service Provider mechanism </span><br><span class="line">to automatically load JDBC Drivers. This removes the need to invoke Class.forName.</span><br></pre></td></tr></table></figure>
+<p><code>Class.forName()</code> 호출을 안해도 자동으로 Driver 클래스를 잡아준다. <del>(우왕 개신기)</del></p>
+<p>그 다음 볼 부분은 <code>callerCL = Thread.currentThread().getContextClassLoader();</code> 이 부분인데 여기에서는 ClassLoader에 대한 배경지식이 필요하다.</p>
+<p>간략하게 설명을 하자면, 전 포스팅에서 <code>Class.forName()</code>을 통해 JDBC Driver를 로딩하는데, 이때 로딩되면서 static 블록이 수행된다고 했다. 이 과정에서 <code>DriverManager.registerDriver()</code> 메소드가 수행되고, JDBC Driver가 오브젝트로 생성된다.</p>
+<p>여기서 로딩된 클래스를 <code>callerCL = Thread.currentThread().getContextClassLoader();</code> 를 통해 가져오는 것이다. <del>(참 쉽죠?)</del></p>
+<p>자, 그 다음 부분의 소스를 보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(url == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> SQLException(<span class="string">"The url cannot be null"</span>, <span class="string">"08001"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">println(<span class="string">"DriverManager.getConnection(\""</span> + url + <span class="string">"\")"</span>);</span><br></pre></td></tr></table></figure>
+<p>파라미터로 넘어온 url을 확인한다. null이면 가차없이 SQLException을 던져버린다.</p>
+<p>자, 그 다음 소스를 보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Walk through the loaded registeredDrivers attempting to make a connection.</span></span><br><span class="line"><span class="comment">// Remember the first exception that gets raised so we can reraise it.</span></span><br><span class="line">SQLException reason = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(DriverInfo aDriver : registeredDrivers) &#123;</span><br><span class="line">    <span class="comment">// If the caller does not have permission to load the driver then</span></span><br><span class="line">    <span class="comment">// skip it.</span></span><br><span class="line">    <span class="keyword">if</span>(isDriverAllowed(aDriver.driver, callerCL)) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            println(<span class="string">"    trying "</span> + aDriver.driver.getClass().getName());</span><br><span class="line">            Connection con = aDriver.driver.connect(url, info);</span><br><span class="line">            <span class="keyword">if</span> (con != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="comment">// Success!</span></span><br><span class="line">                println(<span class="string">"getConnection returning "</span> + aDriver.driver.getClass().getName());</span><br><span class="line">                <span class="keyword">return</span> (con);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException ex) &#123;</span><br><span class="line">            <span class="keyword">if</span> (reason == <span class="keyword">null</span>) &#123;</span><br><span class="line">                reason = ex;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        println(<span class="string">"    skipping: "</span> + aDriver.getClass().getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>맨 위에 주석으로 친절히 설명을 해주고 있다. registerdDrivers를 로드했고 connection을 만든단다. <strong>이부분! 이부분이 우리가 찾던 부분이다!</strong></p>
+<p>여기서 우리가 그동안 보지 못한 클래스가 하나 등장한다. DriverInfo, 이건 뭘까? 찾아보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DriverInfo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> Driver driver;</span><br><span class="line">    DriverAction da;</span><br><span class="line">    DriverInfo(Driver driver, DriverAction action) &#123;</span><br><span class="line">        <span class="keyword">this</span>.driver = driver;</span><br><span class="line">        da = action;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object other)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (other <span class="keyword">instanceof</span> DriverInfo)</span><br><span class="line">                &amp;&amp; <span class="keyword">this</span>.driver == ((DriverInfo) other).driver;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> driver.hashCode();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="string">"driver[className="</span>  + driver + <span class="string">"]"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">DriverAction <span class="title">action</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> da;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>DriverManager에 정의되어 있는 자료구조 클래스다. getConnection에서 for-loop을 돌면서 DriverInfo의 오브젝트를 하나씩 꺼내서 확인한다.</p>
+<p><code>isDriverAllowed(Driver driver, ClassLoader classLoader)</code>는 첫 번째 파라미터 driver와 두 번째 파라미터 classLoader로부터 가져온 driver 오브젝트가 같으면 true, 다르면 false를 반환하는 메소드다.</p>
+<p>정상적으로 같은 JDBC Driver를 로딩하고, 호출했다면 true가 반환되어 if 내 블록이 수행 될 것이다. </p>
+<p>바로 <code>Connection con = aDriver.driver.connect(url, info);</code> 이부분!</p>
+<p>이 부분은 벤더별로 specific 하게 구현된 부분이다. 왜냐하면 여기서 <code>aDriver.driver</code>는 특정 벤더의 JDBC Driver이기 때문이다.</p>
+<p>우리는 오픈소스 DB <a href="http://www.cubrid.com" target="_blank" rel="noopener">CUBRID</a>를 사용중이니 소스코드를 한번 까보자.</p>
+<h3 id="cubrid-jdbc-driver-CUBRIDDriver"><a href="#cubrid-jdbc-driver-CUBRIDDriver" class="headerlink" title="cubrid.jdbc.driver.CUBRIDDriver"></a>cubrid.jdbc.driver.CUBRIDDriver</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Connection <span class="title">connect</span><span class="params">(String url, Properties info)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!acceptsURL(url)) &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (url.toLowerCase().startsWith(JDBC_DEFAULT_CONNECTION)) &#123;</span><br><span class="line">	<span class="keyword">return</span> defaultConnection();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Pattern pattern = Pattern.compile(URL_PATTERN, Pattern.CASE_INSENSITIVE);</span><br><span class="line">    Matcher matcher = pattern.matcher(url);</span><br><span class="line">    <span class="keyword">if</span> (!matcher.find()) &#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> CUBRIDException(CUBRIDJDBCErrorCode.invalid_url, url, <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    String match = matcher.group();</span><br><span class="line">    <span class="keyword">if</span> (!match.equals(url)) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> CUBRIDException(CUBRIDJDBCErrorCode.invalid_url, url, <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    String dummy;</span><br><span class="line">    String host = matcher.group(<span class="number">2</span>);</span><br><span class="line">    String portString = matcher.group(<span class="number">3</span>);</span><br><span class="line">    String db = matcher.group(<span class="number">4</span>);</span><br><span class="line">    String user = matcher.group(<span class="number">5</span>);</span><br><span class="line">    String pass = matcher.group(<span class="number">6</span>);</span><br><span class="line">    String prop = matcher.group(<span class="number">7</span>);</span><br><span class="line">    <span class="keyword">int</span> port = default_port;</span><br><span class="line"></span><br><span class="line">    UConnection u_con;</span><br><span class="line">    String resolvedUrl;</span><br><span class="line">    ConnectionProperties connProperties;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (host == <span class="keyword">null</span> || host.length() == <span class="number">0</span>) &#123;</span><br><span class="line">	host = default_hostname;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (portString == <span class="keyword">null</span> || portString.length() == <span class="number">0</span>) &#123;</span><br><span class="line">	port = default_port;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	port = Integer.parseInt(portString);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    connProperties = <span class="keyword">new</span> ConnectionProperties();</span><br><span class="line">    connProperties.setProperties(prop);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// getting informations from the Properties object</span></span><br><span class="line">    dummy = info.getProperty(<span class="string">"user"</span>);</span><br><span class="line">    <span class="keyword">if</span> (dummy != <span class="keyword">null</span> &amp;&amp; dummy.length() != <span class="number">0</span>) &#123;</span><br><span class="line">	user = dummy;</span><br><span class="line">    &#125;</span><br><span class="line">    dummy = info.getProperty(<span class="string">"password"</span>);</span><br><span class="line">    <span class="keyword">if</span> (dummy != <span class="keyword">null</span> &amp;&amp; dummy.length() != <span class="number">0</span>) &#123;</span><br><span class="line">	pass = dummy;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (user == <span class="keyword">null</span>) &#123;</span><br><span class="line">	user = default_user;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (pass == <span class="keyword">null</span>) &#123;</span><br><span class="line">	pass = default_password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    resolvedUrl = <span class="string">"jdbc:cubrid:"</span> + host + <span class="string">":"</span> + port + <span class="string">":"</span> + db + <span class="string">":"</span> + user + <span class="string">":********:"</span>;</span><br><span class="line">    <span class="keyword">if</span> (prop != <span class="keyword">null</span>) &#123;</span><br><span class="line">	resolvedUrl += prop;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    connProperties.setProperties(info);</span><br><span class="line"></span><br><span class="line">    dummy = connProperties.getAltHosts();</span><br><span class="line">    <span class="keyword">if</span> (dummy != <span class="keyword">null</span>) &#123;</span><br><span class="line">	ArrayList&lt;String&gt; altHostList = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">	altHostList.add(host + <span class="string">":"</span> + port);</span><br><span class="line"></span><br><span class="line">	StringTokenizer st = <span class="keyword">new</span> StringTokenizer(dummy, <span class="string">","</span>, <span class="keyword">false</span>);</span><br><span class="line">	<span class="keyword">while</span> (st.hasMoreTokens()) &#123;</span><br><span class="line">	    altHostList.add(st.nextToken());</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (connProperties.getConnLoadBal()) &#123;</span><br><span class="line">		Collections.shuffle(altHostList);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">	    u_con = UJCIManager.connect(altHostList, db, user, pass, resolvedUrl);</span><br><span class="line">	&#125; <span class="keyword">catch</span> (CUBRIDException e) &#123;</span><br><span class="line">	    <span class="keyword">throw</span> e;</span><br><span class="line">	&#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">	    u_con = UJCIManager.connect(host, port, db, user, pass, resolvedUrl);</span><br><span class="line">	&#125; <span class="keyword">catch</span> (CUBRIDException e) &#123;</span><br><span class="line">	    <span class="keyword">throw</span> e;</span><br><span class="line">	&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    u_con.setCharset(connProperties.getCharSet());</span><br><span class="line">    u_con.setZeroDateTimeBehavior(connProperties.getZeroDateTimeBehavior());</span><br><span class="line"></span><br><span class="line">    u_con.setConnectionProperties(connProperties);</span><br><span class="line">    u_con.tryConnect();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> CUBRIDConnection(u_con, url, user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>이부분도 굉장히 길다. 사실상 여기까지가 JDBC Driver의 Connection을 생성하는 부분의 끝이다. 여기서부터는 특정 벤더에 종속된 구현체이기 때문에 Oracle, MySQL, MS-SQL 뭐 다 다르다. 그래도 나는 궁금하니 소스를 끝까지 추적해 보겠다. <del>(상관 없는 분은 여기서 작별 인사를…)</del></p>
+<p>처음 소스코드를 보도록 하자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!acceptsURL(url)) &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>아주 심플하다. url을 받아들일 수 있는 형태인지 확인한다. url의 헤더는 <em>jdbc:cubrid</em>로 시작하며, <code>CUBRIDDriver.class.getName();</code> 를 호출하여 class의 이름을 확인한다. 만약, class가 oracle 또는 mysql이면 -oracle, -mysql을 헤더에 추가 후 :를 연결한다. 왜 이런 행동을 하냐면 <a href="http://www.cubrid.org/manual/93/ko/shard.html" target="_blank" rel="noopener">CUBRID shard</a> 기능 때문이다. </p>
+<p>그리고 default connection이 있는데, 이부분은 <a href="http://www.cubrid.org/manual/93/ko/sql/jsp.html" target="_blank" rel="noopener">Java stored procedure</a> 를 사용하기 위해 필요하다.</p>
+<p>자, 그럼 다음 소스코드를 보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (url.toLowerCase().startsWith(JDBC_DEFAULT_CONNECTION)) &#123;</span><br><span class="line">	<span class="keyword">return</span> defaultConnection();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>바로 좀 전에 말했던 default connection을 반환하는 부분이다. 그 다음!</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Pattern pattern = Pattern.compile(URL_PATTERN, Pattern.CASE_INSENSITIVE);</span><br><span class="line">	Matcher matcher = pattern.matcher(url);</span><br><span class="line">	<span class="keyword">if</span> (!matcher.find()) &#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> CUBRIDException(CUBRIDJDBCErrorCode.invalid_url, url, <span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">String match = matcher.group();</span><br><span class="line"><span class="keyword">if</span> (!match.equals(url)) &#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> CUBRIDException(CUBRIDJDBCErrorCode.invalid_url, url, <span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">String dummy;</span><br><span class="line">String host = matcher.group(<span class="number">2</span>);</span><br><span class="line">String portString = matcher.group(<span class="number">3</span>);</span><br><span class="line">String db = matcher.group(<span class="number">4</span>);</span><br><span class="line">String user = matcher.group(<span class="number">5</span>);</span><br><span class="line">String pass = matcher.group(<span class="number">6</span>);</span><br><span class="line">String prop = matcher.group(<span class="number">7</span>);</span><br><span class="line"><span class="keyword">int</span> port = default_port;</span><br></pre></td></tr></table></figure>
+<p>이부분은 뭘까?! 바로 URL 패턴을 분석하여 host ip, port, DB name, user id, user password, properties 값을 추출해내는 부분이다. </p>
+<p>자, 다음 소스 코드!</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UConnection u_con;</span><br><span class="line">String resolvedUrl;</span><br><span class="line">ConnectionProperties connProperties;</span><br></pre></td></tr></table></figure>
+<p>변수 선언인데 아래 내용이 한 덩어리 기분이라 3줄만 보여줬다. 저 3개 변수가 마지막에 Connection 오브젝트를 생성하는데 지대한 영향을 끼칠 것이다. 자, 그럼 다음 소스!</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (host == <span class="keyword">null</span> || host.length() == <span class="number">0</span>) &#123;</span><br><span class="line">	host = default_hostname;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (portString == <span class="keyword">null</span> || portString.length() == <span class="number">0</span>) &#123;</span><br><span class="line">	port = default_port;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	port = Integer.parseInt(portString);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>host와 portString은 위의 url pattern을 파싱해서 가져온 값들이다. default_hostname은 localhost, default_port는 30000번을 의미한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">connProperties = <span class="keyword">new</span> ConnectionProperties();</span><br><span class="line">connProperties.setProperties(prop);</span><br><span class="line"></span><br><span class="line"><span class="comment">// getting informations from the Properties object</span></span><br><span class="line">dummy = info.getProperty(<span class="string">"user"</span>);</span><br><span class="line"><span class="keyword">if</span> (dummy != <span class="keyword">null</span> &amp;&amp; dummy.length() != <span class="number">0</span>) &#123;</span><br><span class="line">	user = dummy;</span><br><span class="line">&#125;</span><br><span class="line">dummy = info.getProperty(<span class="string">"password"</span>);</span><br><span class="line"><span class="keyword">if</span> (dummy != <span class="keyword">null</span> &amp;&amp; dummy.length() != <span class="number">0</span>) &#123;</span><br><span class="line">	pass = dummy;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (user == <span class="keyword">null</span>) &#123;</span><br><span class="line">	user = default_user;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (pass == <span class="keyword">null</span>) &#123;</span><br><span class="line">	pass = default_password;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Connection 관련 properties를 prop 변수로부터 생성한다. 이게 뭐냐면 JDBC url 뒷부분에 ? 이후로 붙는 옵션이다. charset=utf8 이라던가 timeout=1 뭐 이런 것들이다.</p>
+<p>그 다음에 갑자기 튀어 나온 info는 무엇일까?! 시간이 좀 지나서 잊어버렸을 지 모르지만 <code>Connection con = aDriver.driver.connect(url, info);</code> 를 통해 DriverManager에서 넘어온 info 저놈이다.</p>
+<p>이 info는 값이 있을 수도 있고, null 일 수도 있다. <code>getConnection()</code> 어떤 애를 호출 했느냐에 따라 다르니깐 말이다.</p>
+<p>그래서 if 문을 통해 user, password가 있는지 없는지 확인한다. null이면 기본 public 사용자에 password는 ‘’ (empty string)으로 세팅한다.</p>
+<p>자, 다음 소스코드를 주세요!</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">resolvedUrl = <span class="string">"jdbc:cubrid:"</span> + host + <span class="string">":"</span> + port + <span class="string">":"</span> + db + <span class="string">":"</span> + user + <span class="string">":********:"</span>;</span><br><span class="line">	<span class="keyword">if</span> (prop != <span class="keyword">null</span>) &#123;</span><br><span class="line">	resolvedUrl += prop;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>자, 진짜 URL을 만들었다. 최종 형태는 <em>“jdbc:cubrid:localhost:30000:demodb:public::”</em> 이런 형태일 것이다. </p>
+<p>그리고 맨 뒤에 Connection 관련 properties들을 붙혀준다. 아마 이런 형태일 것이다. <em>(만약, prop 가 null이 아니라면 말이다.)</em></p>
+<p><em>“jdbc:cubrid:localhost:30000:demodb:public::?charset=utf8”</em></p>
+<p>그 다음으로 넘어가자!</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">connProperties.setProperties(info);</span><br><span class="line"></span><br><span class="line">dummy = connProperties.getAltHosts();</span><br><span class="line"><span class="keyword">if</span> (dummy != <span class="keyword">null</span>) &#123;</span><br><span class="line">	ArrayList&lt;String&gt; altHostList = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">	altHostList.add(host + <span class="string">":"</span> + port);</span><br><span class="line"></span><br><span class="line">	StringTokenizer st = <span class="keyword">new</span> StringTokenizer(dummy, <span class="string">","</span>, <span class="keyword">false</span>);</span><br><span class="line">	<span class="keyword">while</span> (st.hasMoreTokens()) &#123;</span><br><span class="line">		altHostList.add(st.nextToken());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (connProperties.getConnLoadBal()) &#123;</span><br><span class="line">		Collections.shuffle(altHostList);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		u_con = UJCIManager.connect(altHostList, db, user, pass, resolvedUrl);</span><br><span class="line">	&#125; <span class="keyword">catch</span> (CUBRIDException e) &#123;</span><br><span class="line">		<span class="keyword">throw</span> e;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		u_con = UJCIManager.connect(host, port, db, user, pass, resolvedUrl);</span><br><span class="line">	&#125; <span class="keyword">catch</span> (CUBRIDException e) &#123;</span><br><span class="line">		<span class="keyword">throw</span> e;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>먼저 <code>connProperties.setProperties(info)</code>를 수행하는데, 별거 없다. info에는 있어봤자 user, password 정도이거나 빈 오브젝트일 것이다.</p>
+<p>그 다음 나오는 <code>dummy = connProperties.getAltHosts();</code>가 뭔지는 <a href="http://www.cubrid.com" target="_blank" rel="noopener">CUBRID</a>에 대해 아는 사람만 알 것이다. 바로, <a href="http://www.cubrid.org/manual/93/ko/ha.html" target="_blank" rel="noopener">High Availability(HA)</a>를 위해 DB 이중화를 하기 위해 다른 노드의 접속 정보를 기입하는 프로퍼티이다. 여기에서 dummy 변수의 값이 null이 아니라면, JDBC Connection properties 들 중 altHosts라는 내용이 있다는 뜻이다. 그럼 HA 구성을 사용한다는 의미이고, failover를 위해 2개 이상의 노드 정보를 생성해야한다. 그 부분이 바로 while이 돌면서 만들어 내는 부분이다.</p>
+<p>그 다음 라인을 보면 <code>if (connProperties.getConnLoadBal()) {</code> 이런 코드를 수행하는데 <del>(메소드 명이 사실 좀 헷갈리게 되있는건 기분탓?)</del> HA 구성에서 loadBalance를 사용할지에 대한 프로퍼티를 지정하는 부분이다. 랜덤한 순서로 연결하도록 한다고 메뉴얼에 되어 있는데 그래서 <code>Collections.shuffles()</code>로 섞어주나보다.</p>
+<p>다음 나오는 오브젝트는 u_con 이다. 이게 사실 직접적으로 DB에 connection을 맺어주는 오브젝트이다. cubrid.jdbc.jci 패키지에 위치하며, 약 2처라인 좀 넘는데 바이트를 주로 다룬다. <em>(왠지 멋지다… 개발자는 비트 바이트 이래야지)</em></p>
+<p>자, 아무튼, connect 부분 소스코드를 보면 사실 별거 없다. 파라미터에 맞게 UConnection 을 생성하여 반환하면 끝.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> UConnection <span class="title">connect</span><span class="params">(String ip, <span class="keyword">int</span> port, String name,</span></span></span><br><span class="line"><span class="function"><span class="params">		String user, String passwd, String url)</span></span></span><br><span class="line"><span class="function">		<span class="keyword">throws</span> java.sql.SQLException </span>&#123;</span><br><span class="line">	UConnection connection;</span><br><span class="line"></span><br><span class="line">	connection = <span class="keyword">new</span> UConnection(ip, port, name, user, passwd, url);</span><br><span class="line">	<span class="comment">// connectionList.add(connection);</span></span><br><span class="line">	<span class="keyword">return</span> connection;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> UConnection <span class="title">connect</span><span class="params">(ArrayList&lt;String&gt; aConList, String name,</span></span></span><br><span class="line"><span class="function"><span class="params">		String user, String passwd, String url)</span></span></span><br><span class="line"><span class="function">		<span class="keyword">throws</span> java.sql.SQLException </span>&#123;</span><br><span class="line">	UConnection connection;</span><br><span class="line"></span><br><span class="line">	connection = <span class="keyword">new</span> UConnection(aConList, name, user, passwd, url);</span><br><span class="line">	<span class="comment">// connectionList.add(connection);</span></span><br><span class="line">	<span class="keyword">return</span> connection;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>이제 CUBRID의 JDBC Driver를 사용하기 위한 Connection 오브젝트 생성이 완료되었다. 마지막으로 몇 가지만 더 하고 반환하자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">u_con.setCharset(connProperties.getCharSet());</span><br><span class="line">u_con.setZeroDateTimeBehavior(connProperties.getZeroDateTimeBehavior());</span><br><span class="line"></span><br><span class="line">u_con.setConnectionProperties(connProperties);</span><br><span class="line">u_con.tryConnect();</span><br></pre></td></tr></table></figure>
+<p>Connection 오브젝트에 set 뭐시기를 하는거 보니 값을 설정하는 것 같다.</p>
+<p><code>u_con.setCharset()</code>은 뭐 말 안해도 알꺼 같다. 문자셋을 프로퍼티에 지정한다.</p>
+<p><code>u_con.setZeroDateTimeBehavior()</code>는 뭘까? JDBC에서는 java.sql.Date 형 오브젝트에 날짜와 시간 값이 모두 0인 값을 허용하지 않는다. default 동작은 Exception 발생이다. 까지만 알면 될 것 같다.</p>
+<p><code>u_con.setConnectionProperties()</code>는 지금껏 만든 connProperties 오브젝트를 u_con 오브젝트에 넣어주는 역할이다.</p>
+<p>그리고, 마지막 <code>u_con.tryConnect()</code>는 DB에 직접적인 connect를 시도하는 메소드이다. 내부에서 이것 저것 불리다가 <code>private void connectDB(int timeout) throws IOException, UJciException</code> 이런 메소드가 호출되어 DB와 연결된다. <em>(이 부분은 나중에 시간 나면 자세히 포스팅 하겠다)</em></p>
+<p>마지막으로 반환!</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> CUBRIDConnection(u_con, url, user);</span><br></pre></td></tr></table></figure>
+<p>u_con은 바로 위에서 만들었고, url도 이쁘게 만들었고, user는 matcher로 뽑아왔던애가 있었다. 이 3개를 가지고 CUBRIDConnection 생성자를 호출하여 오브젝트를 생성하면 끝!</p>
+<h2 id="끝으로"><a href="#끝으로" class="headerlink" title="끝으로"></a>끝으로</h2><p>너무 두서 없이 썼다. 나 아니면 아무도 못 알아볼지도 모른다. 너무 허접하다.</p>
+<p>다른 사람의 소스코드를 보는건 재밌다. 그리고 놀랍다. 그리고 갈길이 너무 멀다. ^^</p>
+
+        </div>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>팔로우:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/SeunghunandChan" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/seunghun.kim.96" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/seunghun-kim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/04/12/js-start/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">새로운</strong>
+        <p class="article-nav-title">
+        
+            Start JavaScript!
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2016/10/11/cleancode-02/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">오래된</strong>
+        <p class="article-nav-title">Clean Code (2)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">최근 글</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/11/15/Euclidean_algorithm/" class="title">Euclidean_algorithm</a></p>
+                            <p class="item-date"><time datetime="2017-11-15T03:20:56.000Z" itemprop="datePublished">2017-11-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_02/" class="title">print_star (2)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_01/" class="title">print_star (1)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Node-js/">Node.js</a></p>
+                            <p class="item-title"><a href="/2017/04/25/node-events-01/" class="title">Node.js events (1)</a></p>
+                            <p class="item-date"><time datetime="2017-04-24T15:00:00.000Z" itemprop="datePublished">2017-04-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Game/">Game</a></p>
+                            <p class="item-title"><a href="/2017/04/24/js-game-06/" class="title">javascript game (6)</a></p>
+                            <p class="item-date"><time datetime="2017-04-23T15:00:00.000Z" itemprop="datePublished">2017-04-24</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">카테고리</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Code/">Code</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Code/CleanCode/">CleanCode</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JDBC/">JDBC</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Game/">Game</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Node-js/">Node.js</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/jekyll/">jekyll</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">아카이브</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">11월 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">10월 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">4월 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">10월 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">3월 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">태그</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Brute-force/">Brute_force</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Euclidean/">Euclidean</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Star/">Star</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cleancode/">cleancode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/events/">events</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdbc/">jdbc</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wording/">wording</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">태그 클라우드</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Algorithms/" style="font-size: 15px;">Algorithms</a> <a href="/tags/Brute-force/" style="font-size: 10px;">Brute_force</a> <a href="/tags/Euclidean/" style="font-size: 10px;">Euclidean</a> <a href="/tags/Star/" style="font-size: 12.5px;">Star</a> <a href="/tags/cleancode/" style="font-size: 12.5px;">cleancode</a> <a href="/tags/code/" style="font-size: 12.5px;">code</a> <a href="/tags/events/" style="font-size: 10px;">events</a> <a href="/tags/game/" style="font-size: 17.5px;">game</a> <a href="/tags/html5/" style="font-size: 17.5px;">html5</a> <a href="/tags/java/" style="font-size: 12.5px;">java</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jdbc/" style="font-size: 12.5px;">jdbc</a> <a href="/tags/jekyll/" style="font-size: 10px;">jekyll</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/wording/" style="font-size: 10px;">wording</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">링크</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io/ko/">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" style="font-size:40px;color:#fff; text-decoration: none;">Dev Huna</a>
+                </h1>
+                <p>&copy; 2017 Huna</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'huna';
+    
+    
+    var disqus_url = 'https://seunghun-kim.github.io/2016/10/12/jdbc-02/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

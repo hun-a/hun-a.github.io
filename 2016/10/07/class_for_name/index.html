@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>JDBC (1) - Class.forName(java.lang.String)?! | Dev Huna</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="java,jdbc" />
+    
+    <meta name="description" content="JDBC Driver를 사용할 경우, Connection을 생성하기 전에 Class.forName(&amp;quot;Specific Vender&amp;#39;s Driver&amp;quot;); 코드를 추가해서 사용할 JDBC Driver를 로드해야 한다. 얘는 뭘 하는 앨까? 호출되">
+<meta name="keywords" content="java,jdbc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDBC (1) - Class.forName(java.lang.String)?!">
+<meta property="og:url" content="https://seunghun-kim.github.io/2016/10/07/class_for_name/index.html">
+<meta property="og:site_name" content="Dev Huna">
+<meta property="og:description" content="JDBC Driver를 사용할 경우, Connection을 생성하기 전에 Class.forName(&amp;quot;Specific Vender&amp;#39;s Driver&amp;quot;); 코드를 추가해서 사용할 JDBC Driver를 로드해야 한다. 얘는 뭘 하는 앨까? 호출되는 코드만 봐서는 직관적로 뭘 하는지 잘 모르겠다.  한번 찾아보자! java.lang.Cla">
+<meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2017-11-15T14:45:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JDBC (1) - Class.forName(java.lang.String)?!">
+<meta name="twitter:description" content="JDBC Driver를 사용할 경우, Connection을 생성하기 전에 Class.forName(&amp;quot;Specific Vender&amp;#39;s Driver&amp;quot;); 코드를 추가해서 사용할 JDBC Driver를 로드해야 한다. 얘는 뭘 하는 앨까? 호출되는 코드만 봐서는 직관적로 뭘 하는지 잘 모르겠다.  한번 찾아보자! java.lang.Cla">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+					<h1>
+						<a href="/" style="font-size:90px;color:#fff; text-decoration: none;">Dev Huna</a>
+					</h1>
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">홈</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/">Code</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/CleanCode/">CleanCode</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JDBC/">JDBC</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Game/">Game</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Node-js/">Node.js</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/">Tips</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/jekyll/">jekyll</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://about.me/huna">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="검색" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '포스트',
+            PAGES: 'Pages',
+            CATEGORIES: '카테고리',
+            TAGS: '태그',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Java/">Java</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Java/JDBC/">JDBC</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-class_for_name" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        JDBC (1) - Class.forName(java.lang.String)?!
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2016/10/07/class_for_name/" class="article-date">
+            <time datetime="2016-10-06T15:00:00.000Z" itemprop="datePublished">2016-10-07</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/jdbc/">jdbc</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>JDBC Driver를 사용할 경우, Connection을 생성하기 전에 <code>Class.forName(&quot;Specific Vender&#39;s Driver&quot;);</code> 코드를 추가해서 사용할 JDBC Driver를 로드해야 한다.</p>
+<p>얘는 뭘 하는 앨까?</p>
+<p>호출되는 코드만 봐서는 직관적로 뭘 하는지 잘 모르겠다. </p>
+<p>한번 찾아보자!</p>
+<h3 id="java-lang-Class"><a href="#java-lang-Class" class="headerlink" title="java.lang.Class"></a>java.lang.Class</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public final class Class&lt;T&gt;</span><br><span class="line">extends Object</span><br><span class="line">implements Serializable, GenericDeclaration, Type, AnnotatedElement</span><br><span class="line">Instances of the class Class represent classes and interfaces in a running Java application. An enum is a kind of class and an annotation is a kind of interface. Every array also belongs to a class that is reflected as a Class object that is shared by all arrays with the same element type and number of dimensions. The primitive Java types (boolean, byte, char, short, int, long, float, and double), and the keyword void are also represented as Class objects.</span><br><span class="line">Class has no public constructor. Instead Class objects are constructed automatically by the Java Virtual Machine as classes are loaded and by calls to the defineClass method in the class loader.</span><br><span class="line"></span><br><span class="line">The following example uses a Class object to print the class name of an object:</span><br><span class="line"></span><br><span class="line">     void printClassName(Object obj) &#123;</span><br><span class="line">         System.out.println(&quot;The class of &quot; + obj +</span><br><span class="line">                            &quot; is &quot; + obj.getClass().getName());</span><br><span class="line">     &#125;</span><br><span class="line"> </span><br><span class="line">It is also possible to get the Class object for a named type (or for void) using a class literal. See Section 15.8.2 of The Java™ Language Specification. For example:</span><br><span class="line"></span><br><span class="line">System.out.println(&quot;The name of class Foo is: &quot;+Foo.class.getName());</span><br><span class="line">Since:</span><br><span class="line">JDK1.0</span><br><span class="line">See Also:</span><br><span class="line">ClassLoader.defineClass(byte[], int, int), Serialized Form</span><br></pre></td></tr></table></figure>
+<p>Class 클래스의 인스턴스이며 러닝 타임의 클래스들과 인터페이스들을 표현한다고 한다. 그리고 primitive 타입과 void 도 Class 오브젝트로 표현된다고 한다.<br><em>(enum은 클래스중 한 종류이고, annotation은 인터페이스의 한 종류인건 안비밀 ㅎ)</em></p>
+<p>자 그럼 forName 메소드를 한번 봐보자.</p>
+<h3 id="forName-java-lang-String"><a href="#forName-java-lang-String" class="headerlink" title="forName(java.lang.String)"></a>forName(java.lang.String)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public static Class&lt;?&gt; forName(String className)</span><br><span class="line">                        throws ClassNotFoundException</span><br><span class="line">Returns the Class object associated with the class or interface with the given string name. Invoking this method is equivalent to:</span><br><span class="line">Class.forName(className, true, currentLoader)</span><br><span class="line">where currentLoader denotes the defining class loader of the current class.</span><br><span class="line">For example, the following code fragment returns the runtime Class descriptor for the class named java.lang.Thread:</span><br><span class="line"></span><br><span class="line">Class t = Class.forName(&quot;java.lang.Thread&quot;)</span><br><span class="line">A call to forName(&quot;X&quot;) causes the class named X to be initialized.</span><br><span class="line"></span><br><span class="line">Parameters:</span><br><span class="line">className - the fully qualified name of the desired class.</span><br><span class="line">Returns:</span><br><span class="line">the Class object for the class with the specified name.</span><br><span class="line">Throws:</span><br><span class="line">LinkageError - if the linkage fails</span><br><span class="line">ExceptionInInitializerError - if the initialization provoked by this method fails</span><br><span class="line">ClassNotFoundException - if the class cannot be located</span><br></pre></td></tr></table></figure>
+<p>문자열 파라미터로 전달된 애와 연관된 클래스 혹은 인터페이스의 Class 오브젝트를 반환한다. <strong>(Class 오브젝트를 반환하지 문자열에 해당하는 클래스를 반환하는게 아니다!)</strong></p>
+<p>오브젝트를 리턴하는데… 보통 JDBC Driver를 사용할 때 Class.forName() 메소드를 따로 변수에 저장하지 않고 그냥 호출만 한다.</p>
+<p>그냥 공중에다가 오브젝트를 뿌려버리고 마는 걸까? <em>(에이 설마 ㅎ)</em></p>
+<p>이부분은 JDBC Driver의 소스코드를 봐야 알 것 같다.</p>
+<p>말 나온김에 한번 봐보자!</p>
+<p>소스코드는 CUBRID JDBC Driver를 보기로 했다. (MySQL, Oracle 다 비슷비슷 할거 같다. 왜? 표준이란게 있으니깐)</p>
+<p>CUBRID는 JDBC Driver를 로딩할 때 <code>Class.forName(&quot;cubrid.jdbc.driver.CUBRIDDriver&quot;);</code> 이렇게 호출한다.</p>
+<p>즉, cubrid.jdbc.driver.CUBRIDDriver 라는 클래스를 로드하여 반환하라는 의미이다.</p>
+<p>이때, 우리는 따로 변수에 담지 않으니깐 저게 호출되면서 무엇을 하는지를 알아봐야 할 것이다.<br>(소스.. 소스를 보자!)</p>
+<p>소스코드는 <a href="https://github.com/CUBRID/cubrid/tree/develop/src/jdbc" target="_blank" rel="noopener">github</a>에 올라와 있으니 필요하신 분은 참고하시길…</p>
+<h3 id="cubrid-jdbc-driver-CUBRIRDDriver-java"><a href="#cubrid-jdbc-driver-CUBRIRDDriver-java" class="headerlink" title="cubrid.jdbc.driver.CUBRIRDDriver.java"></a>cubrid.jdbc.driver.CUBRIRDDriver.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CUBRIDDriver</span> <span class="keyword">implements</span> <span class="title">Driver</span> </span>&#123;</span><br><span class="line">	<span class="comment">// version</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String version_string = <span class="string">"@JDBC_DRIVER_VERSION_STRING@"</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> major_version;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> minor_version;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> patch_version;</span><br><span class="line">	<span class="keyword">static</span> &#123;</span><br><span class="line">		StringTokenizer st = <span class="keyword">new</span> StringTokenizer(version_string, <span class="string">"."</span>);</span><br><span class="line">		<span class="keyword">if</span> (st.countTokens() != <span class="number">4</span>) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Could not parse version_string: "</span></span><br><span class="line">					+ version_string);</span><br><span class="line">		&#125;</span><br><span class="line">		major_version = Integer.parseInt(st.nextToken());</span><br><span class="line">		minor_version = Integer.parseInt(st.nextToken());</span><br><span class="line">		patch_version = Integer.parseInt(st.nextToken());</span><br><span class="line">	&#125;</span><br><span class="line">... (생략)</span><br><span class="line">	<span class="keyword">static</span> &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			DriverManager.registerDriver(<span class="keyword">new</span> CUBRIDDriver());</span><br><span class="line">		&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>여기서 눈여겨 볼 곳은 static 블록이다.</p>
+<p>static 블록이 왜 중요하냐고? 클래스가 로딩 되면 static 관련 애들은 JVM의 method 영역으로 올라가게 된다.<br>따라서 static 이 붙은 애들은 클래스가 로딩되는 시점부터 사용할 준비가 되는 것이다.</p>
+<p>처음 static 블록은 그냥 버전 정보를 저장할 뿐이니깐 패스하고</p>
+<p>두 번째 static 블록을 보면 실질적으로 CUBRIDDriver 오브젝트를 등록하는 코드가 보인다.<br><em>(이부분은 MySQL, Oracle 등 다 같을 것이다. 표준이니깐)</em></p>
+<p>그럼 여기서 registerDriver(java.sql.Driver)는 뭘 하는 애일까? 그냥 등록만 하면 끝인가? 궁금하다!</p>
+<h3 id="registerDriver-java-sql-Driver"><a href="#registerDriver-java-sql-Driver" class="headerlink" title="registerDriver(java.sql.Driver)"></a>registerDriver(java.sql.Driver)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Registers the given driver with the &#123;@code DriverManager&#125;.</span><br><span class="line"> * A newly-loaded driver class should call</span><br><span class="line"> * the method &#123;@code registerDriver&#125; to make itself</span><br><span class="line"> * known to the &#123;@code DriverManager&#125;. If the driver is currently</span><br><span class="line"> * registered, no action is taken.</span><br><span class="line"> *</span><br><span class="line"> * @param driver the new JDBC Driver that is to be registered with the</span><br><span class="line"> *               &#123;@code DriverManager&#125;</span><br><span class="line"> * @exception SQLException if a database access error occurs</span><br><span class="line"> * @exception NullPointerException if &#123;@code driver&#125; is null</span><br><span class="line"> */</span><br><span class="line">public static synchronized void registerDriver(java.sql.Driver driver)</span><br><span class="line">    throws SQLException &#123;</span><br><span class="line"></span><br><span class="line">    registerDriver(driver, null);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>앗, <code>registerDriver(driver, null);</code> 을 호출한다. 이걸 찾아가보자.</p>
+<h3 id="registerDriver-java-sql-Driver-java-sql-DriverAction"><a href="#registerDriver-java-sql-Driver-java-sql-DriverAction" class="headerlink" title="registerDriver(java.sql.Driver, java.sql.DriverAction)"></a>registerDriver(java.sql.Driver, java.sql.DriverAction)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Registers the given driver with the &#123;<span class="doctag">@code</span> DriverManager&#125;.</span></span><br><span class="line"><span class="comment"> * A newly-loaded driver class should call</span></span><br><span class="line"><span class="comment"> * the method &#123;<span class="doctag">@code</span> registerDriver&#125; to make itself</span></span><br><span class="line"><span class="comment"> * known to the &#123;<span class="doctag">@code</span> DriverManager&#125;. If the driver is currently</span></span><br><span class="line"><span class="comment"> * registered, no action is taken.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> driver the new JDBC Driver that is to be registered with the</span></span><br><span class="line"><span class="comment"> *               &#123;<span class="doctag">@code</span> DriverManager&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> da     the &#123;<span class="doctag">@code</span> DriverAction&#125; implementation to be used when</span></span><br><span class="line"><span class="comment"> *               &#123;<span class="doctag">@code</span> DriverManager#deregisterDriver&#125; is called</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@exception</span> SQLException if a database access error occurs</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@exception</span> NullPointerException if &#123;<span class="doctag">@code</span> driver&#125; is null</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">registerDriver</span><span class="params">(java.sql.Driver driver,</span></span></span><br><span class="line"><span class="function"><span class="params">        DriverAction da)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Register the driver if it has not already been added to our list */</span></span><br><span class="line">    <span class="keyword">if</span>(driver != <span class="keyword">null</span>) &#123;</span><br><span class="line">        registeredDrivers.addIfAbsent(<span class="keyword">new</span> DriverInfo(driver, da));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// This is for compatibility with the original DriverManager</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    println(<span class="string">"registerDriver: "</span> + driver);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>자, 보니깐 registerdDrivers 라는 변수에 새로운 드라이버 정보가 저장되는걸 볼 수 있다. <em>(이 변수는 thread-safe ArrayList이고, DriverInfo가 없을 경우만 add 한다)</em></p>
+<p>그럼 registerdDrivers에 저장된 변수는 언제 어떻게 사용이 될까??</p>
+<p>곰곰히 생각해보자. Class.forName() 을 호출하고 나서 뭘 했지?!</p>
+<p>바로 <code>DriverManager.getConnection(&quot;Specific vender&#39;s url&quot;);</code> 이런 코드를 입력했을 것이다. 바로, Connection 오브젝트를 생성하는 단계이다.</p>
+<p>이때 과연 무슨 일이 일어날까?? <em>(소스… 소스를 보자!)</em></p>
+<h3 id="DriverManager-getConnection"><a href="#DriverManager-getConnection" class="headerlink" title="DriverManager.getConnection"></a>DriverManager.getConnection</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  Worker method called by the public getConnection() methods.</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    String url, java.util.Properties info, Class&lt;?&gt; caller)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * When callerCl is null, we should check the application's</span></span><br><span class="line"><span class="comment">     * (which is invoking this class indirectly)</span></span><br><span class="line"><span class="comment">     * classloader, so that the JDBC driver class outside rt.jar</span></span><br><span class="line"><span class="comment">     * can be loaded from here.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    ClassLoader callerCL = caller != <span class="keyword">null</span> ? caller.getClassLoader() : <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">synchronized</span>(DriverManager.class) &#123;</span><br><span class="line">        <span class="comment">// synchronize loading of the correct classloader.</span></span><br><span class="line">        <span class="keyword">if</span> (callerCL == <span class="keyword">null</span>) &#123;</span><br><span class="line">            callerCL = Thread.currentThread().getContextClassLoader();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(url == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> SQLException(<span class="string">"The url cannot be null"</span>, <span class="string">"08001"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    println(<span class="string">"DriverManager.getConnection(\""</span> + url + <span class="string">"\")"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Walk through the loaded registeredDrivers attempting to make a connection.</span></span><br><span class="line">    <span class="comment">// Remember the first exception that gets raised so we can reraise it.</span></span><br><span class="line">    SQLException reason = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(DriverInfo aDriver : registeredDrivers) &#123;</span><br><span class="line">        <span class="comment">// If the caller does not have permission to load the driver then</span></span><br><span class="line">        <span class="comment">// skip it.</span></span><br><span class="line">        <span class="keyword">if</span>(isDriverAllowed(aDriver.driver, callerCL)) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                println(<span class="string">"    trying "</span> + aDriver.driver.getClass().getName());</span><br><span class="line">                Connection con = aDriver.driver.connect(url, info);</span><br><span class="line">                <span class="keyword">if</span> (con != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// Success!</span></span><br><span class="line">                    println(<span class="string">"getConnection returning "</span> + aDriver.driver.getClass().getName());</span><br><span class="line">                    <span class="keyword">return</span> (con);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException ex) &#123;</span><br><span class="line">                <span class="keyword">if</span> (reason == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    reason = ex;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            println(<span class="string">"    skipping: "</span> + aDriver.getClass().getName());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// if we got here nobody could connect.</span></span><br><span class="line">    <span class="keyword">if</span> (reason != <span class="keyword">null</span>)    &#123;</span><br><span class="line">        println(<span class="string">"getConnection failed: "</span> + reason);</span><br><span class="line">        <span class="keyword">throw</span> reason;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    println(<span class="string">"getConnection: no suitable driver found for "</span>+ url);</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> SQLException(<span class="string">"No suitable driver found for "</span>+ url, <span class="string">"08001"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>와 길다~ getConnection 메소드는 여러개로 오버로딩 되어 있으므로 가장 중요한 getConnection만 보면 될 것 같다.</p>
+<p>중간에 잘 찾아보면 registerDriver 메소드에서 봤던 registeredDrivers 변수가 보인다.</p>
+<p>for-loop을 돌면서 driver 오브젝트를 이용해 connect 메소드를 호출해 실질적인 Connection 오브젝트를 생성한다.</p>
+<p>이후부터는 생성된 Connection 오브젝트를 가지고 Statement를 만들고 ResultSet도 만들고 하면서 DB에 왔다갔다 하면 된다. ㅋ<br><em>(JDBC 4.0 스펙부터는 굳이 Class.forName()으로 클래스 로딩 안해도 된다고 한다…)</em></p>
+<h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2><p>신기술을 배우자. 그리고 적용하자.</p>
+
+        </div>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>팔로우:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/SeunghunandChan" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/seunghun.kim.96" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/seunghun-kim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/10/10/cleancode-01/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">새로운</strong>
+        <p class="article-nav-title">
+        
+            Clean Code (1)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2016/10/06/todays-small-talk/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">오래된</strong>
+        <p class="article-nav-title">잡담(1)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">최근 글</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/11/15/Euclidean_algorithm/" class="title">Euclidean_algorithm</a></p>
+                            <p class="item-date"><time datetime="2017-11-15T03:20:56.000Z" itemprop="datePublished">2017-11-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_02/" class="title">print_star (2)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_01/" class="title">print_star (1)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Node-js/">Node.js</a></p>
+                            <p class="item-title"><a href="/2017/04/25/node-events-01/" class="title">Node.js events (1)</a></p>
+                            <p class="item-date"><time datetime="2017-04-24T15:00:00.000Z" itemprop="datePublished">2017-04-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Game/">Game</a></p>
+                            <p class="item-title"><a href="/2017/04/24/js-game-06/" class="title">javascript game (6)</a></p>
+                            <p class="item-date"><time datetime="2017-04-23T15:00:00.000Z" itemprop="datePublished">2017-04-24</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">카테고리</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Code/">Code</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Code/CleanCode/">CleanCode</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JDBC/">JDBC</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Game/">Game</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Node-js/">Node.js</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/jekyll/">jekyll</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">아카이브</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">11월 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">10월 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">4월 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">10월 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">3월 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">태그</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Brute-force/">Brute_force</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Euclidean/">Euclidean</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Star/">Star</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cleancode/">cleancode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/events/">events</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdbc/">jdbc</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wording/">wording</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">태그 클라우드</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Algorithms/" style="font-size: 15px;">Algorithms</a> <a href="/tags/Brute-force/" style="font-size: 10px;">Brute_force</a> <a href="/tags/Euclidean/" style="font-size: 10px;">Euclidean</a> <a href="/tags/Star/" style="font-size: 12.5px;">Star</a> <a href="/tags/cleancode/" style="font-size: 12.5px;">cleancode</a> <a href="/tags/code/" style="font-size: 12.5px;">code</a> <a href="/tags/events/" style="font-size: 10px;">events</a> <a href="/tags/game/" style="font-size: 17.5px;">game</a> <a href="/tags/html5/" style="font-size: 17.5px;">html5</a> <a href="/tags/java/" style="font-size: 12.5px;">java</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jdbc/" style="font-size: 12.5px;">jdbc</a> <a href="/tags/jekyll/" style="font-size: 10px;">jekyll</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/wording/" style="font-size: 10px;">wording</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">링크</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io/ko/">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" style="font-size:40px;color:#fff; text-decoration: none;">Dev Huna</a>
+                </h1>
+                <p>&copy; 2017 Huna</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'huna';
+    
+    
+    var disqus_url = 'https://seunghun-kim.github.io/2016/10/07/class_for_name/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

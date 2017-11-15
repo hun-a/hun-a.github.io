@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>javascript game (1) | Dev Huna</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="javascript,game,html5" />
+    
+    <meta name="description" content="잡담javascript와 친해지기 위해 뭐가 좋을까 고민을 하다가 예전에 codeschool.com에서 웹으로 만든 게임을 본 것 같은 기억이 있어서 한번 따라해볼까… 하고 들어가봤는데 못찾았다 ㅋㅋ 그래서 Google에서 검색해보니 MDN(Mozilla Developer Network">
+<meta name="keywords" content="javascript,game,html5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript game (1)">
+<meta property="og:url" content="https://seunghun-kim.github.io/2017/04/17/js-game-01/index.html">
+<meta property="og:site_name" content="Dev Huna">
+<meta property="og:description" content="잡담javascript와 친해지기 위해 뭐가 좋을까 고민을 하다가 예전에 codeschool.com에서 웹으로 만든 게임을 본 것 같은 기억이 있어서 한번 따라해볼까… 하고 들어가봤는데 못찾았다 ㅋㅋ 그래서 Google에서 검색해보니 MDN(Mozilla Developer Network)에서 벽돌 깨기 튜토리얼을 찾았다. 순서는 다음과 같다. (링크는 원문">
+<meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2017-11-15T14:45:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript game (1)">
+<meta name="twitter:description" content="잡담javascript와 친해지기 위해 뭐가 좋을까 고민을 하다가 예전에 codeschool.com에서 웹으로 만든 게임을 본 것 같은 기억이 있어서 한번 따라해볼까… 하고 들어가봤는데 못찾았다 ㅋㅋ 그래서 Google에서 검색해보니 MDN(Mozilla Developer Network)에서 벽돌 깨기 튜토리얼을 찾았다. 순서는 다음과 같다. (링크는 원문">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+					<h1>
+						<a href="/" style="font-size:90px;color:#fff; text-decoration: none;">Dev Huna</a>
+					</h1>
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">홈</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/">Code</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/CleanCode/">CleanCode</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JDBC/">JDBC</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Game/">Game</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Node-js/">Node.js</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/">Tips</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/jekyll/">jekyll</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://about.me/huna">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="검색" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '포스트',
+            PAGES: 'Pages',
+            CATEGORIES: '카테고리',
+            TAGS: '태그',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/JavaScript/Game/">Game</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-js-game-01" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        javascript game (1)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/04/17/js-game-01/" class="article-date">
+            <time datetime="2017-04-16T15:00:00.000Z" itemprop="datePublished">2017-04-17</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/game/">game</a>, <a class="tag-link" href="/tags/html5/">html5</a>, <a class="tag-link" href="/tags/javascript/">javascript</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="잡담"><a href="#잡담" class="headerlink" title="잡담"></a>잡담</h2><p>javascript와 친해지기 위해 뭐가 좋을까 고민을 하다가</p>
+<p>예전에 <a href="https://www.codeschool.com/" target="_blank" rel="noopener">codeschool.com</a>에서 웹으로 만든 게임을 본 것 같은 기억이 있어서</p>
+<p>한번 따라해볼까… 하고 들어가봤는데 못찾았다 ㅋㅋ</p>
+<p>그래서 <a href="http://www.google.com" target="_blank" rel="noopener">Google</a>에서 검색해보니 <a href="https://developer.mozilla.org" target="_blank" rel="noopener">MDN(Mozilla Developer Network)</a>에서 <a href="https://developer.mozilla.org/ko/docs/Games/Tutorials/%EC%88%9C%EC%88%98%ED%95%9C_%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A5%BC_%EC%9D%B4%EC%9A%A9%ED%95%9C_2D_%EB%B2%BD%EB%8F%8C%EA%B9%A8%EA%B8%B0_%EA%B2%8C%EC%9E%84" target="_blank" rel="noopener">벽돌 깨기</a> 튜토리얼을 찾았다.</p>
+<p>순서는 다음과 같다. (링크는 원문을, 옆에 해쉬 태크는 본 블로그로!)</p>
+<ol>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Create_the_Canvas_and_draw_on_it" target="_blank" rel="noopener">캔버스 생성과 그리기</a> <a href="#first">#1</a></p>
+</li>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript/Move_the_ball" target="_blank" rel="noopener">공 움직이기</a> <a href="/2017/04/18/js-game-02/">#2</a></p>
+</li>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript/Bounce_off_the_walls" target="_blank" rel="noopener">벽으로 부터 튕겨나오기</a> <a href="/2017/04/19/js-game-03/">#3</a></p>
+</li>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript/Paddle_and_keyboard_controls" target="_blank" rel="noopener">판때기 구현과 키보드 컨트롤</a> <a href="/2017/04/20/js-game-04/">#4</a></p>
+</li>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript/Game_over" target="_blank" rel="noopener">Game Over</a> <a href="/2017/04/21/js-game-05/">#5</a></p>
+</li>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript/Build_the_brick_field" target="_blank" rel="noopener">벽돌 만들기</a> <a href="/2017/04/24/js-game-06/">#6</a></p>
+</li>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript/Collision_detection" target="_blank" rel="noopener">충돌 감지</a> <a href="#seventh">#7</a></p>
+</li>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript/Track_the_score_and_win" target="_blank" rel="noopener">점수 추적과 승리</a> <a href="#eighth">#8</a></p>
+</li>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript/Mouse_controls" target="_blank" rel="noopener">마우스 컨트롤</a> <a href="#ninth">#9</a></p>
+</li>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript/Finishing_up" target="_blank" rel="noopener">마무리</a> <a href="#tenth">#10</a></p>
+</li>
+</ol>
+<p>데모를 보자.</p>
+<body><br><style><br>  <em> {padding: 0; margin: 0; }<br>  canvas {background: #eee; display: block; margin: 0 auto;}<br></style><br>  <canvas id="myCanvas" width="480" height="320"></canvas><br><br>  <script><br>    var isContinue = true;<br>  // for drawing ball and paddle<br>    var canvas = document.getElementById(‘myCanvas’);<br>    var ctx = canvas.getContext(‘2d’);<br>    var x = canvas.width / 2;<br>    var y = canvas.height - 30;<br>    var dx = 2;<br>    var dy = -2;<br>    var ballRadius = 10;<br>    var paddleHeight = 10;<br>    var paddleWidth = 75;<br>    var paddleX = (canvas.width - paddleWidth) / 2; // position at central<br>    var rightPressed = false;<br>    var leftPressed = false;<br><br>    // for bricks<br>    var brickRowCount = 3;<br>    var brickColumnCount = 5;<br>    var brickWidth = 75;<br>    var brickHeight = 20;<br>    var brickPadding = 10;<br>    var brickOffsetTop = 30;<br>    var brickOffsetLeft = 30;<br><br>    var bricks = [];<br>    for (c = 0; c &lt; brickColumnCount; c++) {<br>      bricks[c] = [];<br>      for (r = 0; r &lt; brickRowCount; r++) {<br>        bricks[c][r] = { x: 0, y: 0, status: 1 };<br>      }<br>    }<br><br>    // for score<br>    var score = 0;<br><br>    // for lives<br>    var lives = 3;<br><br>    document.addEventListener(‘keydown’, function(e) {<br>      if (e.keyCode === 39) {<br>        rightPressed = true;<br>      } else if (e.keyCode === 37) {<br>        leftPressed = true;<br>      }<br>    }, false);<br><br>    document.addEventListener(‘keyup’, function(e) {<br>      if (e.keyCode === 39) {<br>        rightPressed = false;<br>      } else if (e.keyCode === 37) {<br>        leftPressed = false;<br>      }<br>    }, false);<br><br>    document.addEventListener(‘mousemove’, function(e) {<br>      var relativeX = e.clientX - canvas.offsetLeft;<br>      if (relativeX &gt; 0 &amp;&amp; relativeX &lt; canvas.width) {<br>        paddleX = relativeX - paddleWidth / 2;<br>      }<br>    }, false);<br><br>    function drawLives() {<br>      ctx.font = ‘16px arial’;<br>      ctx.fillStyle = ‘#0095DD’;<br>      ctx.fillText(‘Lives: ‘ + lives, canvas.width - 65, 20); // fillText(text, x, y);<br>    }<br><br>    function drawScore() {<br>      ctx.font = ‘16px arial’;<br>      ctx.fillStyle = ‘#0095DD’;<br>      ctx.fillText(‘Score: ‘ + score, 8, 20); // fillText(text, x, y);<br>    }<br><br>    function collisionDetection() {<br>      for (c = 0; c &lt; brickColumnCount; c++) {<br>        for (r = 0; r &lt; brickRowCount; r++) {<br>          var b = bricks[c][r];<br>          if (b.status === 1) {<br>            if (x &gt; b.x &amp;&amp; x &lt; b.x + brickWidth &amp;&amp; y &gt; b.y &amp;&amp; y &lt; b.y + brickHeight) {<br>              dy = -dy;<br>              b.status = 0;<br>              score++;<br>              if (score === brickRowCount </em> brickColumnCount) {<br>                alert(‘YOU WIN, CONGRATULATIONS!’);<br>                document.location.reload();<br>              }<br>            }<br>          }<br>        }<br>      }<br>    }<br><br>    function drawBricks() {<br>      for (c = 0; c &lt; brickColumnCount; c++) {<br>        for (r = 0; r &lt; brickRowCount; r++) {<br>          if (bricks[c][r].status === 1) {<br>            var brickX = (c <em> (brickWidth + brickPadding)) + brickOffsetLeft;<br>            var brickY = (r </em> (brickHeight + brickPadding)) + brickOffsetTop;<br>            bricks[c][r].x = brickX;<br>            bricks[c][r].y = brickY;<br>            ctx.beginPath();<br>            ctx.rect(brickX, brickY, brickWidth, brickHeight);<br>            ctx.fillStyle = ‘#0095DD’;<br>            ctx.fill();<br>            ctx.closePath();<br>          }<br>        }<br>      }<br>    }<br><br>    function drawBall() {<br>      ctx.beginPath();<br>      ctx.arc(x, y, ballRadius, 0, Math.PI*2);<br>      ctx.fillStyle = ‘#0095DD’;<br>      ctx.fill();<br>      ctx.closePath();<br>    }<br><br>    function drawPaddle() {<br>      ctx.beginPath();<br>      ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);<br>      ctx.fillStyle = ‘#0095DD’;<br>      ctx.fill();<br>      ctx.closePath();<br>    }<br><br>    function draw() {<br>      ctx.clearRect(0, 0, canvas.width, canvas.height);<br>      drawBricks();<br>      drawBall();<br>      drawPaddle();<br>      drawScore();<br>      drawLives();<br>      collisionDetection();<br><br>      if (x + dx &gt; canvas.width - ballRadius || x + dx &lt; ballRadius) {<br>        dx = -dx;<br>      }<br>      if (y + dy &lt; ballRadius) {<br>        dy = -dy;<br>      } else if (y + dy &gt; canvas.height - ballRadius) {<br>        if (x &gt; paddleX &amp;&amp; x &lt; paddleX + paddleWidth) {<br>          dy = -dy;<br>        } else {<br>          lives–;<br>          if (!lives) {<br>            isContinue = confirm(‘Game Over!\nAre you retry?’);<br>            if (isContinue) {<br>              document.location.reload();<br>            } else {<br>              return;<br>            }<br>          } else {<br>            x = canvas.width / 2;<br>            y = canvas.height - 30;<br>            dx = 2;<br>            dy = -2;<br>            paddleX = (canvas.width - paddleWidth) / 2;<br>          }<br>        }<br>      }<br><br>      if (rightPressed &amp;&amp; paddleX &lt; canvas.width - paddleWidth) {<br>        paddleX += 7;<br>      } else if (leftPressed &amp;&amp; paddleX &gt; 0) {<br>        paddleX -= 7;<br>      }<br><br>      x += dx;<br>      y += dy;<br>      requestAnimationFrame(draw);<br>    }<br><br>    if (isContinue) {<br>      draw();<br>    }<br>  </script><br></body>
+
+
+<p>그럼 따라해보자!</p>
+<h2 id="first"><a href="#first" class="headerlink" title="first"></a>first</h2><p>캔버스 생성과 그리기!</p>
+<p>먼저, html 파일을 만든다. 여기서 중요한건, <a href="https://developer.mozilla.org/ko/docs/Web/HTML/Canvas/Tutorial" target="_blank" rel="noopener">canvas</a> 태그를 만들고, 그 안에서 벽돌을 부시고 지지고 할꺼다.</p>
+<p>그럼 만들어보자.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Gamedev Canvas Workshop<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    	* &#123; padding: 0; margin: 0; &#125;</span></span><br><span class="line"><span class="undefined">    	canvas &#123; background: #eee; display: block; margin: 0 auto; &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"myCanvas"</span> <span class="attr">width</span>=<span class="string">"480"</span> <span class="attr">height</span>=<span class="string">"320"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">	<span class="comment">// JavaScript 코드가 여기에 들어갈 것입니다.</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>html은 간단하니 따로 설명은 생략하겠다.</p>
+<p>javascript에서 canvas 엘리먼트의 아이디를 가져와서 지지고 볶고 해야한다. 이번 튜토리얼은 pure javascript 이므로 오직 javascript 문법만을 통해 구현을 할 것이다.</p>
+<p>아래 코드는 canvas 엘리먼트를 가져오고, 그 canvas를 2d로 설정 후, 사각형을 그리는 예제이다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">'myCanvas'</span>);</span><br><span class="line"><span class="keyword">var</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line"></span><br><span class="line">ctx.beginPath();</span><br><span class="line">ctx.rect(<span class="number">20</span>, <span class="number">40</span>, <span class="number">50</span>, <span class="number">50</span>);</span><br><span class="line">ctx.fillStyle = <span class="string">"#FF0000"</span>;</span><br><span class="line">ctx.fill();</span><br><span class="line">ctx.closePath();</span><br></pre></td></tr></table></figure>
+<p>위 코드를 보면, <code>ctx.beginPath()</code>는 그리기를 시작한다고 알려주는 메소드이며, <code>ctx.closePath()</code>는 그리기가 끝났다고 알리는 메소드이다. 즉, 그리고 지지고 볶는 로직은 두 메소드 안에 작성하면 된다.</p>
+<p>여기에서는 <code>ctx.rect()</code> 메소드를 통해 사각형을 그리는데 <code>x</code> 좌표의 시작 위치가 <code>20px</code>, <code>y</code> 좌표의 시작 위치가 <code>40px</code>이며, <code>width</code>와 <code>height</code>를 모두 50으로 정 사각형을 그리는 것이다.</p>
+<p><code>ctx.fillStyle</code>을 통해 색상을 지정할 수 있으며, <code>FF0000</code>는 빨강을 의미한다. 그리고 <code>ctx.fill()</code>을 수행하면 <code>ctx.fillStyle</code>에서 지정된 색상으로 채워진다. <del>신기하지? 난 그랬는데</del></p>
+<p>다음은 <del>동그라미</del> 원을 그리는 예제이다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ctx.beginPath();</span><br><span class="line">ctx.arc(<span class="number">240</span>, <span class="number">160</span>, <span class="number">20</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI*<span class="number">2</span>, <span class="literal">false</span>);</span><br><span class="line">ctx.fillStyle = <span class="string">"green"</span>;</span><br><span class="line">ctx.fill();</span><br><span class="line">ctx.closePath();</span><br></pre></td></tr></table></figure>
+<p>여기서 사각형 부분과 다른 점은 <code>ctx.arc()</code> 메소드와 <code>ctx.fillStyle</code>의 값이 문자열로 되어 있다는 점이다.</p>
+<p><code>ctx.arc()</code>의 첫 번째 파라미터는 원 중심의 <code>x</code>좌표를 가리키며 여기에서는 <code>240px</code>이다. 그럼 다음은 바로 느낌이 오지 않는가? <code>y</code>좌표이며 <code>260px</code>을 나타낸다. 그 다음은?? 길이가 <code>20px</code>인 반지름을 나타낸다. 그럼 그 다음은??? 원의 시작과 끝의 각도를 각각 나타내며 <a href="https://namu.wiki/w/%EB%9D%BC%EB%94%94%EC%95%88" target="_blank" rel="noopener">라디안</a> 값으로 나타낸다. 마지막 파라미터는 옵션이며, 그리는 방향을 나타내는데 <code>false</code>는 시계 방향을, <code>true</code>는 반시계 방향을 나타낸다. <del>복잡하네</del></p>
+<p><code>ctx.fillStyle</code>은 맨 처음처럼 16진수도 되고, 색상 키워드도 되고, <code>rgba()</code> 함수도 된다고 한다.</p>
+<p>그리고 마지막! 원의 외곽선에 색상을 부여해보자.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ctx.beginPath();</span><br><span class="line">ctx.rect(<span class="number">160</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="number">40</span>);</span><br><span class="line">ctx.strokeStyle = <span class="string">"rgba(0, 0, 255, 0.5)"</span>;</span><br><span class="line">ctx.stroke();</span><br><span class="line">ctx.closePath();</span><br></pre></td></tr></table></figure>
+<p><code>rgba()</code> 함수의 파라미터는 각각 <code>red</code>, <code>green</code>, <code>blue</code>, <code>alpha</code> 값을 나타내는데, 여기서는 불투명한 파란색을 나타내는 것이다.</p>
+<p>그럼 나머지는 다음 시간에…</p>
+<p><br><br><br><br>_이 포스트는 <a href="https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Create_the_Canvas_and_draw_on_it" target="_blank" rel="noopener">MDN 2D Breakout game</a> 의 튜토리얼을 참고한 내용 입니다._</p>
+
+        </div>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>팔로우:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/SeunghunandChan" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/seunghun.kim.96" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/seunghun-kim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/04/18/js-game-02/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">새로운</strong>
+        <p class="article-nav-title">
+        
+            javascript game (2)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/04/12/js-start/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">오래된</strong>
+        <p class="article-nav-title">Start JavaScript!</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">최근 글</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/11/15/Euclidean_algorithm/" class="title">Euclidean_algorithm</a></p>
+                            <p class="item-date"><time datetime="2017-11-15T03:20:56.000Z" itemprop="datePublished">2017-11-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_02/" class="title">print_star (2)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_01/" class="title">print_star (1)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Node-js/">Node.js</a></p>
+                            <p class="item-title"><a href="/2017/04/25/node-events-01/" class="title">Node.js events (1)</a></p>
+                            <p class="item-date"><time datetime="2017-04-24T15:00:00.000Z" itemprop="datePublished">2017-04-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Game/">Game</a></p>
+                            <p class="item-title"><a href="/2017/04/24/js-game-06/" class="title">javascript game (6)</a></p>
+                            <p class="item-date"><time datetime="2017-04-23T15:00:00.000Z" itemprop="datePublished">2017-04-24</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">카테고리</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Code/">Code</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Code/CleanCode/">CleanCode</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JDBC/">JDBC</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Game/">Game</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Node-js/">Node.js</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/jekyll/">jekyll</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">아카이브</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">11월 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">10월 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">4월 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">10월 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">3월 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">태그</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Brute-force/">Brute_force</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Euclidean/">Euclidean</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Star/">Star</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cleancode/">cleancode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/events/">events</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdbc/">jdbc</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wording/">wording</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">태그 클라우드</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Algorithms/" style="font-size: 15px;">Algorithms</a> <a href="/tags/Brute-force/" style="font-size: 10px;">Brute_force</a> <a href="/tags/Euclidean/" style="font-size: 10px;">Euclidean</a> <a href="/tags/Star/" style="font-size: 12.5px;">Star</a> <a href="/tags/cleancode/" style="font-size: 12.5px;">cleancode</a> <a href="/tags/code/" style="font-size: 12.5px;">code</a> <a href="/tags/events/" style="font-size: 10px;">events</a> <a href="/tags/game/" style="font-size: 17.5px;">game</a> <a href="/tags/html5/" style="font-size: 17.5px;">html5</a> <a href="/tags/java/" style="font-size: 12.5px;">java</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jdbc/" style="font-size: 12.5px;">jdbc</a> <a href="/tags/jekyll/" style="font-size: 10px;">jekyll</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/wording/" style="font-size: 10px;">wording</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">링크</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io/ko/">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" style="font-size:40px;color:#fff; text-decoration: none;">Dev Huna</a>
+                </h1>
+                <p>&copy; 2017 Huna</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'huna';
+    
+    
+    var disqus_url = 'https://seunghun-kim.github.io/2017/04/17/js-game-01/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
