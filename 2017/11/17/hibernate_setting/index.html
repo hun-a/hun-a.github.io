@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>hibernate 설정 + 간단 예제 | Dev Huna</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Java,Hibernate" />
+    
+    <meta name="description" content="Hibernate 란?정의관계형 데이터베이스(RDBMS)와 객체지향 언어(Java)를 연결해주는 프레임워크이다. 주로 이런 애들을 ORM (Object/Relational Mapping) 프레임워크 라고 부른다. Node.js에서는 Sequelize 라는 놈이 있다. 특징 Object/">
+<meta name="keywords" content="Java,Hibernate">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hibernate 설정 + 간단 예제">
+<meta property="og:url" content="https://seunghun-kim.github.io/2017/11/17/hibernate_setting/index.html">
+<meta property="og:site_name" content="Dev Huna">
+<meta property="og:description" content="Hibernate 란?정의관계형 데이터베이스(RDBMS)와 객체지향 언어(Java)를 연결해주는 프레임워크이다. 주로 이런 애들을 ORM (Object/Relational Mapping) 프레임워크 라고 부른다. Node.js에서는 Sequelize 라는 놈이 있다. 특징 Object/Relational Mapping  말 그대로 객체/관계의 매핑을 제공한">
+<meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2017-11-20T14:07:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hibernate 설정 + 간단 예제">
+<meta name="twitter:description" content="Hibernate 란?정의관계형 데이터베이스(RDBMS)와 객체지향 언어(Java)를 연결해주는 프레임워크이다. 주로 이런 애들을 ORM (Object/Relational Mapping) 프레임워크 라고 부른다. Node.js에서는 Sequelize 라는 놈이 있다. 특징 Object/Relational Mapping  말 그대로 객체/관계의 매핑을 제공한">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+					<h1>
+						<a href="/" style="font-size:90px;color:#fff; text-decoration: none;">Dev Huna</a>
+					</h1>
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">홈</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/">Code</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/CleanCode/">CleanCode</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JDBC/">JDBC</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Libraries/">Libraries</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Game/">Game</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Node-js/">Node.js</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/">Tips</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/jekyll/">jekyll</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://about.me/huna">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="검색" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '포스트',
+            PAGES: 'Pages',
+            CATEGORIES: '카테고리',
+            TAGS: '태그',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Java/">Java</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Java/Libraries/">Libraries</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-hibernate_setting" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        hibernate 설정 + 간단 예제
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/11/17/hibernate_setting/" class="article-date">
+            <time datetime="2017-11-17T00:00:00.000Z" itemprop="datePublished">2017-11-17</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Hibernate/">Hibernate</a>, <a class="tag-link" href="/tags/Java/">Java</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="Hibernate-란"><a href="#Hibernate-란" class="headerlink" title="Hibernate 란?"></a>Hibernate 란?</h1><h3 id="정의"><a href="#정의" class="headerlink" title="정의"></a>정의</h3><p>관계형 데이터베이스(RDBMS)와 객체지향 언어(Java)를 연결해주는 프레임워크이다. 주로 이런 애들을 ORM (Object/Relational Mapping) 프레임워크 라고 부른다. Node.js에서는 <a href="http://docs.sequelizejs.com/" target="_blank" rel="noopener">Sequelize</a> 라는 놈이 있다.</p>
+<h3 id="특징"><a href="#특징" class="headerlink" title="특징"></a>특징</h3><ul>
+<li><p>Object/Relational Mapping</p>
+<ul>
+<li>말 그대로 객체/관계의 매핑을 제공한다.</li>
+</ul>
+</li>
+<li><p>JPA Provider</p>
+<ul>
+<li>Java Persistance API를 구현하여 제공한다. 이를 통해 JPA를 지원하는 모든 환경에서 쉽게 사용할 수 있다.</li>
+</ul>
+</li>
+<li><p>Idiomatic persistence</p>
+<ul>
+<li>객체지향 패러다임에서 자연스럽게 Persistance class를 개발할 수 있게 도와준다.</li>
+</ul>
+</li>
+<li><p>High Performance</p>
+<ul>
+<li>개발자 생산성 및 런타임 측면에서 그냥 JDBC 코드를 쓴것보다 우수한 성능을 제공함.</li>
+</ul>
+</li>
+<li><p>Scalability</p>
+<ul>
+<li>어플리케이션이 서버 클러스터에서 작동하고 확장성이 뛰어난 아키텍처를 제공하도록 설계됨.</li>
+</ul>
+</li>
+<li><p>Reliable</p>
+<ul>
+<li>수많은 Java 개발자들이 사용하여 안전성 및 품질이 입증됨.</li>
+</ul>
+</li>
+<li><p>Extensibility</p>
+<ul>
+<li>설정과 확장이 쉬움</li>
+</ul>
+</li>
+</ul>
+<p>이정도 되겠다.</p>
+<h1 id="자-설정을-해보자"><a href="#자-설정을-해보자" class="headerlink" title="자 설정을 해보자"></a>자 설정을 해보자</h1><p>우리는 Gradle 을 이용해서 의존성을 설정해 줄꺼다. 안그럼 넘넘넘넘넘나 번거롭다. 그리고 IDE는 Eclipse를 사용할 것이다. <em>(무료니깐!)</em></p>
+<p>설마 Eclipse를 모를 사람은 없을테니 자세한 설명은 생략한다. 다운은 <a href="https://www.eclipse.org/downloads/download.php?file=/oomph/epp/oxygen/R" target="_blank" rel="noopener">여기</a>에서 받도록..</p>
+<p>Gradle은 모르는 사람이 있을 수도 있다.</p>
+<p>하지만 나도 잘은 모른다. 그냥 라이브러리 갖다 쓸 수 있는 정도만 안다. 앞으로 더 알게되면 포스팅 하도록 하겠다.</p>
+<p>Gradle 다운은 <a href="https://gradle.org/install/" target="_blank" rel="noopener">여기</a>에서 편한 방법으로 받으면 된다.</p>
+<p>참고로 JDK 9 를 이용해서 했었는데 호환이 잘 안되는지 Eclipse와 Gradle 연동이 안됬었다. 그래서 JDK를 다시 8 버전대로 바꾸니깐 잘 됬었다. 참고하시길…</p>
+<p><br></p>
+<p>자 그럼 우린 JDK와 Eclipse, Gradle이 모두 준비 되었다. <del>(벌써?)</del></p>
+<p>나는 블로그에 그림 넣는걸 별로 안좋아한다. <del>(절대 귀찮아서가 아니다 :( )</del></p>
+<p>따라서 커맨드 형식으로 보여주기 위해 프로젝트를 커맨드 형식으로 생성 후 Eclipse에서 import 하는 방식으로 진행할 것이다.</p>
+<p><br></p>
+<h3 id="Eclipse-프로젝트-생성"><a href="#Eclipse-프로젝트-생성" class="headerlink" title="Eclipse 프로젝트 생성"></a>Eclipse 프로젝트 생성</h3><p>먼저 프로젝트를 만들 적당한 곳으로 이동한다. 나는 <code>~/workspace/hibernate</code> 이곳을 프로젝트 홈으로 만들 것이다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p ~/workspace/hibernate</span><br><span class="line">$ cd ~/workspace/hibernate</span><br></pre></td></tr></table></figure>
+<p>그런 다음 <code>gradle init --type java-library</code> 이라고 명령어를 날려보자.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ gradle init --type java-library</span><br><span class="line"></span><br><span class="line">BUILD SUCCESSFUL in 1s</span><br><span class="line">2 actionable tasks: 2 executed</span><br><span class="line">$ ls -al</span><br><span class="line">total 40</span><br><span class="line">drwxr-xr-x  9 hun  staff   306 Nov 17 13:45 .</span><br><span class="line">drwxr-xr-x  3 hun  staff   102 Nov 17 13:43 ..</span><br><span class="line">drwxr-xr-x  4 hun  staff   136 Nov 17 13:43 .gradle</span><br><span class="line">-rw-r--r--  1 hun  staff  1031 Nov 17 13:43 build.gradle</span><br><span class="line">drwxr-xr-x  3 hun  staff   102 Nov 17 13:43 gradle</span><br><span class="line">-rwxr-xr-x  1 hun  staff  5296 Nov 17 13:43 gradlew</span><br><span class="line">-rw-r--r--  1 hun  staff  2260 Nov 17 13:43 gradlew.bat</span><br><span class="line">-rw-r--r--  1 hun  staff   584 Nov 17 13:43 settings.gradle</span><br><span class="line">drwxr-xr-x  4 hun  staff   136 Nov 17 13:43 src</span><br></pre></td></tr></table></figure>
+<p>자 이제 build.gradle 파일을 열어서 java와 eclipse를 사용하겠다고 알려주자.</p>
+<p><code>apply plugin: &#39;java-library&#39;</code> 부분 아래에 <code>apply pulgin: &#39;eclipse&#39;</code>를 추가하자.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// Apply the java-library plugin to add support for Java Library</span><br><span class="line">apply plugin: &apos;java-library&apos;</span><br><span class="line">apply pulgin: &apos;eclipse&apos; // 여기!</span><br></pre></td></tr></table></figure>
+<p>이제 저장하고 나서 다시 프로젝트의 홈 디렉토리로 돌아가서 다음 명령어를 날려보자.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ gradle eclipse</span><br><span class="line"></span><br><span class="line">BUILD SUCCESSFUL in 1s</span><br><span class="line">3 actionable tasks: 3 executed</span><br><span class="line">$ ls -al</span><br><span class="line">total 56</span><br><span class="line">drwxr-xr-x  12 hun  staff   408 Nov 17 13:51 .</span><br><span class="line">drwxr-xr-x   3 hun  staff   102 Nov 17 13:50 ..</span><br><span class="line">-rw-r--r--   1 hun  staff  3026 Nov 17 13:51 .classpath</span><br><span class="line">drwxr-xr-x   4 hun  staff   136 Nov 17 13:50 .gradle</span><br><span class="line">-rw-r--r--   1 hun  staff   383 Nov 17 13:51 .project</span><br><span class="line">drwxr-xr-x   3 hun  staff   102 Nov 17 13:51 .settings</span><br><span class="line">-rw-r--r--   1 hun  staff  1055 Nov 17 13:51 build.gradle</span><br><span class="line">drwxr-xr-x   3 hun  staff   102 Nov 17 13:50 gradle</span><br><span class="line">-rwxr-xr-x   1 hun  staff  5296 Nov 17 13:50 gradlew</span><br><span class="line">-rw-r--r--   1 hun  staff  2260 Nov 17 13:50 gradlew.bat</span><br><span class="line">-rw-r--r--   1 hun  staff   584 Nov 17 13:50 settings.gradle</span><br><span class="line">drwxr-xr-x   4 hun  staff   136 Nov 17 13:50 src</span><br></pre></td></tr></table></figure>
+<p>자, 이제 Eclipse 프로젝트가 생성이 되었다. ~(참 쉽죠?)~</p>
+<h3 id="Hibernate-추가"><a href="#Hibernate-추가" class="headerlink" title="Hibernate 추가"></a>Hibernate 추가</h3><p>이제, Eclipse로 돌아가서 File &gt; Import 를 클릭한 뒤, gradle &gt; Existing Gradle Project 를 선택하고 Next!</p>
+<p>How to experience the best blah blah blah~ 나오면 Next!</p>
+<p>Project root directory 부분에 우리가 만들었던 <code>~/workspace/hibernate</code> 를 절대경로로 바꿔주고 난 뒤 Finish!</p>
+<p>이제 Eclipse 프로젝트가 완성되었다. <del>(왜케 힘들지? …)</del></p>
+<p>하지만 우린 아직 갈길이 멀다. Eclipse에서 build.gradle 파일을 열어 몇가지 내용을 추가해주자.</p>
+<p>현재 build.gradle 파일을 보면 3가지 섹션으로 나눠져 있는것을 알 수 있을 것이다.</p>
+<p>첫 번째는 apply 가 적힌 부분! 내가 이런애들 쓸꺼야~ 라고 선언해주는 부분이다.</p>
+<p>두 번째는 repositories 이 부분!</p>
+<p>이 부분에서는 우리가 가져올 라이브러리들이 존재하는 경로를 알려주면 된다. Hibernate의 경우 Maven 리파지토리를 쓰면 된다.</p>
+<p>마지막 세 번째는 dependencies 이 부분!</p>
+<p>우리가 실제로 사용할 라이브러리들을 알려주는 부분이다. 여기에 적힌 라이브러리를 gradle이 보고, 자동으로 의존성을 확인해서 관련된 라이브러리들을 모~두 가져다 준다. <em>(슈퍼 쿨!)</em></p>
+<p>자 그럼 Hibernate를 추가해보자! 아래에 같이 build.gradle 파일을 수정한 뒤 저장해보자.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * This build file was generated by the Gradle &apos;init&apos; task.</span><br><span class="line"> *</span><br><span class="line"> * This generated file contains a sample Java Library project to get you started.</span><br><span class="line"> * For more details take a look at the Java Libraries chapter in the Gradle</span><br><span class="line"> * user guide available at https://docs.gradle.org/4.3.1/userguide/java_library_plugin.html</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">// Apply the java-library plugin to add support for Java Library</span><br><span class="line">apply plugin: &apos;java-library&apos;</span><br><span class="line">apply plugin: &apos;eclipse&apos;</span><br><span class="line"></span><br><span class="line">// In this section you declare where to find the dependencies of your project</span><br><span class="line">repositories &#123;</span><br><span class="line">    // Use jcenter for resolving your dependencies.</span><br><span class="line">    // You can declare any Maven/Ivy/file repository here.</span><br><span class="line">    jcenter()</span><br><span class="line">    mavenCentral()  // maven 리파지토리를 추가해준다</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    // This dependency is exported to consumers, that is to say found on their compile classpath.</span><br><span class="line">    api &apos;org.apache.commons:commons-math3:3.6.1&apos;</span><br><span class="line"></span><br><span class="line">    // This dependency is used internally, and not exposed to consumers on their own compile classpath.</span><br><span class="line">    implementation &apos;com.google.guava:guava:23.0&apos;</span><br><span class="line"></span><br><span class="line">    // Use JUnit test framework</span><br><span class="line">    testImplementation &apos;junit:junit:4.12&apos;</span><br><span class="line"></span><br><span class="line">    // hibernate 5.2.12 버전과 slf4j 라이브러리를 추가해준다.</span><br><span class="line">    compile &apos;org.hibernate:hibernate-core:5.2.12.Final&apos;</span><br><span class="line">    compile &apos;org.slf4j:slf4j-api:1.7.21&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>이제 hibernate를 사용할 준비가 완료되었다.</p>
+<p>커맨드창으로 가서 gradle build 라고 했을때 오류 없이 잘 되면 성공한 것이다. <del>(당연한 소릴 하네…)</del></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ gradle build</span><br><span class="line"></span><br><span class="line">BUILD SUCCESSFUL in 4s</span><br><span class="line">4 actionable tasks: 4 executed</span><br></pre></td></tr></table></figure>
+<h3 id="CUBRID-추가"><a href="#CUBRID-추가" class="headerlink" title="CUBRID 추가"></a>CUBRID 추가</h3><p>나는 데이터베이스를 국산 오픈소스 DB인 <a href="http://cubrid.com/" target="_blank" rel="noopener">CUBRID</a>를 사용할 것이다. MySQL이나 다른 유명한 DB들은 검색하면 워낙에 많은 정보들이 나오니 다른거 쓰실 분들은 다른거 쓰셔도 된다.</p>
+<p>이를 위해 우리는 repositories와 dependencies에 CUBRID 설정을 추가해야 한다.</p>
+<p>다음처럼 추가해보자.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">repositories &#123;</span><br><span class="line">    // Use jcenter for resolving your dependencies.</span><br><span class="line">    // You can declare any Maven/Ivy/file repository here.</span><br><span class="line">    jcenter()</span><br><span class="line">    mavenCentral()</span><br><span class="line"></span><br><span class="line">	// CUBRID를 위한 리파지토리 추가</span><br><span class="line">	maven &#123;</span><br><span class="line">		url &apos;http://maven.cubrid.org/&apos;</span><br><span class="line">	&#125;    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    // This dependency is exported to consumers, that is to say found on their compile classpath.</span><br><span class="line">    api &apos;org.apache.commons:commons-math3:3.6.1&apos;</span><br><span class="line"></span><br><span class="line">    // This dependency is used internally, and not exposed to consumers on their own compile classpath.</span><br><span class="line">    implementation &apos;com.google.guava:guava:23.0&apos;</span><br><span class="line"></span><br><span class="line">    // Use JUnit test framework</span><br><span class="line">    testImplementation &apos;junit:junit:4.12&apos;</span><br><span class="line">    testImplementation &apos;org.hamcrest:hamcrest-all:1.3&apos;</span><br><span class="line"></span><br><span class="line">    compile &apos;org.hibernate:hibernate-core:5.2.12.Final&apos;</span><br><span class="line">    compile &apos;org.slf4j:slf4j-api:1.7.21&apos;</span><br><span class="line"></span><br><span class="line">    // CUBRID를 사용하기 위한 추가!</span><br><span class="line">	  compile group: &apos;cubrid&apos;, name: &apos;cubrid-jdbc&apos;, version: &apos;10.1.0.7663&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>hibernate의 경우 <code>compile &#39;org.hibernate:hibernate-core:5.2.12.Final&#39;</code> 이렇게 되 있는데 CUBRID는 왜 <code>compile group: &#39;cubrid&#39;, name: &#39;cubrid-jdbc&#39;, version: &#39;10.1.0.7663&#39;</code> 이렇게 되 있는지 궁금해 할 수 있겠다.</p>
+<p>근데 별 차이 없다. hibernate 선언한 부분은 CUBRID 선언한 부분을 그저 짧게 작성한 것 뿐이다. :)</p>
+<p>여기까지 하고 다시 커맨드로 가서 <code>gradle build</code> 를 입력해서 오류가 안난다면 성공이다.</p>
+<h3 id="Hibernate-세팅"><a href="#Hibernate-세팅" class="headerlink" title="Hibernate 세팅"></a>Hibernate 세팅</h3><p>이제 본격적인 Hibernate를 사용할 시간이다. 두근두근 하지 않는가?</p>
+<p>자 먼저 Eclipse 프로젝트의 구조를 보면 다음과 같이 생겼을 것이다. <del>(이미지를 넣을껄 그랬나?)</del></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">hibernate</span><br><span class="line">  `- src/main/java</span><br><span class="line">  `- src/test/java</span><br><span class="line">  `- JRE System Library [JavaSE-1.8]</span><br><span class="line">  `- Project and External Dependencies</span><br><span class="line">  `- gradle</span><br><span class="line">  `- src</span><br><span class="line">  `- build.gradle</span><br><span class="line">  `- gradlew</span><br><span class="line">  `- gradlew.bat</span><br><span class="line">  `- settings.gradle</span><br></pre></td></tr></table></figure>
+<p>여기에 hibernate 설정 파일을 추가하기 위해 프로젝트명을 우클릭하여 new &gt; source folder 를 클릭한 뒤 <code>src/main/resources</code> 라고 생성해준다.</p>
+<p>이제 방금 만든 <code>src/main/resources</code> 를 우클릭하여 new &gt; file 을 클릭한 뒤 <code>hibernate.cfg.xml</code> 이라는 파일을 생성해준다. 이 파일이 hibernate의 DB 접속 정보와 설정들, 그리고 매핑 클래스들 등 온갖 정보가 들어가게 된다.</p>
+<p>우리는 아주 <strong>간단하게</strong> 만들 예정이니 참고하기 바란다.</p>
+<p>hibernate.cfg.xml 파일에 아래와 동일하게 입력한다.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE hibernate-configuration PUBLIC</span></span><br><span class="line"><span class="meta">		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"</span></span><br><span class="line"><span class="meta">		"http://hibernate.org/dtd/hibernate-configuration-3.0.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hibernate-configuration</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">session-factory</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- Database connection properties - Driver, URL, user, password --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.connection.driver_class"</span>&gt;</span>cubrid.jdbc.driver.CUBRIDDriver<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.connection.url"</span>&gt;</span>jdbc:cubrid:localhost:33000:demodb:public::<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.connection.username"</span>&gt;</span>public<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.connection.password"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- Connection Pool Size --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.connection.pool_size"</span>&gt;</span>1<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">&lt;!-- Outputs the SQL queries, should be disabled in Production --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.show_sql"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">&lt;!-- Dialect is required to let Hibernate know the Database Type, MySQL, Oracle etc</span></span><br><span class="line"><span class="comment">			Hibernate 4 automatically figure out Dialect from Database Connection Metadata --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.dialect"</span>&gt;</span>org.hibernate.dialect.CUBRIDDialect<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">mapping</span> <span class="attr">class</span>=<span class="string">"dev.huna.model.Employee"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">mapping</span> <span class="attr">class</span>=<span class="string">"dev.huna.model.Address"</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">session-factory</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">hibernate-configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>&lt;session-factory&gt;</code>에 있는 프로퍼티들 중 중요한 애들은 다음과 같다.</p>
+<ul>
+<li><code>hibernate.connection.driver_class</code>: JDBC 드라이버가 로드될 때 필요한 클래스명을 알려주는 놈이다.</li>
+<li><code>hibernate.connection.url</code>: JDBC Connection을 맺기 위한 url 접속 정보다.</li>
+<li><code>hibernate.connection.username</code>: DB 사용자 이름이다.</li>
+<li><code>hibernate.connection.password</code>: DB 사용자의 비밀번호이다.</li>
+<li><code>hibernate.connection.pool_size</code>: Connection pool을 몇 개 사용할 것인지 설정이다.</li>
+<li><code>hibernate.show_sql</code>: 이 값을 true로 설정하면 HQL이라는 Hibernate sql이 일반 SQL로 변환되어 로그로 출력된다.</li>
+<li><code>hibernate.dialect</code>: 특정 DBMS에 맞게 설정된 클래스를 지정하는 부분인데 사실 4.대부터는 자동으로 잡아줘서 상관이 없긴 하다.</li>
+</ul>
+<p>마지막으로 <code>&lt;mapping&gt;</code> 태그는 RDBMS의 테이블과 매핑시킬 클래스를 지정해 주는 것이다. 곧 Employee와 Address 클래스를 만들 것이다.</p>
+<p>다 됬는가? 그럼 테이블을 먼저 준비해보자.</p>
+<h3 id="Database-세팅"><a href="#Database-세팅" class="headerlink" title="Database 세팅"></a>Database 세팅</h3><p>먼저 table을 만들어보자. 간단한 Employee와 Address 이다.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`Employee`</span> (</span><br><span class="line">  <span class="string">`emp_id`</span> <span class="built_in">int</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`emp_name`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`emp_salary`</span> <span class="built_in">numeric</span>(<span class="number">10</span>,<span class="number">0</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_id`</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`Address`</span> (</span><br><span class="line">  <span class="string">`emp_id`</span> <span class="built_in">int</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`address_line1`</span> <span class="built_in">varchar</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`zipcode`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`city`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_id`</span>),</span><br><span class="line">  <span class="keyword">CONSTRAINT</span> <span class="string">`emp_fk_1`</span> FOREIGN <span class="keyword">KEY</span> (<span class="string">`emp_id`</span>) <span class="keyword">REFERENCES</span> <span class="string">`Employee`</span> (<span class="string">`emp_id`</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`Employee`</span> (<span class="string">`emp_id`</span>, <span class="string">`emp_name`</span>, <span class="string">`emp_salary`</span>)</span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">	(<span class="number">1</span>, <span class="string">'Mr. Huna'</span>, <span class="number">1000</span>),</span><br><span class="line">	(<span class="number">2</span>, <span class="string">'Miss A'</span>, <span class="number">200</span>),</span><br><span class="line">	(<span class="number">3</span>, <span class="string">'Dr. strange'</span>, <span class="number">300</span>),</span><br><span class="line">	(<span class="number">4</span>, <span class="string">'Jack and kong tree water'</span>, <span class="number">400</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`Address`</span> (<span class="string">`emp_id`</span>, <span class="string">`address_line1`</span>, <span class="string">`zipcode`</span>, <span class="string">`city`</span>)</span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">	(<span class="number">1</span>, <span class="string">'devro 1-2'</span>, <span class="string">'95129'</span>, <span class="string">'Developer Town'</span>),</span><br><span class="line">	(<span class="number">2</span>, <span class="string">'room 9'</span>, <span class="string">'95051'</span>, <span class="string">'JYP'</span>),</span><br><span class="line">	(<span class="number">3</span>, <span class="string">'undefined'</span>, <span class="string">'560100'</span>, <span class="string">'Marvel Universe'</span>),</span><br><span class="line">	(<span class="number">4</span>, <span class="string">'first street'</span>, <span class="string">'100100'</span>, <span class="string">'Above the cloud'</span>);</span><br></pre></td></tr></table></figure>
+<p>Employee 와 Address는 foreign key로 연결되어 있고, 1:1 대응관계에 있다는 사실을 염두해두기 바란다. join을 구현하려면 이게 중요하다.</p>
+<h3 id="Mapping-class-작성"><a href="#Mapping-class-작성" class="headerlink" title="Mapping class 작성"></a>Mapping class 작성</h3><p>방금 만든 두 개의 테이블에 대응하는 클래스를 각각 만들어야 한다. 매핑하는 방법은 xml을 이용하는 방법이 있고, annotation을 이용하는 방법이 있는데 여기서는 annotation을 이용하도록 하겠다.</p>
+<p>클래스 이름은 알아보기 쉽게 테이블과 똑같이 만들어주자.</p>
+<h4 id="dev-huna-model-Employee"><a href="#dev-huna-model-Employee" class="headerlink" title="dev.huna.model.Employee"></a>dev.huna.model.Employee</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> dev.huna.model;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.persistence.Column;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.Entity;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.GeneratedValue;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.GenerationType;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.Id;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.OneToOne;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.Table;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.UniqueConstraint;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name=<span class="string">"EMPLOYEE"</span>,</span><br><span class="line">	uniqueConstraints=&#123;<span class="meta">@UniqueConstraint</span>(columnNames=&#123;<span class="string">"EMP_ID"</span>&#125;)&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> empId;</span><br><span class="line">	<span class="keyword">private</span> String empName;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> empSalary;</span><br><span class="line">	<span class="keyword">private</span> Address address;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Id</span></span><br><span class="line">	<span class="meta">@Column</span>(name=<span class="string">"EMP_ID"</span>, nullable=<span class="keyword">false</span>)</span><br><span class="line">	<span class="meta">@GeneratedValue</span>(strategy=GenerationType.IDENTITY)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getEmpId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> empId;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEmpId</span><span class="params">(<span class="keyword">int</span> empId)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.empId = empId;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Column</span>(name=<span class="string">"EMP_NAME"</span>, length=<span class="number">20</span>, nullable=<span class="keyword">false</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getEmpName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> empName;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEmpName</span><span class="params">(String empName)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.empName = empName;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Column</span>(name=<span class="string">"EMP_SALARY"</span>, nullable=<span class="keyword">false</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getEmpSalary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> empSalary;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEmpSalary</span><span class="params">(<span class="keyword">int</span> empSalary)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.empSalary = empSalary;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@OneToOne</span>(mappedBy=<span class="string">"employee"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Address <span class="title">getAddress</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> address;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAddress</span><span class="params">(Address address)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.address = address;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Employee [empId="</span> + empId + <span class="string">", empName="</span></span><br><span class="line">				+ empName + <span class="string">", empSalary="</span> + empSalary + <span class="string">"]"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="dev-huna-model-Address"><a href="#dev-huna-model-Address" class="headerlink" title="dev.huna.model.Address"></a>dev.huna.model.Address</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> dev.huna.model;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.persistence.Column;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.Entity;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.Id;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.OneToOne;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.PrimaryKeyJoinColumn;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.Table;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.UniqueConstraint;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name=<span class="string">"ADDRESS"</span>,</span><br><span class="line">	uniqueConstraints=&#123;<span class="meta">@UniqueConstraint</span>(columnNames=&#123;<span class="string">"EMP_ID"</span>&#125;)&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Address</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> empId;</span><br><span class="line">	<span class="keyword">private</span> String addressLine1;</span><br><span class="line">	<span class="keyword">private</span> String zipCode;</span><br><span class="line">	<span class="keyword">private</span> String city;</span><br><span class="line">	<span class="keyword">private</span> Employee employee;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Id</span></span><br><span class="line">	<span class="meta">@Column</span>(name=<span class="string">"EMP_ID"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getEmpId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> empId;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEmpId</span><span class="params">(<span class="keyword">int</span> empId)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.empId = empId;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Column</span>(name=<span class="string">"ADDRESS_LINE1"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getAddressLine1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> addressLine1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAddressLine1</span><span class="params">(String addressLine1)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.addressLine1 = addressLine1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Column</span>(name=<span class="string">"ZIPCODE"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getZipCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> zipCode;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setZipCode</span><span class="params">(String zipCode)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.zipCode = zipCode;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Column</span>(name=<span class="string">"CITY"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getCity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> city;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCity</span><span class="params">(String city)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.city = city;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@OneToOne</span></span><br><span class="line">	<span class="meta">@PrimaryKeyJoinColumn</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Employee <span class="title">getEmployee</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> employee;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEmployee</span><span class="params">(Employee employee)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.employee = employee;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Address [empId="</span> + empId + <span class="string">", addressLine1="</span></span><br><span class="line">				+ addressLine1 + <span class="string">", zipCode="</span> + zipCode + <span class="string">", city="</span> + city</span><br><span class="line">				+ <span class="string">"]"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>다른 annotation들은 비교적 간단하나 개인적으로 JOIN에 사용되는 annotation이 난해했었다.</p>
+<p>앞서 이야기한대로 1:1 대응관계이기 때문에 <code>@OneToOne</code> annotation을 사용하였다.</p>
+<p>참고로 <code>Employee</code> 클래스의 <code>@OneToOne</code>의 <code>mappedBy</code>에는 <code>Address</code> 클래스의 <code>employee</code>를 멤버변수명을 써주면 되고</p>
+<p><code>Address</code> 클래스에서 <code>Employee</code> 클래스를 참조하는 경우에는 <code>@PrimaryKeyJoinColumn</code> annotation은 말 그대로 Primary key 이면서 join 컬럼으로 사용될 때 사용하면 되므로 요걸 사요하면 된다. <del>(참 쉽죠?)</del></p>
+<h3 id="Hibernate-연결-클래스"><a href="#Hibernate-연결-클래스" class="headerlink" title="Hibernate 연결 클래스"></a>Hibernate 연결 클래스</h3><p>Hibernate를 이용해서 DBMS에 접속하기 위해서는 먼저 <code>Configuration</code> 클래스를 만들어서 <code>hibernate.cfg.xml</code> 설정파일을 읽어들인 다음 <code>SessionFactory</code> 를 생성해내면 된다.</p>
+<p>소스코드는 다음과 같다.</p>
+<h4 id="dev-huna-util-HibernateUtil"><a href="#dev-huna-util-HibernateUtil" class="headerlink" title="dev.huna.util.HibernateUtil"></a>dev.huna.util.HibernateUtil</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> dev.huna.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.hibernate.SessionFactory;</span><br><span class="line"><span class="keyword">import</span> org.hibernate.cfg.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HibernateUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> SessionFactory sessionFactory;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> SessionFactory <span class="title">buildSessionFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Configuration configuration = <span class="keyword">new</span> Configuration();</span><br><span class="line">			configuration.configure(<span class="string">"hibernate.cfg.xml"</span>);</span><br><span class="line">			<span class="keyword">return</span> configuration.buildSessionFactory();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">			ex.printStackTrace();</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> ExceptionInInitializerError(ex);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SessionFactory <span class="title">getSessionFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(sessionFactory == <span class="keyword">null</span>) sessionFactory = buildSessionFactory();</span><br><span class="line">		<span class="keyword">return</span> sessionFactory;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Main-클래스"><a href="#Main-클래스" class="headerlink" title="Main 클래스"></a>Main 클래스</h3><p>이제 고지가 눈앞이다. 쫌만 힘내길 바란다.</p>
+<p><code>Main</code> 클래스는 그냥 Hibernate를 이용해서 질의를 수행한다. 여기서는 간단히 <a href="https://docs.jboss.org/hibernate/orm/3.5/reference/en/html/queryhql.html" target="_blank" rel="noopener">HQL</a>이라고 불리는 문법을 통해 질의를 수행해 볼 것이다.</p>
+<h4 id="dev-huna-main-Main"><a href="#dev-huna-main-Main" class="headerlink" title="dev.huna.main.Main"></a>dev.huna.main.Main</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> dev.huna.main;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.hibernate.Session;</span><br><span class="line"><span class="keyword">import</span> org.hibernate.SessionFactory;</span><br><span class="line"><span class="keyword">import</span> org.hibernate.query.Query;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> dev.huna.model.Employee;</span><br><span class="line"><span class="keyword">import</span> dev.huna.util.HibernateUtil;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();</span><br><span class="line">		Session session = sessionFactory.getCurrentSession();</span><br><span class="line"></span><br><span class="line">		session.beginTransaction();</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Select all records at table of Employee</span></span><br><span class="line">		Query query = session.createQuery(<span class="string">"FROM Employee"</span>);</span><br><span class="line"></span><br><span class="line">		List&lt;Employee&gt; empList = query.list();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (Employee emp: empList) &#123;</span><br><span class="line">			System.out.println(emp);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Select specific record at table of Employee</span></span><br><span class="line">		query = session.createQuery(<span class="string">"FROM Employee WHERE empId = :id"</span>);</span><br><span class="line">		query.setParameter(<span class="string">"id"</span>, <span class="number">1</span>);</span><br><span class="line">		Employee employee = (Employee) query.uniqueResult();</span><br><span class="line">		System.out.println(employee);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Inner join between Employee and Address</span></span><br><span class="line">		query = session.createQuery(<span class="string">"select e.empName, a.city, a.addressLine1 from Employee e INNER JOIN e.address a"</span>);</span><br><span class="line">		List&lt;Object[]&gt; addrList = query.list();</span><br><span class="line">		<span class="keyword">for</span> (Object[] arr: addrList) &#123;</span><br><span class="line">			System.out.println(Arrays.toString(arr));</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		session.getTransaction().commit();</span><br><span class="line"></span><br><span class="line">		HibernateUtil.getSessionFactory().close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>처음 질의 <code>FROM Employee</code> 는 Employee 테이블의 모든 데이터를 조회한다. 주의할 점은 Employee 는 Java 클래스를 의미하므로 첫 글짜가 <code>Employee</code> 클래스처럼 대문자로 적혀 있다. 궁금하면 <code>FROM employee</code> 로 수정해서 돌려보길 바란다. <code>Exception</code>이 후두두두둑 떨어질 것이다.</p>
+<p>두 번째 질의는 파라미터를 바인딩 하는 예제이다. JDBC의 prepare, setXXX 이런 애들과 동일하다. 여기서 또 주의해야 할 점은 <code>WHERE empId</code> 에서 <code>empId</code> 는 <code>Employee</code> 클래스의 <code>empId</code> 멤버변수를 의미한다. 대소문자 주의하기 바란다.</p>
+<p>아! 바인딩 할때 <code>:id</code> 와 같이 임의로 이름을 정해준 뒤 <code>query.setParameter(변수명, 값)</code> 형태로 바인딩하면 된다. JDBC 드라이버에 비해 굉장히 추상적이라서 맘에 든다. <em>(<code>setObject()</code> 도 비슷하긴 하지만… 그래도…)</em></p>
+<p>마지막 예제는 <code>Employee</code> 클래스와 <code>Address</code> 클래스의 <code>INNER JOIN</code> 예제이다. <code>Employee</code> 클래스에서 <code>address</code> 라는 멤버변수를 생성했던걸 기억하는가? HQL 내부의 <code>e.address</code> 는 바로 그 멤버변수를 가리키는 것이다. Hibernate 는 질의도 객체지향적이다! <em>(슈퍼 쿨!)</em></p>
+<p>join의 경우 결과값이 <code>Object[]</code>로 생성됨을 유의하자.</p>
+<p><br><br><br></p>
+<p>휴, 드디어 끝났다.</p>
+<p>실행은 각자 해보길 바란다.</p>
+
+        </div>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>팔로우:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/SeunghunandChan" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/seunghun.kim.96" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/seunghun-kim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/11/15/Euclidean_algorithm/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">오래된</strong>
+        <p class="article-nav-title">Euclidean_algorithm</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">최근 글</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Java/Libraries/">Libraries</a></p>
+                            <p class="item-title"><a href="/2017/11/17/hibernate_setting/" class="title">hibernate 설정 + 간단 예제</a></p>
+                            <p class="item-date"><time datetime="2017-11-17T00:00:00.000Z" itemprop="datePublished">2017-11-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/11/15/Euclidean_algorithm/" class="title">Euclidean_algorithm</a></p>
+                            <p class="item-date"><time datetime="2017-11-15T03:20:56.000Z" itemprop="datePublished">2017-11-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_02/" class="title">print_star (2)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_01/" class="title">print_star (1)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Node-js/">Node.js</a></p>
+                            <p class="item-title"><a href="/2017/04/25/node-events-01/" class="title">Node.js events (1)</a></p>
+                            <p class="item-date"><time datetime="2017-04-24T15:00:00.000Z" itemprop="datePublished">2017-04-25</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">카테고리</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Code/">Code</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Code/CleanCode/">CleanCode</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JDBC/">JDBC</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Libraries/">Libraries</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Game/">Game</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Node-js/">Node.js</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/jekyll/">jekyll</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">아카이브</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">11월 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">10월 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">4월 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">10월 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">3월 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">태그</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Brute-force/">Brute_force</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Euclidean/">Euclidean</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hibernate/">Hibernate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Star/">Star</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cleancode/">cleancode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/events/">events</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdbc/">jdbc</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wording/">wording</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">태그 클라우드</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Algorithms/" style="font-size: 15px;">Algorithms</a> <a href="/tags/Brute-force/" style="font-size: 10px;">Brute_force</a> <a href="/tags/Euclidean/" style="font-size: 10px;">Euclidean</a> <a href="/tags/Hibernate/" style="font-size: 10px;">Hibernate</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Star/" style="font-size: 12.5px;">Star</a> <a href="/tags/cleancode/" style="font-size: 12.5px;">cleancode</a> <a href="/tags/code/" style="font-size: 12.5px;">code</a> <a href="/tags/events/" style="font-size: 10px;">events</a> <a href="/tags/game/" style="font-size: 17.5px;">game</a> <a href="/tags/html5/" style="font-size: 17.5px;">html5</a> <a href="/tags/java/" style="font-size: 12.5px;">java</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jdbc/" style="font-size: 12.5px;">jdbc</a> <a href="/tags/jekyll/" style="font-size: 10px;">jekyll</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/wording/" style="font-size: 10px;">wording</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">링크</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io/ko/">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5009520982293904"
+     data-ad-slot="8981626582"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" style="font-size:40px;color:#fff; text-decoration: none;">Dev Huna</a>
+                </h1>
+                <p>&copy; 2017 Huna</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'huna';
+    
+    
+    var disqus_url = 'https://seunghun-kim.github.io/2017/11/17/hibernate_setting/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
