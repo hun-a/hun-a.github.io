@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Dev Huna">
 <meta property="og:description" content="먼저 들어가기 앞서…본인은 앱등이라 Mac OS X를 사용한다. 그런데 메일로 첨부파일을 보내면 받는 쪽 (아마도 Windows 사용자?) 에서 파일명이 왜 이렇게 오냐고 뭐라고 한 적이 있었다. 대충 아래와 같은 느낌? 🤬 1ㅈㅏㅂㅏㅅㅡㅋㅡㄹㅣㅂㅌㅡㅉㅏㅇ.doc 그때는 그냥 OS끼리 호환이 안되나 보다 하고 별거 아닌듯 넘겼었는데 오늘 이것 때문에 엄청">
 <meta property="og:locale" content="ko">
-<meta property="og:updated_time" content="2018-12-17T17:31:49.572Z">
+<meta property="og:updated_time" content="2018-12-17T17:39:11.727Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS - String.normalize()">
 <meta name="twitter:description" content="먼저 들어가기 앞서…본인은 앱등이라 Mac OS X를 사용한다. 그런데 메일로 첨부파일을 보내면 받는 쪽 (아마도 Windows 사용자?) 에서 파일명이 왜 이렇게 오냐고 뭐라고 한 적이 있었다. 대충 아래와 같은 느낌? 🤬 1ㅈㅏㅂㅏㅅㅡㅋㅡㄹㅣㅂㅌㅡㅉㅏㅇ.doc 그때는 그냥 OS끼리 호환이 안되나 보다 하고 별거 아닌듯 넘겼었는데 오늘 이것 때문에 엄청">
@@ -187,7 +187,7 @@
 <p>하지만… 몇시간 동안… 로우는… <code>img</code>는… 꿈쩍도 하지 않았다…</p>
 <h1 id="멘붕"><a href="#멘붕" class="headerlink" title="멘붕"></a>멘붕</h1><p>카테고리명을 <code>가전제품</code> 이라고 예를 들면, 일반적으로 <code>&quot;가전제품&quot;.length</code> 의 값은 <code>4</code> 로 평가된다.</p>
 <p>즉, 한글 문자 1개를 1로 평가한다.</p>
-<p>근데 <code>fs.readdir</code> 함수로 읽은 파일명은 화면에서 위와 동일하게 출력되면서 <code>length</code>가 10 으로 평가되었다.</p>
+<p>근데 <code>fs.readdir</code> 함수로 읽은 파일명은 화면에서는 <code>가전제품</code> 이라고 출력되면서 <code>length</code>가 10 으로 평가되었다.</p>
 <p>이게 뭐지? 혼란스럽다.</p>
 <h1 id="조언"><a href="#조언" class="headerlink" title="조언"></a>조언</h1><p>인코딩이 문제인줄 알았다.</p>
 <p>내장 메소드인 <code>encodeURIComponent()</code>, <code>decodeURIComponent()</code>도 같이 써보고,</p>
@@ -200,12 +200,12 @@
 <p>바로 구굴님께 여쭤보았다.</p>
 <p>그러다가 <code>NFD (Normalization Form Canonical Decomposition)</code>, <code>NFC (Normalization Form Canonical Composition)</code> 이라는 생소한 단어를 알겍 되었다.</p>
 <p>전자의 경우는 Mac OS X에서 사용되는 유니코드 정규화 방식이며, 후자는 Windows 에서 사용되는 방식이다.</p>
-<p>자세한 내용은 <a href="https://blogs.technet.microsoft.com/spsofficesupportko/2017/01/06/%ED%8C%8C%EC%9D%BC%EB%AA%85%EC%9D%98-%ED%95%9C%EA%B8%80%EC%9E%90%EB%AA%A8%EA%B0%80-%EB%B6%84%ED%95%B4%EB%90%98%EC%96%B4-%EB%B3%B4%EC%97%AC%EC%A7%80%EB%8A%94-%ED%98%84%EC%83%81-unicode-nfd/" target="_blank" rel="noopener">여기</a>{:target=”_blank”} 를 참고하면 참 좋겠다.</p>
+<p>자세한 내용은 <a href="https://blogs.technet.microsoft.com/spsofficesupportko/2017/01/06/%ED%8C%8C%EC%9D%BC%EB%AA%85%EC%9D%98-%ED%95%9C%EA%B8%80%EC%9E%90%EB%AA%A8%EA%B0%80-%EB%B6%84%ED%95%B4%EB%90%98%EC%96%B4-%EB%B3%B4%EC%97%AC%EC%A7%80%EB%8A%94-%ED%98%84%EC%83%81-unicode-nfd/" target="_blank" rel="noopener">여기</a> 를 참고하면 참 좋겠다.</p>
 <p>근데 둘 다 표준이라 사실 뭘 쓰던 상관은 없는 셈이다.</p>
 <p>영어권 국가에서 태어났다면 이런 고민도 없었을 텐데… 코드도 좀 더 읽기 쉽게 작성할 수 있었을 텐데… 영어공부나 해야겠다.</p>
 <p>아무튼 OS가 보여주고 싶은 맘데로 보여주는거라 사실상 터미널에서 보이던 <code>가전제품</code> 이라는 문자열은 이미 <code>ㄱㅏㅈㅓㄴㅈㅔㅍㅜㅁ</code> 으로 되어 있는 것이었다.</p>
 <p><del>(Mac OS X 이 과하게 친절한 녀석… 😭)</del></p>
-<p>또한, <a href="https://m.blog.naver.com/PostView.nhn?blogId=kiros33&amp;logNo=220671385630&amp;proxyReferer=https%3A%2F%2Fwww.google.co.kr%2F" target="_blank" rel="noopener">깜장토끼님의 블로그</a>{:target=”_blank”} 에서 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize" target="_blank" rel="noopener">String.normalize()</a>{:target=”_blank”} 라는 엄청난 녀석을 발견했다.</p>
+<p>또한, <a href="https://m.blog.naver.com/PostView.nhn?blogId=kiros33&amp;logNo=220671385630&amp;proxyReferer=https%3A%2F%2Fwww.google.co.kr%2F" target="_blank" rel="noopener">깜장토끼님의 블로그</a> 에서 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize" target="_blank" rel="noopener">String.normalize()</a> 라는 엄청난 녀석을 발견했다.</p>
 <h1 id="해결"><a href="#해결" class="headerlink" title="해결"></a>해결</h1><p>굉장히 간단했다.</p>
 <p><code>&quot;가전제품&quot;.normalize(&#39;NFC&#39;)</code> 라고 <code>normalize()</code> 메소드에 <code>NFC</code> 라는 값을 넣어주면 해결!</p>
 <h1 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h1><p>영어 공부를 하자. 😜</p>
@@ -380,7 +380,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
-                            <p class="item-title"><a href="/2017/10/19/print_star_01/" class="title">print_star (1)</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_02/" class="title">print_star (2)</a></p>
                             <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
                         </div>
                     </li>
@@ -389,7 +389,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
-                            <p class="item-title"><a href="/2017/10/19/print_star_02/" class="title">print_star (2)</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_01/" class="title">print_star (1)</a></p>
                             <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
                         </div>
                     </li>
