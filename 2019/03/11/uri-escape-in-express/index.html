@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    
+    <title>Encoding the querystring in express | Dev Huna</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Node.js,NodeJS,Express,querystring,encode">
+    
+    <meta name="description" content="버그의 시작맘에 안들지만 임시방편으로 굉장히 기괴한 API를 하나 만들었다. 검색어에 대한 정보를 뿌려줘야 하는데, 새로 개발한 프로젝트가 플랫폼 이슈로 인해 사용할 수 없었고, 기존에 있던 프로젝트의 API를 호출해서 검색어에 대한 정보를 뿌려주도록 구현을 했다.  정말 맘에 안든다. 그렇게… 버그가 태어나기 시작했다. 버그의 출현검색어는 당연 한글이 들">
+<meta name="keywords" content="Node.js,NodeJS,Express,querystring,encode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Encoding the querystring in express">
+<meta property="og:url" content="https://hun-a.github.io/2019/03/11/uri-escape-in-express/index.html">
+<meta property="og:site_name" content="Dev Huna">
+<meta property="og:description" content="버그의 시작맘에 안들지만 임시방편으로 굉장히 기괴한 API를 하나 만들었다. 검색어에 대한 정보를 뿌려줘야 하는데, 새로 개발한 프로젝트가 플랫폼 이슈로 인해 사용할 수 없었고, 기존에 있던 프로젝트의 API를 호출해서 검색어에 대한 정보를 뿌려주도록 구현을 했다.  정말 맘에 안든다. 그렇게… 버그가 태어나기 시작했다. 버그의 출현검색어는 당연 한글이 들">
+<meta property="og:locale" content="ko">
+<meta property="og:image" content="https://hun-a.github.io/images/wtf_encoding_20190312.png">
+<meta property="og:updated_time" content="2019-03-11T16:23:00.593Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Encoding the querystring in express">
+<meta name="twitter:description" content="버그의 시작맘에 안들지만 임시방편으로 굉장히 기괴한 API를 하나 만들었다. 검색어에 대한 정보를 뿌려줘야 하는데, 새로 개발한 프로젝트가 플랫폼 이슈로 인해 사용할 수 없었고, 기존에 있던 프로젝트의 API를 호출해서 검색어에 대한 정보를 뿌려주도록 구현을 했다.  정말 맘에 안든다. 그렇게… 버그가 태어나기 시작했다. 버그의 출현검색어는 당연 한글이 들">
+<meta name="twitter:image" content="https://hun-a.github.io/images/wtf_encoding_20190312.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+					<h1>
+						<a href="/" style="font-size:90px;color:#fff; text-decoration: none;">Dev Huna</a>
+					</h1>
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/">홈</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/">Code</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/CleanCode/">CleanCode</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JDBC/">JDBC</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Libraries/">Libraries</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Game/">Game</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Node-js/">Node.js</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/">Tips</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/jekyll/">jekyll</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="https://about.me/huna">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="검색">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '포스트',
+            PAGES: 'Pages',
+            CATEGORIES: '카테고리',
+            TAGS: '태그',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/JavaScript/Node-js/">Node.js</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5009520982293904" data-ad-slot="8981626582" data-ad-format="auto"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-5009520982293904",
+    enable_page_level_ads: true
+  });
+</script>
+                            <article id="post-uri-escape-in-express" class="article article-single article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Encoding the querystring in express
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/03/11/uri-escape-in-express/" class="article-date">
+            <time datetime="2019-03-11T14:46:15.000Z" itemprop="datePublished">2019-03-11</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Express/">Express</a>, <a class="tag-link" href="/tags/Node-js/">Node.js</a>, <a class="tag-link" href="/tags/NodeJS/">NodeJS</a>, <a class="tag-link" href="/tags/encode/">encode</a>, <a class="tag-link" href="/tags/querystring/">querystring</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="버그의-시작"><a href="#버그의-시작" class="headerlink" title="버그의 시작"></a>버그의 시작</h1><p>맘에 안들지만 임시방편으로 굉장히 기괴한 API를 하나 만들었다.</p>
+<p>검색어에 대한 정보를 뿌려줘야 하는데, 새로 개발한 프로젝트가 플랫폼 이슈로 인해 사용할 수 없었고,</p>
+<p>기존에 있던 프로젝트의 API를 호출해서 검색어에 대한 정보를 뿌려주도록 구현을 했다. </p>
+<p>정말 맘에 안든다.</p>
+<p>그렇게… 버그가 태어나기 시작했다.</p>
+<h1 id="버그의-출현"><a href="#버그의-출현" class="headerlink" title="버그의 출현"></a>버그의 출현</h1><p>검색어는 당연 한글이 들어온다. 이건 전혀 문제가 되지 않는다.</p>
+<p>그런데 괴상한 <code>Exception</code>이 자꾸 로그에 찍히고 있었다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Uncaught URIError: URI malformed</span><br><span class="line">라인 번호는 여기가 어떻고</span><br><span class="line">이쪽 스택은 또 어쩌고 저쩌고</span><br><span class="line">저쪽 스택도 어쩌고 저쩌고</span><br><span class="line">블라블라...</span><br></pre></td></tr></table></figure>
+<p>문제가 된 라인을 확인하니 <code>decodeURI(req.query.keyword)</code> 가 있었다.</p>
+<h1 id="해결"><a href="#해결" class="headerlink" title="해결?!"></a>해결?!</h1><p>이것도 해보고 저것도 해보고 스택over플로우님께도 여쭤봤다.</p>
+<p>unicode sequence가 어쩌고 저쩌고… 영알못은 오늘도 너무 괴로웠다.</p>
+<p>그런데 이것 저것 해보다 보니…</p>
+<p><code>decodeURI(&#39;%&#39;)</code> 와 같이 <code>%</code> 가 인코딩 된 애들과 다른 형태 즉,</p>
+<p>혼자 따로 노는 <code>%</code> 가 있을 경우 에러를 뱉어냈다.</p>
+<p>그럼 <code>%</code> 를 escape 처리하면 되겠네?</p>
+<p>그래서 웹에서 전역으로 사용 가능한 <code>escape()</code> 함수를 사용했다.</p>
+<p>하지만 전~ 혀 코딱지 만큼도 해결되지 않고 똑같은 <code>Uncaught URIError: URI malformed</code> 를 연신 뱉어냈다.</p>
+<p>심지어 <code>escape()</code> 이친구는 strictly deprecated 된 친구였다. <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/escape" target="_blank" rel="noopener">(여기 참조)</a></p>
+<h1 id="근데-이건-뭐"><a href="#근데-이건-뭐" class="headerlink" title="근데 이건 뭐??"></a>근데 이건 뭐??</h1><p>이제부터가 이 포스팅을 시작한 진짜 이유다.</p>
+<p>후후. 이것도 버그가 아닐까 생각이 들지만…</p>
+<p><strong>한글 + %</strong> 가 파라미터로 들어오면 멋쟁이 express가 이걸 자동으로 encoding 해버린다.</p>
+<p>물론 <strong>영어 + %</strong> 는 원래대로 들어온다. <del>영어최고!</del></p>
+<p>못 믿겠다고? 그럼 아래 코드를 실행하고, <code>localhost:3000?q=한글%</code> 라고 웹 브라우저에서 실행해 보면 된다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"><span class="keyword">const</span> port = <span class="number">3000</span>;</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  res.json(&#123; <span class="attr">query</span>: req.query, <span class="attr">url</span>: req.url &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(port, () =&gt; <span class="built_in">console</span>.log(<span class="string">`Example app listening on port <span class="subst">$&#123;port&#125;</span>!`</span>));</span><br></pre></td></tr></table></figure>
+<p>결과는 아래와 같다.</p>
+<p><img src="/images/wtf_encoding_20190312.png" alt="wtf?"></p>
+<p>우리의 멋쟁이 express 가 너무나도 과도한 친절을 베풀고 있는게 아닐까 의심이 된다.</p>
+<p>아, 참고로 인코딩을 왜 하는지 모르는 분들이 있을 수도 있다.</p>
+<p>나도 잘 몰랐는데 검색하면 굉장히 잘 나온다. 그래도 한번 써본다.</p>
+<p>일단은, <code>URL</code>로 넘어갈 수 있는 놈은 <code>ASCII</code> 문자 뿐이다. <del>구시대의 유물 이랄까…?</del></p>
+<p><code>UTF-8</code>, <code>EUC-KR</code> 이런애들이 아닌 오로지 <code>ASCII</code> 이다. <del>EUC-KR도 사실 극혐…</del></p>
+<p>따라서 <code>UTF-8</code> 문자를 <code>encodeURI()</code>, <code>encodeURIComponent()</code> 와 같은 함수로 <code>%16진수16진수</code> 형태로 인코딩 해서 보내는 것이다.</p>
+<p><code>ASCII</code>는 고작 1바이트로 사용하는데 <code>%16진수16진수</code>로 인코딩 하면 더 풍부한 표현력이 생기지 않는가? <del>겁나 똑독해! 누구 아이디어지?</del></p>
+<p>아무튼 잡담은 이제 그만 하고,</p>
+<p><code>NodeJS</code>의 멋진 API <a href="https://nodejs.org/dist/latest-v10.x/docs/api/querystring.html#querystring_querystring_unescape_str" target="_blank" rel="noopener">querystring.unescape()</a> 를 사용하면 express의 과도한 친절을 사양할 수 있게 된다.</p>
+<p>아래의 코드로 수정하고 다시 <code>localhost:3000?q=한글%</code>를 웹 브라우저 또는 <code>curl</code> 로 실행 해보자.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> qs = <span class="built_in">require</span>(<span class="string">'querystring'</span>);</span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"><span class="keyword">const</span> port = <span class="number">3000</span>;</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  res.json(&#123; <span class="attr">query</span>: req.query.q, <span class="attr">original</span>: qs.unescape(req.query.q), <span class="attr">url</span>: req.url &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(port, () =&gt; <span class="built_in">console</span>.log(<span class="string">`Example app listening on port <span class="subst">$&#123;port&#125;</span>!`</span>));</span><br></pre></td></tr></table></figure>
+<p>결과가 어떤가? 야근을 안해도 되겠는가?</p>
+<p><img src="/images/good_job_20190312.png" alt="요시! 집으로 이쿠조!"></p>
+<h1 id="이건-또-뭐지"><a href="#이건-또-뭐지" class="headerlink" title="이건 또 뭐지?"></a>이건 또 뭐지?</h1><p>집에 가기 전에 몇 가지 테스트를 좀 더 해봐야겠다.</p>
+<p>하지만 이내 괜히 테스트를 더 한게 아닌가 하는 좌절감에 빠졌다…</p>
+<p>웹 브라우저 또는 <code>curl</code>을 이용해서 <code>localhost:3000?q=100%한글</code> 을 실행해 보자.</p>
+<p><img src="/images/wtf2_20190312.png" alt="WTF 2!!"></p>
+<p>세종대왕님이 창조하신 한글은 위대하지만… 컴퓨터 사이언스에서 한글은… </p>
+<p>아무튼, 문제는 <code>%</code> 가 한글 앞에 붙으면 한글이 깨져버린다는 사실!</p>
+<p>위에서 말한 내용 중 <code>%16진수16진수</code> 부분과 연관이 있는 부분이다.</p>
+<p><code>%한</code> 이라는 문자열을 <a href="https://nodejs.org/dist/latest-v10.x/docs/api/querystring.html#querystring_querystring_unescape_str" target="_blank" rel="noopener">querystring.unescape()</a> 이친구가 멋대로 디코딩 해 버린 것이다!</p>
+<p>어쩌겠는가… <code>% + 2byte</code> 를 디코딩 하도록 작성된 코드일 뿐인것을…</p>
+<h1 id="해결-방안은"><a href="#해결-방안은" class="headerlink" title="해결 방안은?"></a>해결 방안은?</h1><p>파라미터에서 <code>%</code> 가 이상한 패턴으로 나오면 <code>%</code>를 escape 해버리면 어떨까? </p>
+<p>함수를 하나 만들어 보자.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> parseParam = <span class="function"><span class="params">param</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> result = &#123; <span class="attr">encoded</span>: <span class="literal">false</span>, param &#125;;</span><br><span class="line">  <span class="keyword">if</span> (<span class="regexp">/%(?=[a-f0-9]&#123;2&#125;)/gi</span>.test(param)) &#123;</span><br><span class="line">    result.original = qs.unescape(result.param.replace(<span class="regexp">/%(?=%)/g</span>, <span class="string">'%25'</span>));</span><br><span class="line">    result.encoded = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>파라미터를 받아서 파라미터가 인코딩 되었는지 확인 후 <code>qs.unescape()</code> 로 디코딩 한다.</p>
+<p><code>replace</code> 는 <code>%</code>가 그냥 문자로 사용될 경우 <code>한글 30%증가</code> 와 같은 파라미터가 들어오면 여전히 한글이 깨지기 때문에 escape 처리 한 것이다.</p>
+<p><code>qs</code> 는 <code>querystring</code> 이다. 전체 코드는 요 바로 아래에 있다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> qs = <span class="built_in">require</span>(<span class="string">'querystring'</span>);</span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"><span class="keyword">const</span> port = <span class="number">3000</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> parseParam = <span class="function"><span class="params">param</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> result = &#123; <span class="attr">encoded</span>: <span class="literal">false</span>, param &#125;;</span><br><span class="line">  <span class="keyword">if</span> (<span class="regexp">/%(?=[a-f0-9]&#123;2&#125;)/gi</span>.test(param)) &#123;</span><br><span class="line">    result.original = qs.unescape(result.param.replace(<span class="regexp">/%(?=%)/g</span>, <span class="string">'%25'</span>));</span><br><span class="line">    result.encoded = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  res.json(parseParam(req.query.q));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(port, () =&gt; <span class="built_in">console</span>.log(<span class="string">`Example app listening on port <span class="subst">$&#123;port&#125;</span>!`</span>))</span><br></pre></td></tr></table></figure>
+<p>그럼 이제 정말 집에 갈 수 있을까?</p>
+<p><img src="/images/go_to_home_20190312.png" alt="그렇다 퇴근이다!"></p>
+
+        </div>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5009520982293904" data-ad-slot="8981626582" data-ad-format="auto"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-5009520982293904",
+    enable_page_level_ads: true
+  });
+</script>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>팔로우:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/SeunghunandChan" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/seunghun.kim.96" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/seunghun-kim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/12/18/js-normalize/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">오래된</strong>
+        <p class="article-nav-title">JS - String.normalize()</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">최근 글</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Node-js/">Node.js</a></p>
+                            <p class="item-title"><a href="/2019/03/11/uri-escape-in-express/" class="title">Encoding the querystring in express</a></p>
+                            <p class="item-date"><time datetime="2019-03-11T14:46:15.000Z" itemprop="datePublished">2019-03-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Basic/">Basic</a></p>
+                            <p class="item-title"><a href="/2018/12/18/js-normalize/" class="title">JS - String.normalize()</a></p>
+                            <p class="item-date"><time datetime="2018-12-17T16:00:00.000Z" itemprop="datePublished">2018-12-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Java/Libraries/">Libraries</a></p>
+                            <p class="item-title"><a href="/2017/11/17/hibernate_setting/" class="title">hibernate 설정 + 간단 예제</a></p>
+                            <p class="item-date"><time datetime="2017-11-17T00:00:00.000Z" itemprop="datePublished">2017-11-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/11/15/Euclidean_algorithm/" class="title">Euclidean_algorithm</a></p>
+                            <p class="item-date"><time datetime="2017-11-15T03:20:56.000Z" itemprop="datePublished">2017-11-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithms/">Algorithms</a></p>
+                            <p class="item-title"><a href="/2017/10/19/print_star_02/" class="title">print_star (2)</a></p>
+                            <p class="item-date"><time datetime="2017-10-19T14:00:00.000Z" itemprop="datePublished">2017-10-19</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">카테고리</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Code/">Code</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Code/CleanCode/">CleanCode</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JDBC/">JDBC</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Libraries/">Libraries</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Basic/">Basic</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Game/">Game</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Node-js/">Node.js</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/jekyll/">jekyll</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">아카이브</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">3월 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">12월 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">11월 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">10월 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">4월 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">10월 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">3월 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">태그</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Brute-force/">Brute_force</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Euclidean/">Euclidean</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/">Express</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hibernate/">Hibernate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS/">JS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJS/">NodeJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Star/">Star</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cleancode/">cleancode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encode/">encode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/events/">events</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdbc/">jdbc</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/normalize/">normalize</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/querystring/">querystring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wording/">wording</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">태그 클라우드</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Algorithms/" style="font-size: 15px;">Algorithms</a> <a href="/tags/Brute-force/" style="font-size: 10px;">Brute_force</a> <a href="/tags/Euclidean/" style="font-size: 10px;">Euclidean</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/Hibernate/" style="font-size: 10px;">Hibernate</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/NodeJS/" style="font-size: 10px;">NodeJS</a> <a href="/tags/Star/" style="font-size: 12.5px;">Star</a> <a href="/tags/cleancode/" style="font-size: 12.5px;">cleancode</a> <a href="/tags/code/" style="font-size: 12.5px;">code</a> <a href="/tags/encode/" style="font-size: 10px;">encode</a> <a href="/tags/events/" style="font-size: 10px;">events</a> <a href="/tags/game/" style="font-size: 17.5px;">game</a> <a href="/tags/html5/" style="font-size: 17.5px;">html5</a> <a href="/tags/java/" style="font-size: 12.5px;">java</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jdbc/" style="font-size: 12.5px;">jdbc</a> <a href="/tags/jekyll/" style="font-size: 10px;">jekyll</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/normalize/" style="font-size: 10px;">normalize</a> <a href="/tags/querystring/" style="font-size: 10px;">querystring</a> <a href="/tags/wording/" style="font-size: 10px;">wording</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">링크</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io/ko/">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5009520982293904" data-ad-slot="8981626582" data-ad-format="auto"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-5009520982293904",
+    enable_page_level_ads: true
+  });
+</script>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" style="font-size:40px;color:#fff; text-decoration: none;">Dev Huna</a>
+                </h1>
+                <p>&copy; 2019 Huna</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'huna';
+    
+    
+    var disqus_url = 'https://hun-a.github.io/2019/03/11/uri-escape-in-express/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
