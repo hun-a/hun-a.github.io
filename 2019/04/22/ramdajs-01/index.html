@@ -3,20 +3,24 @@
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     
-    <title>카테고리: JavaScript | Dev Huna</title>
+    <title>Ramda_intro | Dev Huna</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="description" content="This is my personal blog about development">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Dev Huna">
-<meta property="og:url" content="https://hun-a.github.io/categories/JavaScript/page/2/index.html">
+        <meta name="keywords" content="JS,Ramda,FP">
+    
+    <meta name="description" content="WHO나. Huna 가. WHEN틈틈히 시간 날 때 마다 (주로 밤에?) WHERE집에서 또는 밖에 아무데서나 맥북을 쓸 수 있는 곳이 있다면 WHATFP (Functional programming) 라이브러리인 Ramda 를 HOW함수 하나씩 분석을 해 나갈 예정이다. 분석 내용은  함수 설명 코드 분석 실제 사용 예제  를 포스팅 할 예정이다. 함수 순">
+<meta name="keywords" content="JS,Ramda,FP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ramda_intro">
+<meta property="og:url" content="https://hun-a.github.io/2019/04/22/ramdajs-01/index.html">
 <meta property="og:site_name" content="Dev Huna">
-<meta property="og:description" content="This is my personal blog about development">
+<meta property="og:description" content="WHO나. Huna 가. WHEN틈틈히 시간 날 때 마다 (주로 밤에?) WHERE집에서 또는 밖에 아무데서나 맥북을 쓸 수 있는 곳이 있다면 WHATFP (Functional programming) 라이브러리인 Ramda 를 HOW함수 하나씩 분석을 해 나갈 예정이다. 분석 내용은  함수 설명 코드 분석 실제 사용 예제  를 포스팅 할 예정이다. 함수 순">
 <meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2019-04-22T14:59:31.584Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dev Huna">
-<meta name="twitter:description" content="This is my personal blog about development">
+<meta name="twitter:title" content="Ramda_intro">
+<meta name="twitter:description" content="WHO나. Huna 가. WHEN틈틈히 시간 날 때 마다 (주로 밤에?) WHERE집에서 또는 밖에 아무데서나 맥북을 쓸 수 있는 곳이 있다면 WHATFP (Functional programming) 라이브러리인 Ramda 를 HOW함수 하나씩 분석을 해 나갈 예정이다. 분석 내용은  함수 설명 코드 분석 실제 사용 예제  를 포스팅 할 예정이다. 함수 순">
     
 
     
@@ -123,7 +127,7 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-folder-open"></i>카테고리: <em class="page-title-link">JavaScript</em>
+    <a class="page-title-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/JavaScript/FP/">FP</a>
     </h1>
 </div>
                         <div class="main-body-content">
@@ -136,89 +140,148 @@
     enable_page_level_ads: true
   });
 </script>
-                            
-
-    
-    
+                            <article id="post-ramdajs-01" class="article article-single article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2017" class="archive-year"><i class="icon fa fa-calendar-o"></i>2017</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Game/">Game</a>
-            </div>
-            <div class="date"><time datetime="2017-04-16T15:00:00.000Z" itemprop="datePublished">2017-04-17</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2017/04/17/js-game-01/">javascript game (1)</a>
+        Ramda_intro
         </h1>
     
 
-        <p class="article-excerpt">
-            잡담javascript와 친해지기 위해 뭐가 좋을까 고민을 하다가
-예전에 codeschool.com에서 웹으로 만든 게임을 본 것 같은 기억이 있어서
-한번 따라해볼까… 하고 들어가봤는데 못찾았다 ㅋㅋ
-그래서 Google에서 검색해보니 MDN(Mozilla Developer Network)에서 벽돌 깨기 튜토리얼을 찾았다.
-순서는 다음과 같다. (링크는 원문
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
+            </header>
         
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Basic/">Basic</a>
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/04/22/ramdajs-01/" class="article-date">
+            <time datetime="2019-04-22T14:29:46.000Z" itemprop="datePublished">2019-04-22</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/FP/">FP</a>, <a class="tag-link" href="/tags/JS/">JS</a>, <a class="tag-link" href="/tags/Ramda/">Ramda</a>
+    </div>
+
             </div>
-            <div class="date"><time datetime="2017-04-11T15:00:00.000Z" itemprop="datePublished">2017-04-12</time></div>
-        </div>
         
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/04/12/js-start/">Start JavaScript!</a>
-        </h1>
-    
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="WHO"><a href="#WHO" class="headerlink" title="WHO"></a>WHO</h1><p>나. Huna 가.</p>
+<h1 id="WHEN"><a href="#WHEN" class="headerlink" title="WHEN"></a>WHEN</h1><p>틈틈히 시간 날 때 마다 <em>(주로 밤에?)</em></p>
+<h1 id="WHERE"><a href="#WHERE" class="headerlink" title="WHERE"></a>WHERE</h1><p>집에서 또는 밖에 아무데서나 맥북을 쓸 수 있는 곳이 있다면</p>
+<h1 id="WHAT"><a href="#WHAT" class="headerlink" title="WHAT"></a>WHAT</h1><p>FP <em>(Functional programming)</em> 라이브러리인 <a href="https://ramdajs.com/" target="_blank" rel="noopener">Ramda</a> 를</p>
+<h1 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h1><p>함수 하나씩 분석을 해 나갈 예정이다.</p>
+<p>분석 내용은</p>
+<ol>
+<li>함수 설명</li>
+<li>코드 분석</li>
+<li>실제 사용 예제</li>
+</ol>
+<p>를 포스팅 할 예정이다.</p>
+<p>함수 순서는 <a href="https://ramdajs.com/docs/" target="_blank" rel="noopener">Documentation</a> 의 순서대로 진행 할 예정이다.</p>
+<p>현재 버전인 0.26.1 버전을 바탕으로 포스팅을 작성할 예정이며,</p>
+<p>시간이 지날수록 새로운 함수가 추가될 수 있다는 것을 염두해 두길 바란다.</p>
+<p>아, 그리고 실제 사용 예제를 작성하려면 현재 설명중인 함수 외에 다른 함수들이 등장 할 수 있다. 아니 무조건 등장 할 것 같다.</p>
+<p>아무튼 그런 경우에는 현재 분석중인 함수 외에 나머지 함수들은 그냥 원래 아는 것 처럼 자연스럽게 넘어갈 예정이다.</p>
+<p>물론 시간이 지나면 넘어간 함수들도 분석된 포스팅이 작성될 것이니 그때 링크로 연결하도록 하겠다.</p>
+<h1 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h1><p>요즘 실무에서 Ramda 를 통해 FP 기법으로 기능을 구현하려고 많이 노력 중이다.</p>
+<p>장점도 있고 단점도 있다.</p>
+<p>단점은 내가 아직 Ramda의 모든 함수들에 대해 익숙하지 못해서 기형적인 모습의 코드들이 등장한다는 거?</p>
+<p>장점은 코드가 모듈화 되기 때문에 원하는 기능을 바로바로 추가하거나 뺄 수 있으며, 코드의 기능을 사람이 사고하듯 선언적으로 작성할 수 있다.</p>
+<p>물론 더 많은 장단점이 있겠지만 가장 큰 장점은 <strong>재미</strong> 인 것 같다.</p>
+<p>그리고 이 포스팅을 시작하기로 결정한 계기는 술먹고 집에 가는 버스안에서 </p>
+<blockquote>
+<p>와 이거 재밌겠는걸?</p>
+</blockquote>
+<p>이라고 생각이 들어서 시작하기로 했음.</p>
 
-        <p class="article-excerpt">
-            잡담책 산지가 언젠데… 아직도… 보고있다니… 부끄럽다.
-사고싶은 책은 많은데 이리도 진도가 안나가서야 언제 또 사나… 걱정이다.
-아무튼, 예전에 웹개발 잠깐 맛보기로 배울때 html, JavaScript, css 이 세 가지를 기본으로 배웠다.
-이때 이해했던 JavaScript는 그저 이벤트 처리용으로 사용되는 간단한 스크립트 언어였다. 문법도 Java랑 
-        </p>
+        </div>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5009520982293904" data-ad-slot="8981626582" data-ad-format="auto"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-5009520982293904",
+    enable_page_level_ads: true
+  });
+</script>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
     </div>
 </article>
+
+    <section id="comments">
     
-        </div>
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
     
-
-
-    </div></section>
-
-
-    <nav id="page-nav">
-        <span class="pages">Page 2 of 2</span>
-        <a class="extend prev" rel="prev" href="/categories/JavaScript/">&laquo;</a><a class="page-number" href="/categories/JavaScript/">1</a><span class="page-number current">2</span>
-    </nav>
+    </section>
 
 
 
@@ -256,6 +319,19 @@
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/03/11/uri-escape-in-express/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">오래된</strong>
+        <p class="article-nav-title">Encoding the querystring in express</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
@@ -409,11 +485,13 @@
     var disqus_shortname = 'huna';
     
     
+    var disqus_url = 'https://hun-a.github.io/2019/04/22/ramdajs-01/';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
