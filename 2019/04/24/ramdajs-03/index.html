@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Dev Huna">
 <meta property="og:description" content="What is today’s function?오늘은 아주 아주 간단한 add 함수 되시겠다.  너무 간단한 함수라 두 개를 해야 하나 걱정이 되기도… 그럼 시작 해 볼까~? 함수 설명 Adds two values.   발 번역: 두 값을 더한다  두 값을 더하면 된다. 끝이다. 코드 분석외부에 노출되는 함수는 어디에 있다 그랬지? 맞다. source/add">
 <meta property="og:locale" content="ko">
-<meta property="og:updated_time" content="2019-04-24T15:21:38.767Z">
+<meta property="og:updated_time" content="2019-04-24T15:26:21.524Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ramda add">
 <meta name="twitter:description" content="What is today’s function?오늘은 아주 아주 간단한 add 함수 되시겠다.  너무 간단한 함수라 두 개를 해야 하나 걱정이 되기도… 그럼 시작 해 볼까~? 함수 설명 Adds two values.   발 번역: 두 값을 더한다  두 값을 더하면 된다. 끝이다. 코드 분석외부에 노출되는 함수는 어디에 있다 그랬지? 맞다. source/add">
@@ -198,19 +198,19 @@
 </blockquote>
 <p>위의 기능을 위해서는 아래와 같이 총 4개의 함수가 있으며, 모두 <code>curry</code> 된 함수로 가정한다.</p>
 <ul>
-<li>getPostById<ul>
+<li>getPostById(id)<ul>
 <li>인자로 게시글의 <code>id</code>를 받으며, <code>id</code> 에 해당되는 <code>post</code> 데이터를 반환</li>
 </ul>
 </li>
-<li>hasLike<ul>
+<li>hasLike(userId, post)<ul>
 <li>인자로 <code>userId</code>, <code>post</code> 데이터를 받으며, 해당 <code>post</code> 데이터에 좋아요를 눌렀는지 판별하는 <code>boolean</code> 값을 반환</li>
 </ul>
 </li>
-<li>updateLikeCountOnPost<ul>
+<li>updateLikeCountOnPost(post)<ul>
 <li>인자로 <code>likeCount</code> 가 수정된 <code>post</code> 를 받으며, 성공, 실패를 반환</li>
 </ul>
 </li>
-<li>updateLikeCountOnUser<ul>
+<li>updateLikeCountOnUser(userId, post)<ul>
 <li>인자로 <code>userId</code> 와 <code>post</code> 를 받으며, 내부적으로 <code>post</code> 에서 <code>id</code> 를 가져다가 좋아요를 했는지 여부를 저장</li>
 </ul>
 </li>
