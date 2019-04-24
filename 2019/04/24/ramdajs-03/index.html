@@ -3,20 +3,24 @@
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     
-    <title>카테고리: Libraries | Dev Huna</title>
+    <title>Ramda add | Dev Huna</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="description" content="This is my personal blog about development">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Dev Huna">
-<meta property="og:url" content="https://hun-a.github.io/categories/Java/Libraries/index.html">
+        <meta name="keywords" content="js,ramda,fp">
+    
+    <meta name="description" content="What is today’s function?오늘은 아주 아주 간단한 add 함수 되시겠다.  너무 간단한 함수라 두 개를 해야 하나 걱정이 되기도… 그럼 시작 해 볼까~? 함수 설명 Adds two values.   발 번역: 두 값을 더한다  두 값을 더하면 된다. 끝이다. 코드 분석외부에 노출되는 함수는 어디에 있다 그랬지? 맞다. source/add">
+<meta name="keywords" content="js,ramda,fp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ramda add">
+<meta property="og:url" content="https://hun-a.github.io/2019/04/24/ramdajs-03/index.html">
 <meta property="og:site_name" content="Dev Huna">
-<meta property="og:description" content="This is my personal blog about development">
+<meta property="og:description" content="What is today’s function?오늘은 아주 아주 간단한 add 함수 되시겠다.  너무 간단한 함수라 두 개를 해야 하나 걱정이 되기도… 그럼 시작 해 볼까~? 함수 설명 Adds two values.   발 번역: 두 값을 더한다  두 값을 더하면 된다. 끝이다. 코드 분석외부에 노출되는 함수는 어디에 있다 그랬지? 맞다. source/add">
 <meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2019-04-24T15:21:38.767Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dev Huna">
-<meta name="twitter:description" content="This is my personal blog about development">
+<meta name="twitter:title" content="Ramda add">
+<meta name="twitter:description" content="What is today’s function?오늘은 아주 아주 간단한 add 함수 되시겠다.  너무 간단한 함수라 두 개를 해야 하나 걱정이 되기도… 그럼 시작 해 볼까~? 함수 설명 Adds two values.   발 번역: 두 값을 더한다  두 값을 더하면 된다. 끝이다. 코드 분석외부에 노출되는 함수는 어디에 있다 그랬지? 맞다. source/add">
     
 
     
@@ -123,7 +127,7 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-folder-open"></i>카테고리: <em class="page-title-link">Libraries</em>
+    <a class="page-title-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/JavaScript/FP/">FP</a>
     </h1>
 </div>
                         <div class="main-body-content">
@@ -136,54 +140,177 @@
     enable_page_level_ads: true
   });
 </script>
-                            
-
-    
-    
+                            <article id="post-ramdajs-03" class="article article-single article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2017" class="archive-year"><i class="icon fa fa-calendar-o"></i>2017</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Java/">Java</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Java/Libraries/">Libraries</a>
-            </div>
-            <div class="date"><time datetime="2017-11-17T00:00:00.000Z" itemprop="datePublished">2017-11-17</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2017/11/17/hibernate_setting/">hibernate 설정 + 간단 예제</a>
+        Ramda add
         </h1>
     
 
-        <p class="article-excerpt">
-            Hibernate 란?정의관계형 데이터베이스(RDBMS)와 객체지향 언어(Java)를 연결해주는 프레임워크이다. 주로 이런 애들을 ORM (Object/Relational Mapping) 프레임워크 라고 부른다. Node.js에서는 Sequelize 라는 놈이 있다.
-특징
-Object/Relational Mapping
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/04/24/ramdajs-03/" class="article-date">
+            <time datetime="2019-04-24T14:03:41.000Z" itemprop="datePublished">2019-04-24</time>
+        </a>
+    </div>
 
-말 그대로 객체/관계의 매핑을 제공한
-        </p>
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/fp/">fp</a>, <a class="tag-link" href="/tags/js/">js</a>, <a class="tag-link" href="/tags/ramda/">ramda</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="What-is-today’s-function"><a href="#What-is-today’s-function" class="headerlink" title="What is today’s function?"></a>What is today’s function?</h1><p>오늘은 아주 아주 간단한 <a href="https://ramdajs.com/docs/#add" target="_blank" rel="noopener">add</a> 함수 되시겠다. </p>
+<p><del>너무 간단한 함수라 두 개를 해야 하나 걱정이 되기도…</del></p>
+<p>그럼 시작 해 볼까~?</p>
+<h1 id="함수-설명"><a href="#함수-설명" class="headerlink" title="함수 설명"></a>함수 설명</h1><blockquote>
+<p>Adds two values.</p>
+</blockquote>
+<blockquote>
+<p>발 번역: 두 값을 더한다</p>
+</blockquote>
+<p>두 값을 더하면 된다. 끝이다.</p>
+<h1 id="코드-분석"><a href="#코드-분석" class="headerlink" title="코드 분석"></a>코드 분석</h1><p>외부에 노출되는 함수는 어디에 있다 그랬지?</p>
+<p>맞다. <a href="https://github.com/ramda/ramda/blob/v0.26.1/source/add.js" target="_blank" rel="noopener">source/add.js</a> 에 위치한다.</p>
+<p>이번에도 주석 다 떼고 중요한 함수만 한번 코드를 봐보자.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> add = _curry2(<span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Number</span>(a) + <span class="built_in">Number</span>(b);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> add;</span><br></pre></td></tr></table></figure>
+<p>인수를 모두 <code>Number</code> 를 통해 숫자로 형변환 후에 더하면 끝난다.</p>
+<p>근데 조기 함수 선언부 쪽에 <code>_curry2</code> 라는 신기한 뭔가가 달라붙어 있는게 보인다.</p>
+<p>바로 FP의 꽃인 <code>curry</code> 함수인데 정해진 함수의 인자가 모두 들어올 때 까지 새로운 함수를 만들어 내는 엄청난 녀석이다. </p>
+<p><code>add</code> 함수는 2개의 인자를 받으니, 인자가 2개가 모두 들어올 때 까지 함수의 평가를 미룰 수 있는 <strong>엄청난 슈퍼 쿨 짱</strong>인 함수다.</p>
+<p>이친구 덕분에 함수 합성이 가능해진다. <del>중독되면 끊기 힘들껄?</del></p>
+<p>아무튼 <code>_curry2</code> 는 나중에 분석할 내용이니 오늘도 <a href="https://github.com/ramda/ramda/blob/v0.26.1/source/internal/_curry2.js" target="_blank" rel="noopener">링크</a> 만 남기고 넘어간다.</p>
+<h1 id="실제-사용-예제"><a href="#실제-사용-예제" class="headerlink" title="실제 사용 예제"></a>실제 사용 예제</h1><p>우리의 요구사항은 다음과 같다고 가정해보자.</p>
+<blockquote>
+<p>게시물에 좋아요 기능을 추가한다. 처음 좋아요를 누르면 좋아요가 +1 되고, 다시 한번 누르면 좋아요가 -1 된다.</p>
+</blockquote>
+<p>위의 기능을 위해서는 아래와 같이 총 4개의 함수가 있으며, 모두 <code>curry</code> 된 함수로 가정한다.</p>
+<ul>
+<li>getPostById<ul>
+<li>인자로 게시글의 <code>id</code>를 받으며, <code>id</code> 에 해당되는 <code>post</code> 데이터를 반환</li>
+</ul>
+</li>
+<li>hasLike<ul>
+<li>인자로 <code>userId</code>, <code>post</code> 데이터를 받으며, 해당 <code>post</code> 데이터에 좋아요를 눌렀는지 판별하는 <code>boolean</code> 값을 반환</li>
+</ul>
+</li>
+<li>updateLikeCountOnPost<ul>
+<li>인자로 <code>likeCount</code> 가 수정된 <code>post</code> 를 받으며, 성공, 실패를 반환</li>
+</ul>
+</li>
+<li>updateLikeCountOnUser<ul>
+<li>인자로 <code>userId</code> 와 <code>post</code> 를 받으며, 내부적으로 <code>post</code> 에서 <code>id</code> 를 가져다가 좋아요를 했는지 여부를 저장</li>
+</ul>
+</li>
+</ul>
+<p>그럼 코드를 한번 만들어 보자.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> R <span class="keyword">from</span> <span class="string">"ramda"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> id = <span class="number">12345</span>; <span class="comment">// 좋아요 누르면 요 id 는 전달 받는다고 가정한다.</span></span><br><span class="line"><span class="keyword">const</span> userId = <span class="string">"dev-huna-001"</span>;  <span class="comment">// 미들웨어를 통해 로그인 처리가 되었다고 가정한다.</span></span><br><span class="line"></span><br><span class="line">getPostById(id)</span><br><span class="line">  .then(R.ifElse(</span><br><span class="line">    hasLike(userId),</span><br><span class="line">    R.over(R.lensProp(<span class="string">"likeCount"</span>), R.add(<span class="number">1</span>)),</span><br><span class="line">    R.over(R.lensProp(<span class="string">"likeCount"</span>), R.add(<span class="number">-1</span>))</span><br><span class="line">  ))</span><br><span class="line">  .then(R.tap(updateLikeCountOnUser(userId)))</span><br><span class="line">  .then(updateLikeCountOnPost)</span><br><span class="line">  .then(<span class="built_in">console</span>.log)</span><br><span class="line">  .catch(<span class="built_in">console</span>.error);</span><br></pre></td></tr></table></figure>
+<p>모르는 함수가 4개가 더 나왔는데 간단히 설명을 하자면</p>
+<ul>
+<li><a href="https://ramdajs.com/docs/#ifElse" target="_blank" rel="noopener">ifElse</a>: <code>if-else</code> 구문처럼 사용 가능한 함수이며, <code>predicate</code>, <code>onTrue</code>, <code>onFalse</code> 에 해당하는 함수들을 인자로 받는다. 즉, <code>predicate</code> 가 <code>true</code> 이면 <code>onTrue</code> 함수를 수행하고, <code>false</code> 이면 <code>onFalse</code> 함수를 수행</li>
+<li><a href="https://ramdajs.com/docs/#over" target="_blank" rel="noopener">over</a>: <code>lens</code>, <code>function</code>, <code>Array or Object</code> 를 인자로 받으며, <code>lens</code> 에 해당되는 <code>Object</code> 의 속성 또는 <code>Array</code> 의 인덱스의 값에 <code>function</code> 을 적용하여 복제된 <code>Object</code> 또는 <code>Array</code> 를 반환</li>
+<li><a href="https://ramdajs.com/docs/#lensProp" target="_blank" rel="noopener">lensProp</a>: <code>property</code> 를 인자로 받으며, 해당 <code>property</code> 의 <code>lens</code> 를 반환한다. <code>lens</code> 는 <code>getter</code> 와 <code>setter</code> 함수를 가지고 있고, 요걸 통해서 <em>렌즈를 통해 집중하고 있는 <code>property</code></em> 를 보거나 수정할 수 있다. <del>어후 내가 말하고도 뭔소린지…</del></li>
+<li><a href="https://ramdajs.com/docs/#tap" target="_blank" rel="noopener">tap</a>: 내가 아주 좋아하는 함수 중 하나인데, 탭~ 하고 건너 뛴다고 생각하면 되는 함수다. 즉, 전달받은 <code>Object</code> 를 가지고 <code>tap</code> 내에 주어진 함수를 실행한 후에 <code>Object</code> 를 그대로 반환한다. 주로 로그를 남기거나 결과값이 필요 없는 비동기 처리를 할 때 굉장히 유용하다.</li>
+</ul>
+<p>아무튼 저런 애들이다. 앞으로 자주 등장할 애들이니 나중에 분석하기 전에 미리 간단하게 설명을 남겼다.</p>
+<p>그리고 사실 <code>R.add(1)</code> 은 <code>R.inc</code> 함수와 같고, <code>R.add(-1)</code> 은 <code>R.dec</code> 함수와 같다… <del>저걸 예제라고 만들었니?</del></p>
+<h1 id="마치며…"><a href="#마치며…" class="headerlink" title="마치며…"></a>마치며…</h1><p>너무 두서없고 모르는 것 투성이라는 사실이 뼈저리게 느껴진다.</p>
+<p><code>Ramda</code> 라이브러리를 분석하기 전에 함수형 프로그래밍의 기초부터 더욱 다져야 하는게 아닌가… 하는 생각이 드는 밤이다.</p>
+<p>잘자용~</p>
+
+        </div>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5009520982293904" data-ad-slot="8981626582" data-ad-format="auto"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-5009520982293904",
+    enable_page_level_ads: true
+  });
+</script>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
     </div>
 </article>
+
+    <section id="comments">
     
-        </div>
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
     
-
-
-    </div></section>
-
+    </section>
 
 
 
@@ -221,6 +348,19 @@ Object/Relational Mapping
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/04/23/ramdajs-02/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">오래된</strong>
+        <p class="article-nav-title">Ramda __ (placeholder)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
@@ -374,11 +514,13 @@ Object/Relational Mapping
     var disqus_shortname = 'huna';
     
     
+    var disqus_url = 'https://hun-a.github.io/2019/04/24/ramdajs-03/';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
