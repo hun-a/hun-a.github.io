@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    
+    <title>transform.position | Dev Huna</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="unity,C#,position,axis,deltatime">
+    
+    <meta name="description" content="Intro유니티 UI에서 Hierarchy 탭에 존재하는 오브젝트를 클릭하면, Inspector 탭에 해당 오브젝트의 컴포넌트들이 표시된다. 그중에 오늘은 Transform, 그중에 Position에 대해 간략하게 메모를 해본다. TransformTransform 컴포넌트 안에는 Position, Rotation, Scale 3가지 필드가 존재하며 각각 위">
+<meta name="keywords" content="unity,C#,position,axis,deltatime">
+<meta property="og:type" content="article">
+<meta property="og:title" content="transform.position">
+<meta property="og:url" content="https://hun-a.github.io/2020/03/27/unity-transform-position/index.html">
+<meta property="og:site_name" content="Dev Huna">
+<meta property="og:description" content="Intro유니티 UI에서 Hierarchy 탭에 존재하는 오브젝트를 클릭하면, Inspector 탭에 해당 오브젝트의 컴포넌트들이 표시된다. 그중에 오늘은 Transform, 그중에 Position에 대해 간략하게 메모를 해본다. TransformTransform 컴포넌트 안에는 Position, Rotation, Scale 3가지 필드가 존재하며 각각 위">
+<meta property="og:locale" content="ko">
+<meta property="og:image" content="https://hun-a.github.io/images/unity_transform.png">
+<meta property="og:updated_time" content="2020-03-27T16:13:45.222Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="transform.position">
+<meta name="twitter:description" content="Intro유니티 UI에서 Hierarchy 탭에 존재하는 오브젝트를 클릭하면, Inspector 탭에 해당 오브젝트의 컴포넌트들이 표시된다. 그중에 오늘은 Transform, 그중에 Position에 대해 간략하게 메모를 해본다. TransformTransform 컴포넌트 안에는 Position, Rotation, Scale 3가지 필드가 존재하며 각각 위">
+<meta name="twitter:image" content="https://hun-a.github.io/images/unity_transform.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+					<h1>
+						<a href="/" style="font-size:90px;color:#fff; text-decoration: none;">Dev Huna</a>
+					</h1>
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/">홈</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Chat/">Chat</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/">Code</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Code/CleanCode/">CleanCode</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JDBC/">JDBC</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Libraries/">Libraries</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/FP/">FP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Game/">Game</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript/Node-js/">Node.js</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/">Tips</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tips/jekyll/">jekyll</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Unity/">Unity</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Unity/C/">C#</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="https://about.me/huna">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="검색">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '포스트',
+            PAGES: 'Pages',
+            CATEGORIES: '카테고리',
+            TAGS: '태그',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Unity/">Unity</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Unity/C/">C#</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5009520982293904" data-ad-slot="8981626582" data-ad-format="auto"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-5009520982293904",
+    enable_page_level_ads: true
+  });
+</script>
+                            <article id="post-unity-transform-position" class="article article-single article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        transform.position
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/03/27/unity-transform-position/" class="article-date">
+            <time datetime="2020-03-27T12:56:54.000Z" itemprop="datePublished">2020-03-27</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/C/">C#</a>, <a class="tag-link" href="/tags/axis/">axis</a>, <a class="tag-link" href="/tags/deltatime/">deltatime</a>, <a class="tag-link" href="/tags/position/">position</a>, <a class="tag-link" href="/tags/unity/">unity</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h1><p>유니티 UI에서 <code>Hierarchy</code> 탭에 존재하는 오브젝트를 클릭하면, <code>Inspector</code> 탭에 해당 오브젝트의 컴포넌트들이 표시된다.</p>
+<p>그중에 오늘은 <strong>Transform</strong>, 그중에 <code>Position</code>에 대해 간략하게 메모를 해본다.</p>
+<h1 id="Transform"><a href="#Transform" class="headerlink" title="Transform"></a>Transform</h1><p><code>Transform</code> 컴포넌트 안에는 <code>Position</code>, <code>Rotation</code>, <code>Scale</code> 3가지 필드가 존재하며 각각 위치, 회전, 크기를 담당한다.</p>
+<p><img src="/images/unity_transform.png" alt="Unity - Transform UI"></p>
+<p>재밌는건 위의 UI의 값들을 C# 스크립트 내에서도 사용이 가능하다.</p>
+<p>먼저 <code>Position</code> 관련 값들을 스크립트로 조작하기 위해서는 <code>Global Axis</code>와 <code>Local Axis</code> 개념을 알아야 한다.</p>
+<p>간단하다.</p>
+<p><code>Global Axis</code>는 배경(?) 세계(?) 기준의 좌표계이고,<br><code>Local Axis</code>는 선택된 게임 오브젝트 기준의 좌표계이다.</p>
+<p>먼저 <code>Global Axis</code>의 경우 <code>Position</code>을 이동하는 스크립트를 짜볼껀데,<br>🆆(앞쪽), 🅰(왼쪽), 🆂(뒤쪽), 🅳(오른쪽) 단축키로 이동한다고 가정하도록 해보자.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class PlayerController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    void Start() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        if (Input.GetKey(KeyCode.W))  // 🆆 누를 경우</span><br><span class="line">            transform.position += new Vector3(0.0f, 0.0f, 1.0f);</span><br><span class="line"></span><br><span class="line">        if (Input.GetKey(KeyCode.S))  // 🆂 누를 경우</span><br><span class="line">            transform.position += new Vector3(0.0f, 0.0f, -1.0f);</span><br><span class="line"></span><br><span class="line">        if (Input.GetKey(KeyCode.A))  // 🅰 누를 경우</span><br><span class="line">            transform.position += new Vector3(-1.0f, 0.0f, 0.0f);</span><br><span class="line"></span><br><span class="line">        if (Input.GetKey(KeyCode.D))  // 🅳 누를 경우</span><br><span class="line">            transform.position += new Vector3(1.0f, 0.0f, 0.0f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>위 코드는 <code>Global Axis</code> 기준으로 <code>new Vector3(float x, float y, float z)</code> 를 이용해 <code>transform.positon</code>의 값을 증가시키는 스크립트다.</p>
+<p>🆆를 누르면 z 좌표를 1씩 증가시켜 앞으로 전진하고, 🆂를 누르면 z좌표를 -1씩 증가시켜서 뒤로 이동하고, 🅰와 🅳는 x좌표를 수정해서 좌우로 이동한다.</p>
+<p>여기에서 <code>new Vector3()</code> 부분이 사실 좀 귀찮은데, Unity는 친절하게도 자주 사용하는 기능들을 미리 만들어논게 많다. 문서를 잘 찾아보길 바란다.<br>아무튼 <code>new Vector3(0.0f, 0.0f, 1.0f)</code>는 <code>Vector3.forward</code>, <code>new Vector3(0.0f, 0.0f, -1.0f)</code>는 <code>Vector3.back</code>으로 바꿀 수 있고, 좌우도 <code>Vector3.left</code>, <code>Vector3.right</code>로 바꿀 수 있다. </p>
+<p>그럼 다시, <code>Global Axis</code>와 <code>Local Axis</code>는 무슨 차이가 있을까?<br>이를 알아보기 전에 UI에서 <code>Rotation</code>중 y값을 아무렇게나 수정한 뒤 위의 스크립트를 먼저 실행해보자. 어떤가?</p>
+<p>게임 오브젝트를 y축으로 살짝 회전시키면 게임 오브젝트가 바라보는 방향이 아닌 항상 똑같은 방향으로 움직일 것이다. 왜냐하면 <code>Global Axis</code>기준으로 <code>Position</code>이 변경되기 때문이다. 굉장히 어색할 것이다.</p>
+<p>그럼 이제 아래 스크립트를 작성해서 게임을 실행해보자. 물론 이전에 수정했던 <code>Rotation</code> 값은 그대로 두고 말이다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class PlayerController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    void Start() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        if (Input.GetKey(KeyCode.W))</span><br><span class="line">            transform.Translate(Vector3.forward);</span><br><span class="line"></span><br><span class="line">        if (Input.GetKey(KeyCode.S))</span><br><span class="line">            transform.Translate(Vector3.back);</span><br><span class="line"></span><br><span class="line">        if (Input.GetKey(KeyCode.A))</span><br><span class="line">            transform.Translate(Vector3.left);</span><br><span class="line"></span><br><span class="line">        if (Input.GetKey(KeyCode.D))</span><br><span class="line">            transform.Translate(Vector3.right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>transform.Translate()</code> 함수는 친절하게도 <code>Local Axis</code>로 변환을 해준다.<br>따라서 게임 오브젝트가 y측으로 회전을 한 상태에서 🆆 키를 누르면 회전 후 바라보고 있는 방향을 앞으로 판단하고 움직이게 된다. </p>
+<h1 id="Time-deltaTime"><a href="#Time-deltaTime" class="headerlink" title="Time.deltaTime"></a>Time.deltaTime</h1><p>마지막으로, 위의 스크립트들을 돌려보면 게임 오브젝트가 굉장히 빠르게 후다닥 움직일 것이다.<br>왜냐하면 <code>MonoBehaviour.Update()</code> 함수는 매 프레임마다 호출되고, 그러면 1초에 여러 프레임이 생성되면서 생성된 만큼 이동하기 때문이다.</p>
+<p>자 그럼 이부분을 해결하기 위해서는?<br>학교에서 옛날에 물리를 배울때를 떠올려보자. 안배웠다면 어쩔 수 없지만…<br><code>거리 = 속력 * 시간</code> 이라는 공식이 있다. 즉, 거리는 속력과 시간을 곱하면 구할 수 있다.<br>이게 갑자기 왜 나왔냐?</p>
+<p>우리가 이동시키려는 1은 실제로는 거리이다. 1만큼 이동시키고 싶은데 <code>MonoBehavior.Update()</code> 함수는 프레임 단위로 수행되기 때문에 30frame/s일 경우 1초에 30번 호출하게 된다. 즉, 30frame/s의 속도로 이동한다.</p>
+<p>그럼 <code>1 = 30 * t</code> 를 만족하는 시간 <code>t</code>를 우리가 알 수만 있다면, 프레임이 어쨌던 말든 우리는 원하는데로 1씩 이동시킬 수 있을 것이다.</p>
+<p>이때 <code>t</code>가 바로 <code>Time.deltaTime</code>이다. 이 값은 지난 프레임이 완료되는 데 까지 걸린 시간을 나타내며, 단위는 초를 사용한다. 즉, 30프레임이라면 <code>Time.deltaTime</code>은 1/30s가 되는것이다.<br>그럼 <code>Time.deltaTime</code>을 위 스크립트에 적용해서 수행해보자.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class PlayerController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    void Start() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        if (Input.GetKey(KeyCode.W))</span><br><span class="line">            transform.Translate(Vector3.forward) * Time.deltaTime;</span><br><span class="line"></span><br><span class="line">        if (Input.GetKey(KeyCode.S))</span><br><span class="line">            transform.Translate(Vector3.back) * Time.deltaTime;</span><br><span class="line"></span><br><span class="line">        if (Input.GetKey(KeyCode.A))</span><br><span class="line">            transform.Translate(Vector3.left) * Time.deltaTime;</span><br><span class="line"></span><br><span class="line">        if (Input.GetKey(KeyCode.D))</span><br><span class="line">            transform.Translate(Vector3.right) * Time.deltaTime;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>간단하게 <code>Time.deltaTime</code>을 곱해주면 된다.<br>한번 실행해보자.</p>
+<p>너무 느리다면 상수를 더 곱해주면 된다. 거리는 속도와 시간과 비례하는 관계이니깐. :)</p>
+
+        </div>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5009520982293904" data-ad-slot="8981626582" data-ad-format="auto"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-5009520982293904",
+    enable_page_level_ads: true
+  });
+</script>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>팔로우:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/SeunghunandChan" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/seunghun.kim.96" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/seunghun-kim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/12/23/ramdajs-04-addindex/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">오래된</strong>
+        <p class="article-nav-title">Rambda addIndex</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">최근 글</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Unity/">Unity</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Unity/C/">C#</a></p>
+                            <p class="item-title"><a href="/2020/03/27/unity-transform-position/" class="title">transform.position</a></p>
+                            <p class="item-date"><time datetime="2020-03-27T12:56:54.000Z" itemprop="datePublished">2020-03-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/FP/">FP</a></p>
+                            <p class="item-title"><a href="/2019/12/23/ramdajs-04-addindex/" class="title">Rambda addIndex</a></p>
+                            <p class="item-date"><time datetime="2019-12-22T15:58:23.000Z" itemprop="datePublished">2019-12-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Chat/">Chat</a></p>
+                            <p class="item-title"><a href="/2019/12/12/at-least-one-commit-per-day/" class="title">최소 하루에 한 번 커밋하기</a></p>
+                            <p class="item-date"><time datetime="2019-12-11T16:12:39.000Z" itemprop="datePublished">2019-12-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/Node-js/">Node.js</a></p>
+                            <p class="item-title"><a href="/2019/05/16/sequelize-migrate/" class="title">How to programmatically migrate the sequelize instead of sequelize-cli</a></p>
+                            <p class="item-date"><time datetime="2019-05-16T13:17:43.000Z" itemprop="datePublished">2019-05-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/JavaScript/FP/">FP</a></p>
+                            <p class="item-title"><a href="/2019/04/24/ramdajs-03/" class="title">Ramda add</a></p>
+                            <p class="item-date"><time datetime="2019-04-24T14:03:41.000Z" itemprop="datePublished">2019-04-24</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">카테고리</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chat/">Chat</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Code/">Code</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Code/CleanCode/">CleanCode</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JDBC/">JDBC</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Libraries/">Libraries</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Basic/">Basic</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/FP/">FP</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Game/">Game</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/Node-js/">Node.js</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/jekyll/">jekyll</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/C/">C#</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">아카이브</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">3월 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">12월 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">5월 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">4월 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">3월 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">12월 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">11월 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">10월 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">4월 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">10월 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">3월 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">태그</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithms/">algorithms</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axis/">axis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/brute-force/">brute_force</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cleancode/">cleancode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deltatime/">deltatime</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encode/">encode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/euclidean/">euclidean</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/events/">events</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/express/">express</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fp/">fp</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hibernate/">hibernate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdbc/">jdbc</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-js/">node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/normalize/">normalize</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/position/">position</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/querystring/">querystring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ramda/">ramda</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sequelize/">sequelize</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/star/">star</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unity/">unity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wording/">wording</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">태그 클라우드</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/algorithms/" style="font-size: 16px;">algorithms</a> <a href="/tags/axis/" style="font-size: 10px;">axis</a> <a href="/tags/brute-force/" style="font-size: 10px;">brute_force</a> <a href="/tags/cleancode/" style="font-size: 12px;">cleancode</a> <a href="/tags/code/" style="font-size: 12px;">code</a> <a href="/tags/deltatime/" style="font-size: 10px;">deltatime</a> <a href="/tags/encode/" style="font-size: 10px;">encode</a> <a href="/tags/euclidean/" style="font-size: 10px;">euclidean</a> <a href="/tags/events/" style="font-size: 10px;">events</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fp/" style="font-size: 16px;">fp</a> <a href="/tags/game/" style="font-size: 18px;">game</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/html5/" style="font-size: 18px;">html5</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/jdbc/" style="font-size: 12px;">jdbc</a> <a href="/tags/jekyll/" style="font-size: 10px;">jekyll</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/nodejs/" style="font-size: 12px;">nodejs</a> <a href="/tags/normalize/" style="font-size: 10px;">normalize</a> <a href="/tags/position/" style="font-size: 10px;">position</a> <a href="/tags/querystring/" style="font-size: 10px;">querystring</a> <a href="/tags/ramda/" style="font-size: 16px;">ramda</a> <a href="/tags/sequelize/" style="font-size: 10px;">sequelize</a> <a href="/tags/star/" style="font-size: 12px;">star</a> <a href="/tags/unity/" style="font-size: 10px;">unity</a> <a href="/tags/wording/" style="font-size: 10px;">wording</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">링크</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io/ko/">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ReactiveAd -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5009520982293904" data-ad-slot="8981626582" data-ad-format="auto"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-5009520982293904",
+    enable_page_level_ads: true
+  });
+</script>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" style="font-size:40px;color:#fff; text-decoration: none;">Dev Huna</a>
+                </h1>
+                <p>&copy; 2020 Huna</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'huna';
+    
+    
+    var disqus_url = 'https://hun-a.github.io/2020/03/27/unity-transform-position/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
